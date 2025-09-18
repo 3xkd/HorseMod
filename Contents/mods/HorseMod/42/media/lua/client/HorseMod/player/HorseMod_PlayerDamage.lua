@@ -245,7 +245,9 @@ end
 
 local function onZombieAttack_checkAndRedirect(zombie)
     if not zombie then return end
-    if not getSpecificPlayer(0):getVariableBoolean("RidingHorse") then return end
+    local player = getSpecificPlayer(0)
+    if not player then return end
+    if not player:getVariableBoolean("RidingHorse") then return end
     local target = zombie:getTarget()
     if not target then return end
 

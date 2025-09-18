@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode x_extends="Horse_eating.xml">
 	<m_Name>Horse_eating2</m_Name>
-	<m_AnimName>Horse_Eat_Grass</m_AnimName>
+	<m_AnimName>Horse_Eat_Hand</m_AnimName>
     <m_ConditionPriority>10</m_ConditionPriority>
     <m_Conditions>
         <m_Name>isHorse</m_Name>
@@ -14,8 +14,13 @@
 		<m_Value>eat1</m_Value>
 	</m_Conditions>
     <m_Events>
-		<m_EventName>PlayBreedSound</m_EventName>
-		<m_TimePc>0.25</m_TimePc>
-		<m_ParameterValue>eat_grass</m_ParameterValue>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>HorseEating=true</m_ParameterValue>
+	</m_Events>
+    <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue>HorseEating=false</m_ParameterValue>
 	</m_Events>
 </animNode>

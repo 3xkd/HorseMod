@@ -16,7 +16,7 @@ module HorseMod
 		{
 			offset = -0.0000 0.2011 0.0429,
 			rotate = 89.1355 0.4641 178.8851,
-			scale = 1.0853,
+			scale = 2.8228,
 			bone = DEF_Spine2,
 		}
 
@@ -24,7 +24,7 @@ module HorseMod
 		{
 			offset = -0.0000 -0.0826 -0.1536,
 			rotate = 89.1355 0.4641 178.8851,
-			scale = 0.7276,
+			scale = 2.4981,
 			bone = DEF_Spine2,
 		}
 
@@ -47,6 +47,27 @@ module HorseMod
 			offset = -0.6000 0.0000 -0.0006,
 			rotate = 0.0000 0.0000 0.0000,
 			bone = Bip01,
+		}
+
+		attachment maneTop
+		{
+			offset = -0.6000 0.1997 0.0670,
+			rotate = 0.0000 0.0000 0.0000,
+			bone = DEF_ManeStart,
+		}
+
+		attachment maneMid
+		{
+			offset = 0.0001 -0.6675 -1.7382,
+			rotate = 0.0000 0.0000 0.0000,
+			bone = DEF_ManeMid3,
+		}
+
+		attachment maneBottom
+		{
+			offset = -0.6000 0.0964 0.0677,
+			rotate = 0.0000 0.0000 0.0000,
+			bone = DEF_ManeEnd,
 		}
 	}
 	model HorseHeadless
@@ -74,6 +95,7 @@ module HorseMod
 	{
 		mesh = HorseMod/Horse_Head,
 		static = true,
+    texture = HorseMod/HorseAQHP,
 		scale = 0.3530,
 
 		attachment world

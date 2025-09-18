@@ -23,7 +23,7 @@
     <m_Conditions>
 		<m_Name>targetTwist</m_Name>
 		<m_Type>GTR</m_Type>
-		<m_Value>25</m_Value>
+		<m_Value>5</m_Value>
 	</m_Conditions>
     <m_Conditions>
         <m_Name>animalWalking</m_Name>
@@ -40,87 +40,19 @@
 		<m_Time>End</m_Time>
 		<m_ParameterValue>isTurningRight=false</m_ParameterValue>
 	</m_Events>
-    <!-- <m_Events>
-        <m_EventName>PlayBreedSound</m_EventName>
-        <m_TimePc>0.01</m_TimePc>
-        <m_ParameterValue>gallop</m_ParameterValue>
-    </m_Events> -->
-    <!-- <m_Transitions>
-        <m_Target>Horse_PathfindRun</m_Target>
-        <m_blendInTime>0.40</m_blendInTime>
-        <m_blendOutTime>1.00</m_blendOutTime>
-        <m_Conditions>
-            <m_Name>targetTwist</m_Name>
-            <m_Type>LESS</m_Type>
-            <m_Value>1</m_Value>
-        </m_Conditions>
-    </m_Transitions> -->
-    <!-- <m_Transitions>
-        <m_Target>Horse_PathfindWait</m_Target>
-        <m_blendInTime>0.80</m_blendInTime>
-        <m_blendOutTime>0.80</m_blendOutTime>
-        <m_speedScale>0.8</m_speedScale>
-        <m_Conditions>
-            <m_Name>isHorse</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_Value>true</m_Value>
-        </m_Conditions>
-        <m_Conditions>
-            <m_Name>animalWalking</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>false</m_BoolValue>
-        </m_Conditions>
-        <m_Conditions>
-            <m_Name>animalRunning</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>false</m_BoolValue>
-        </m_Conditions>
-    </m_Transitions> -->
-    <!-- <m_Transitions>
-        <m_Target>Horse_PathfindRun</m_Target>
-        <m_blendInTime>0.80</m_blendInTime>
-        <m_blendOutTime>0.80</m_blendOutTime>
-        <m_speedScale>1.20</m_speedScale>
-        <m_Conditions>
-            <m_Name>animalWalking</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>false</m_BoolValue>
-        </m_Conditions>
-        <m_Conditions>
-            <m_Name>animalRunning</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>true</m_BoolValue>
-        </m_Conditions>
-        <m_Conditions x_name="8de8c17e-18eb-48d7-9df9-a513cc02dace">
-            <m_Name>targetTwist</m_Name>
-            <m_Type>LESS</m_Type>
-            <m_Value>1</m_Value>
-        </m_Conditions>
-        <m_Conditions x_name="8de8c17e-18eb-48d7-9df9-a513cc02dace">
-            <m_Name>targetTwist</m_Name>
-            <m_Type>GTR</m_Type>
-            <m_Value>-1</m_Value>
-        </m_Conditions>
-    </m_Transitions> -->
-
-    <!-- <m_Events>
-        <m_EventName>PlayBreedSound</m_EventName>
-        <m_TimePc>0.22</m_TimePc>
-        <m_ParameterValue>walkFront</m_ParameterValue>
-    </m_Events>
-    <m_Events>
-        <m_EventName>PlayBreedSound</m_EventName>
-        <m_TimePc>0.38</m_TimePc>
-        <m_ParameterValue>walkBack</m_ParameterValue>
-    </m_Events>
-    <m_Events>
-        <m_EventName>PlayBreedSound</m_EventName>
-        <m_TimePc>0.59</m_TimePc>
-        <m_ParameterValue>walkFront</m_ParameterValue>
-    </m_Events>
-    <m_Events>
-        <m_EventName>PlayBreedSound</m_EventName>
-        <m_TimePc>0.97</m_TimePc>
-        <m_ParameterValue>walkBack</m_ParameterValue>
-    </m_Events> -->
+  <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>isTurningLeftSharp=false</m_ParameterValue>
+	</m_Events>
+  <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>isTurningRightSharp=false</m_ParameterValue>
+	</m_Events>
+  <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>HorseGalloping=false</m_ParameterValue>
+	</m_Events>
 </animNode>

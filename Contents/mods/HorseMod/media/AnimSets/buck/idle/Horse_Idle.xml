@@ -54,9 +54,14 @@
             <m_Value>true</m_Value>
         </m_Conditions>
     </m_Transitions>
+    <m_Events>
+      <m_EventName>SetVariable</m_EventName>
+      <m_Time>Start</m_Time>
+      <m_ParameterValue>HorseGalloping=false</m_ParameterValue>
+    </m_Events>
 
     <m_Transitions>
-        <m_Target>idleSit</m_Target>
-        <m_AnimName>DeerStag_IdleToSitting</m_AnimName>
+        <m_Target>Horse_idleSit</m_Target>
+        <m_AnimName>Horse_Idle_StandingToLying</m_AnimName>
     </m_Transitions>
 </animNode>

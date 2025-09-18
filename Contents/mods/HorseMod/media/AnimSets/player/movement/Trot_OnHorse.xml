@@ -5,6 +5,7 @@
 	<m_Priority>10</m_Priority>
 	<m_Looped>true</m_Looped>
     <m_SpeedScale>1.3</m_SpeedScale>
+    <m_Scalar>geneSpeed</m_Scalar>
 	<m_ConditionPriority>10</m_ConditionPriority>
 	<m_deferredBoneAxis>Y</m_deferredBoneAxis>
 	<m_BlendTime>0.80</m_BlendTime>
@@ -18,6 +19,11 @@
         <m_Name>HorseTrot</m_Name>
         <m_Type>BOOL</m_Type>
         <m_BoolValue>true</m_BoolValue>
+    </m_Conditions>
+    <m_Conditions>
+        <m_Name>HorseGallop</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_BoolValue>false</m_BoolValue>
     </m_Conditions>
     <m_SubStateBoneWeights>
 		<boneName>Bip01</boneName>

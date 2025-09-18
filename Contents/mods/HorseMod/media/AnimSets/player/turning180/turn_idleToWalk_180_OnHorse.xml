@@ -7,6 +7,7 @@
 	<m_SpeedScale>1.04</m_SpeedScale>
 	<m_maxTorsoTwist>5.00</m_maxTorsoTwist>
 	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
+    <m_ConditionPriority>10</m_ConditionPriority>
 	<m_Conditions x_name="64349a95-766b-47fe-937b-cfa7eb4e0c50">
 		<m_Name>isMoving</m_Name>
 		<m_Type>BOOL</m_Type>
@@ -14,6 +15,11 @@
 	</m_Conditions>
 	<m_Conditions x_name="ead5d1d5-021f-4ef6-9ef2-f5667d683a73">
 		<m_Name>Aim</m_Name>
+		<m_Type>BOOL</m_Type>
+		<m_Value>false</m_Value>
+	</m_Conditions>
+    <m_Conditions x_name="dc2a4ff0-7dcf-45fc-aab0-b7d32f728361">
+		<m_Name>pressedRunButton</m_Name>
 		<m_Type>BOOL</m_Type>
 		<m_Value>false</m_Value>
 	</m_Conditions>

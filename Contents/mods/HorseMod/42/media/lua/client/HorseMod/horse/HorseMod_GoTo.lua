@@ -77,11 +77,15 @@ Events.OnKeyPressed.Add(function(key)
     --     horse = lastHorse[player:getPlayerNum()]
     -- end
     if key ~= Keyboard.KEY_G then return end
-        player:setIgnoreAimingInput(false)
-        player:setHeadLookAround(true)
-        -- print("lookaroundDir: ", lookaroundDir)
-        player:setHeadLookAroundDirection(lookaroundDir + 90, lookaroundDir + 135)
-        lookaroundDir = lookaroundDir + 20
+        print("Horse: ", horse)
+        horse:setAttachedItem("ManeTop", instanceItem("HorseMod.HorseBackpack"))
+        horse:setAttachedItem("ManeMid", instanceItem("HorseMod.HorseBackpack"))
+        horse:setAttachedItem("ManeBottom", instanceItem("HorseMod.HorseBackpack"))
+    -- player:setIgnoreAimingInput(false)
+        -- player:setHeadLookAround(true)
+        -- -- print("lookaroundDir: ", lookaroundDir)
+        -- player:setHeadLookAroundDirection(lookaroundDir + 90, lookaroundDir + 135)
+        -- lookaroundDir = lookaroundDir + 20
         -- if currentOffset then
         --     -- Restore original camera position by dragging back.
         --     debugChunkState:fromLua2('dragCamera', -currentOffset.dx, -currentOffset.dy)

@@ -8,7 +8,7 @@
 
     <m_deferredBoneAxis>Y</m_deferredBoneAxis>
     <m_SpeedScale>HorseWalkSpeed</m_SpeedScale>
-    <m_Scalar>1</m_Scalar>
+    <m_Scalar>geneSpeed</m_Scalar>
     <m_BlendTime>0.80</m_BlendTime>
 
     <m_Conditions>
@@ -63,6 +63,11 @@
 		<m_EventName>SetVariable</m_EventName>
 		<m_Time>Start</m_Time>
 		<m_ParameterValue>HorseGallop=false</m_ParameterValue>
+	</m_Events>
+  <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>HorseGalloping=false</m_ParameterValue>
 	</m_Events>
 
     <!-- <m_Events>

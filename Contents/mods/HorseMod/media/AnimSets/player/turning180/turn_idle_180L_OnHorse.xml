@@ -10,6 +10,11 @@
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
+    <m_Conditions x_name="12909e00-176c-495d-83fd-bc14f48d6adf">
+		<m_Name>isTurningAround</m_Name>
+		<m_Type>BOOL</m_Type>
+		<m_Value>true</m_Value>
+	</m_Conditions>
     <m_Conditions>
         <m_Name>isMoving</m_Name>
         <m_Type>BOOL</m_Type>

@@ -13,8 +13,13 @@
         <m_Value>true</m_Value>
     </m_Conditions>
 	<m_Events>
-		<m_EventName>PlayBreedSound</m_EventName>
+		<m_EventName>SetVariable</m_EventName>
 		<m_Time>Start</m_Time>
-		<m_ParameterValue>pain</m_ParameterValue>
+		<m_ParameterValue>HorseHurt=true</m_ParameterValue>
+	</m_Events>
+    <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue>HorseHurt=false</m_ParameterValue>
 	</m_Events>
 </animNode>

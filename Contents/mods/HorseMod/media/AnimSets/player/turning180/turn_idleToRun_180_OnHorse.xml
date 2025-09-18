@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <animNode>
-	<m_Name>turn_idleToWalk_180_OnHorse</m_Name>
+	<m_Name>turn_idleToRun_180_OnHorse</m_Name>
 	<m_Looped>false</m_Looped>
-	<m_BlendTime>0.10</m_BlendTime>
+	<m_BlendTime>0.80</m_BlendTime>
 	<m_BlendOutTime>0.30</m_BlendOutTime>
 	<m_SpeedScale>1.04</m_SpeedScale>
 	<m_maxTorsoTwist>5.00</m_maxTorsoTwist>
@@ -24,9 +24,9 @@
 		<m_Value>1</m_Value>
 	</m_Conditions>
 	<m_Conditions x_name="dc2a4ff0-7dcf-45fc-aab0-b7d32f728361">
-		<m_Name>isRunning</m_Name>
+		<m_Name>pressedRunButton</m_Name>
 		<m_Type>BOOL</m_Type>
-		<m_Value>false</m_Value>
+		<m_Value>true</m_Value>
 	</m_Conditions>
 	<m_SubStateBoneWeights>
 		<boneName>Bip01_Pelvis</boneName>

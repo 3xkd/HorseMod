@@ -72,6 +72,11 @@
 		<m_Time>Start</m_Time>
 		<m_ParameterValue>HorseGallop=false</m_ParameterValue>
 	</m_Events>
+  <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>Start</m_Time>
+		<m_ParameterValue>HorseGalloping=false</m_ParameterValue>
+	</m_Events>
 
     <!-- <m_Events>
         <m_EventName>PlayBreedSound</m_EventName>

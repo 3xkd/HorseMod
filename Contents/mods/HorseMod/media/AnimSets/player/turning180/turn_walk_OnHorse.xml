@@ -18,6 +18,11 @@
 		<m_Type>BOOL</m_Type>
 		<m_Value>true</m_Value>
 	</m_Conditions>
+    <m_Conditions>
+		<m_Name>HorseGallop</m_Name>
+		<m_Type>BOOL</m_Type>
+		<m_Value>false</m_Value>
+	</m_Conditions>
     <m_Conditions x_name="dc2a4ff0-7dcf-45fc-aab0-b7d32f728361">
 		<m_Name>isRunning</m_Name>
 		<m_Type>BOOL</m_Type>

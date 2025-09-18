@@ -1,119 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animNode>
     <m_Name>aim_2dblends</m_Name>
-    <m_AnimName>Bob_IdleAim1Hand</m_AnimName>
+    <m_AnimName>Bob_Mounted_Saddle</m_AnimName>
     <m_BlendTime>0.20</m_BlendTime>
-    <m_SpeedScale>StrafeSpeed</m_SpeedScale>
-    <m_Scalar>DeltaX</m_Scalar>
-    <m_Scalar2>DeltaY</m_Scalar2>
-
-    <m_2DBlends referenceID="1">
-        <m_AnimName>Bob_IdleAim1Hand</m_AnimName>
-        <m_XPos>0.00</m_XPos>
-        <m_YPos>0.00</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="2">
-        <m_AnimName>Bob_WalkAim1Hand</m_AnimName>
-        <m_XPos>0.00</m_XPos>
-        <m_YPos>1.00</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="3">
-        <m_AnimName>Bob_WalkBwdAim1Hand</m_AnimName>
-        <m_XPos>0.00</m_XPos>
-        <m_YPos>-1.00</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="4">
-        <m_AnimName>Bob_Strafe_Right</m_AnimName>
-        <m_XPos>1.00</m_XPos>
-        <m_YPos>0.00</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="5">
-        <m_AnimName>Bob_Strafe_Left</m_AnimName>
-        <m_XPos>-1.00</m_XPos>
-        <m_YPos>0.00</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="6">
-        <m_AnimName>Bob_WalkBwdAim1Hand_DiagL</m_AnimName>
-        <m_XPos>-0.55</m_XPos>
-        <m_YPos>-0.55</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="7">
-        <m_AnimName>Bob_WalkBwdAim1Hand_DiagR</m_AnimName>
-        <m_XPos>0.55</m_XPos>
-        <m_YPos>-0.55</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="8">
-        <m_AnimName>Bob_WalkAim1Hand_DiagR</m_AnimName>
-        <m_XPos>0.55</m_XPos>
-        <m_YPos>0.55</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
-    <m_2DBlends referenceID="9">
-        <m_AnimName>Bob_WalkAim1Hand_DiagL</m_AnimName>
-        <m_XPos>-0.55</m_XPos>
-        <m_YPos>0.55</m_YPos>
-        <m_SpeedScale>0.80</m_SpeedScale>
-    </m_2DBlends>
-
+    <m_SpeedScale>1.0</m_SpeedScale>
+    <m_maxTorsoTwist>90.00</m_maxTorsoTwist>
+    <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
+    <m_ConditionPriority>10</m_ConditionPriority>
+    <m_Conditions>
+        <m_Name>RidingHorse</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_Value>true</m_Value>
+    </m_Conditions>
     <m_Conditions>
         <m_Name>Aim</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
-
-    <m_2DBlendTri>
-        <node1>6</node1>
-        <node2>1</node2>
-        <node3>5</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>5</node1>
-        <node2>1</node2>
-        <node3>9</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>1</node1>
-        <node2>6</node2>
-        <node3>3</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>4</node1>
-        <node2>1</node2>
-        <node3>7</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>3</node1>
-        <node2>7</node2>
-        <node3>1</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>2</node1>
-        <node2>1</node2>
-        <node3>8</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>4</node1>
-        <node2>8</node2>
-        <node3>1</node3>
-    </m_2DBlendTri>
-    <m_2DBlendTri>
-        <node1>9</node1>
-        <node2>1</node2>
-        <node3>2</node3>
-    </m_2DBlendTri>
+    <m_Transitions>
+        <m_Target>aim_OnHorse_right</m_Target>
+        <m_AnimName>Bob_Mounted_SaddleTurnRight</m_AnimName>
+        <m_EarlyTransitionOut>false</m_EarlyTransitionOut>
+        <m_BlendTime>0.40</m_BlendTime>
+        <m_speedScale>1.0</m_speedScale>
+        <m_Conditions>
+            <m_Name>targetTwist</m_Name>
+		    <m_Type>GTR</m_Type>
+		    <m_Value>45</m_Value>
+        </m_Conditions>
+    </m_Transitions>
+    <m_SubStateBoneWeights>
+		<boneName>Bip01</boneName>
+		<weight>1.00</weight>
+        <includeDescendants>true</includeDescendants>
+	</m_SubStateBoneWeights>
+	<m_SubStateBoneWeights>
+		<boneName>Bip01_Spine1</boneName>
+		<weight>1.00</weight>
+        <includeDescendants>true</includeDescendants>
+	</m_SubStateBoneWeights>
 </animNode>

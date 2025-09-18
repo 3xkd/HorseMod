@@ -5,8 +5,8 @@
 	<m_deferredBoneAxis>Z</m_deferredBoneAxis>
 	<m_useDeferedRotation>false</m_useDeferedRotation>
 	<m_Looped>false</m_Looped>
-	<m_BlendTime>0.10</m_BlendTime>
-	<m_BlendOutTime>0.20</m_BlendOutTime>
+	<m_BlendTime>0.00</m_BlendTime>
+	<m_BlendOutTime>0.00</m_BlendOutTime>
 	<m_SpeedScale>0.80</m_SpeedScale>
 	<m_maxTorsoTwist>5.00</m_maxTorsoTwist>
 	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>

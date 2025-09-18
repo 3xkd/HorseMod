@@ -543,7 +543,7 @@ Events.OnPlayerUpdate.Add(function(player)
     --     horse:setVariable("animalWalking", false)
     -- end
 
-    local mirrorVars = { "HorseGallop","isTurningLeft","isTurningRight","isTurningLeftSharp","isTurningRightSharp" }
+    local mirrorVars = { "HorseGallop", "HorseGalloping","isTurningLeft","isTurningRight","isTurningLeftSharp","isTurningRightSharp" }
     for i = 1, #mirrorVars do
         local k = mirrorVars[i]
         local v = horse:getVariableBoolean(k)

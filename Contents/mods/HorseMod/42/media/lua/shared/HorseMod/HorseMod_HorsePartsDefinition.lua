@@ -150,6 +150,129 @@ stallionsteve_the_horse.skull = "HorseMod.Horse_Skull";
 stallionsteve_the_horse.xpPerItem = stallionsteve_the_horse.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionsteve_the_horse"] = stallionsteve_the_horse
 
+-----------------------------
+----- BLUE ROAN -------------
+-----------------------------
+
+-- FILLY
+local fillyblue_roan = AnimalPartsDefinitions.animals["fillyblue_roan"] or {};
+fillyblue_roan.parts = fillyblue_roan.parts or horseparts;
+fillyblue_roan.bones = fillyblue_roan.bones or fillybones;
+fillyblue_roan.head = "HorseMod.Horse_Head";
+fillyblue_roan.skull = "HorseMod.Horse_Skull";
+fillyblue_roan.xpPerItem = fillyblue_roan.xpPerItem or fillyxp
+AnimalPartsDefinitions.animals["fillyblue_roan"] = fillyblue_roan
+
+-- MARE
+local mareblue_roan = AnimalPartsDefinitions.animals["mareblue_roan"] or {};
+mareblue_roan.parts = mareblue_roan.parts or horseparts;
+mareblue_roan.bones = mareblue_roan.bones or horsebones;
+mareblue_roan.head = "HorseMod.Horse_Head";
+mareblue_roan.skull = "HorseMod.Horse_Skull";
+mareblue_roan.xpPerItem = mareblue_roan.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["mareblue_roan"] = mareblue_roan
+
+-- STALLION
+local stallionblue_roan = AnimalPartsDefinitions.animals["stallionblue_roan"] or {};
+stallionblue_roan.parts = stallionblue_roan.parts or horseparts;
+stallionblue_roan.bones = stallionblue_roan.bones or horsebones;
+stallionblue_roan.head = "HorseMod.Horse_Head";
+stallionblue_roan.skull = "HorseMod.Horse_Skull";
+stallionblue_roan.xpPerItem = stallionblue_roan.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["stallionblue_roan"] = stallionblue_roan
+
+-----------------------------
+----- SPOTTED APPALOOSA -----
+-----------------------------
+
+-- FILLY
+local fillyspotted_appaloosa = AnimalPartsDefinitions.animals["fillyspotted_appaloosa"] or {};
+fillyspotted_appaloosa.parts = fillyspotted_appaloosa.parts or horseparts;
+fillyspotted_appaloosa.bones = fillyspotted_appaloosa.bones or fillybones;
+fillyspotted_appaloosa.head = "HorseMod.Horse_Head";
+fillyspotted_appaloosa.skull = "HorseMod.Horse_Skull";
+fillyspotted_appaloosa.xpPerItem = fillyspotted_appaloosa.xpPerItem or fillyxp
+AnimalPartsDefinitions.animals["fillyspotted_appaloosa"] = fillyspotted_appaloosa
+
+-- MARE
+local marespotted_appaloosa = AnimalPartsDefinitions.animals["marespotted_appaloosa"] or {};
+marespotted_appaloosa.parts = marespotted_appaloosa.parts or horseparts;
+marespotted_appaloosa.bones = marespotted_appaloosa.bones or horsebones;
+marespotted_appaloosa.head = "HorseMod.Horse_Head";
+marespotted_appaloosa.skull = "HorseMod.Horse_Skull";
+marespotted_appaloosa.xpPerItem = marespotted_appaloosa.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["marespotted_appaloosa"] = marespotted_appaloosa
+
+-- STALLION
+local stallionspotted_appaloosa = AnimalPartsDefinitions.animals["stallionspotted_appaloosa"] or {};
+stallionspotted_appaloosa.parts = stallionspotted_appaloosa.parts or horseparts;
+stallionspotted_appaloosa.bones = stallionspotted_appaloosa.bones or horsebones;
+stallionspotted_appaloosa.head = "HorseMod.Horse_Head";
+stallionspotted_appaloosa.skull = "HorseMod.Horse_Skull";
+stallionspotted_appaloosa.xpPerItem = stallionspotted_appaloosa.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["stallionspotted_appaloosa"] = stallionspotted_appaloosa
+
+-------------------------------------
+----- AMERICAN PAINT (OVERO) --------
+-------------------------------------
+
+-- FILLY
+local fillyamerican_paint_overo = AnimalPartsDefinitions.animals["fillyamerican_paint_overo"] or {};
+fillyamerican_paint_overo.parts = fillyamerican_paint_overo.parts or horseparts;
+fillyamerican_paint_overo.bones = fillyamerican_paint_overo.bones or fillybones;
+fillyamerican_paint_overo.head = "HorseMod.Horse_Head";
+fillyamerican_paint_overo.skull = "HorseMod.Horse_Skull";
+fillyamerican_paint_overo.xpPerItem = fillyamerican_paint_overo.xpPerItem or fillyxp
+AnimalPartsDefinitions.animals["fillyamerican_paint_overo"] = fillyamerican_paint_overo
+
+-- MARE
+local mareamerican_paint_overo = AnimalPartsDefinitions.animals["mareamerican_paint_overo"] or {};
+mareamerican_paint_overo.parts = mareamerican_paint_overo.parts or horseparts;
+mareamerican_paint_overo.bones = mareamerican_paint_overo.bones or horsebones;
+mareamerican_paint_overo.head = "HorseMod.Horse_Head";
+mareamerican_paint_overo.skull = "HorseMod.Horse_Skull";
+mareamerican_paint_overo.xpPerItem = mareamerican_paint_overo.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["mareamerican_paint_overo"] = mareamerican_paint_overo
+
+-- STALLION
+local stallionamerican_paint_overo = AnimalPartsDefinitions.animals["stallionamerican_paint_overo"] or {};
+stallionamerican_paint_overo.parts = stallionamerican_paint_overo.parts or horseparts;
+stallionamerican_paint_overo.bones = stallionamerican_paint_overo.bones or horsebones;
+stallionamerican_paint_overo.head = "HorseMod.Horse_Head";
+stallionamerican_paint_overo.skull = "HorseMod.Horse_Skull";
+stallionamerican_paint_overo.xpPerItem = stallionamerican_paint_overo.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["stallionamerican_paint_overo"] = stallionamerican_paint_overo
+
+-----------------------------
+----- FLEA-BITTEN GREY ------
+-----------------------------
+
+-- FILLY
+local fillyflea_bitten_grey = AnimalPartsDefinitions.animals["fillyflea_bitten_grey"] or {};
+fillyflea_bitten_grey.parts = fillyflea_bitten_grey.parts or horseparts;
+fillyflea_bitten_grey.bones = fillyflea_bitten_grey.bones or fillybones;
+fillyflea_bitten_grey.head = "HorseMod.Horse_Head";
+fillyflea_bitten_grey.skull = "HorseMod.Horse_Skull";
+fillyflea_bitten_grey.xpPerItem = fillyflea_bitten_grey.xpPerItem or fillyxp
+AnimalPartsDefinitions.animals["fillyflea_bitten_grey"] = fillyflea_bitten_grey
+
+-- MARE
+local mareflea_bitten_grey = AnimalPartsDefinitions.animals["mareflea_bitten_grey"] or {};
+mareflea_bitten_grey.parts = mareflea_bitten_grey.parts or horseparts;
+mareflea_bitten_grey.bones = mareflea_bitten_grey.bones or horsebones;
+mareflea_bitten_grey.head = "HorseMod.Horse_Head";
+mareflea_bitten_grey.skull = "HorseMod.Horse_Skull";
+mareflea_bitten_grey.xpPerItem = mareflea_bitten_grey.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["mareflea_bitten_grey"] = mareflea_bitten_grey
+
+-- STALLION
+local stallionflea_bitten_grey = AnimalPartsDefinitions.animals["stallionflea_bitten_grey"] or {};
+stallionflea_bitten_grey.parts = stallionflea_bitten_grey.parts or horseparts;
+stallionflea_bitten_grey.bones = stallionflea_bitten_grey.bones or horsebones;
+stallionflea_bitten_grey.head = "HorseMod.Horse_Head";
+stallionflea_bitten_grey.skull = "HorseMod.Horse_Skull";
+stallionflea_bitten_grey.xpPerItem = stallionflea_bitten_grey.xpPerItem or horsexp
+AnimalPartsDefinitions.animals["stallionflea_bitten_grey"] = stallionflea_bitten_grey
 
 -----------------------------
 ----- HEAD RECIPE STUFF -----

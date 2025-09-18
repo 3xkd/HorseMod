@@ -102,7 +102,59 @@ AnimalDefinitions.breeds["horse"] = {
             invIconMaleDead = "Item_DeerMale_Dead",
             invIconFemaleDead = "Item_DeerFemale_Dead",
             invIconBabyDead = "Item_DeerFawn_Dead",
-        }
+        },
+        ["blue_roan"] = {
+            name = "blue_roan",
+            texture = "HorseMod/aqhbrSHADEDNEW",
+            textureMale = "HorseMod/aqhbrSHADEDNEW",
+            rottenTexture = "HorseMod/aqhbrSHADEDNEW",
+            textureBaby = "HorseMod/aqhbrSHADEDNEW",
+            invIconMale = "Item_DeerMale_Dead",
+            invIconFemale = "Item_DeerFemale_Dead",
+            invIconBaby = "Item_DeerFawn_Dead",
+            invIconMaleDead = "Item_DeerMale_Dead",
+            invIconFemaleDead = "Item_DeerFemale_Dead",
+            invIconBabyDead = "Item_DeerFawn_Dead",
+        },
+        ["spotted_appaloosa"] = {
+            name = "spotted_appaloosa",
+            texture = "HorseMod/LPASHADEDNEW",
+            textureMale = "HorseMod/LPASHADEDNEW",
+            rottenTexture = "HorseMod/LPASHADEDNEW",
+            textureBaby = "HorseMod/LPASHADEDNEW",
+            invIconMale = "Item_DeerMale_Dead",
+            invIconFemale = "Item_DeerFemale_Dead",
+            invIconBaby = "Item_DeerFawn_Dead",
+            invIconMaleDead = "Item_DeerMale_Dead",
+            invIconFemaleDead = "Item_DeerFemale_Dead",
+            invIconBabyDead = "Item_DeerFawn_Dead",
+        },
+        ["american_paint_overo"] = {
+            name = "american_paint_overo",
+            texture = "HorseMod/aphoveroSHADEDNEW",
+            textureMale = "HorseMod/aphoveroSHADEDNEW",
+            rottenTexture = "HorseMod/aphoveroSHADEDNEW",
+            textureBaby = "HorseMod/aphoveroSHADEDNEW",
+            invIconMale = "Item_DeerMale_Dead",
+            invIconFemale = "Item_DeerFemale_Dead",
+            invIconBaby = "Item_DeerFawn_Dead",
+            invIconMaleDead = "Item_DeerMale_Dead",
+            invIconFemaleDead = "Item_DeerFemale_Dead",
+            invIconBabyDead = "Item_DeerFawn_Dead",
+        },
+        ["flea_bitten_grey"] = {
+            name = "flea_bitten_grey",
+            texture = "HorseMod/greyhorse2",
+            textureMale = "HorseMod/greyhorse2",
+            rottenTexture = "HorseMod/greyhorse2",
+            textureBaby = "HorseMod/greyhorse2",
+            invIconMale = "Item_DeerMale_Dead",
+            invIconFemale = "Item_DeerFemale_Dead",
+            invIconBaby = "Item_DeerFawn_Dead",
+            invIconMaleDead = "Item_DeerMale_Dead",
+            invIconFemaleDead = "Item_DeerFemale_Dead",
+            invIconBabyDead = "Item_DeerFawn_Dead",
+        },
     }
 }
 
@@ -160,7 +212,7 @@ AnimalDefinitions.animals["filly"] = {
 
     -- STATS
     ---- general
-    turnDelta = 0.8,
+    turnDelta = 0.65,
     trailerBaseSize = 300,
     minEnclosureSize = 40,
     idleSoundVolume = 0.2,
@@ -241,7 +293,7 @@ AnimalDefinitions.animals["stallion"] = {
 
     -- STATS
     ---- general
-    turnDelta = 0.8,
+    turnDelta = 0.65,
     trailerBaseSize = 300,
     minEnclosureSize = 40,
     idleSoundVolume = 0.2,
@@ -324,7 +376,7 @@ AnimalDefinitions.animals["mare"] = {
 
     -- STATS
     ---- general
-    turnDelta = 0.8,
+    turnDelta = 0.65,
     trailerBaseSize = 300,
     minEnclosureSize = 40,
     idleSoundVolume = 0.2,
@@ -418,6 +470,22 @@ local filly_sounds = {
 	walkFront = { name = "AnimalFootstepsBuckWalkFront" },
 }
 AnimalDefinitions.animals["filly"].breeds["american_quarter"].sounds = filly_sounds
+
+AnimalDefinitions.animals["stallion"].breeds["blue_roan"].sounds = stallion_sounds
+AnimalDefinitions.animals["mare"].breeds["blue_roan"].sounds     = mare_sounds
+AnimalDefinitions.animals["filly"].breeds["blue_roan"].sounds    = filly_sounds
+
+AnimalDefinitions.animals["stallion"].breeds["spotted_appaloosa"].sounds = stallion_sounds
+AnimalDefinitions.animals["mare"].breeds["spotted_appaloosa"].sounds     = mare_sounds
+AnimalDefinitions.animals["filly"].breeds["spotted_appaloosa"].sounds    = filly_sounds
+
+AnimalDefinitions.animals["stallion"].breeds["american_paint_overo"].sounds = stallion_sounds
+AnimalDefinitions.animals["mare"].breeds["american_paint_overo"].sounds     = mare_sounds
+AnimalDefinitions.animals["filly"].breeds["american_paint_overo"].sounds    = filly_sounds
+
+AnimalDefinitions.animals["stallion"].breeds["flea_bitten_grey"].sounds = stallion_sounds
+AnimalDefinitions.animals["mare"].breeds["flea_bitten_grey"].sounds     = mare_sounds
+AnimalDefinitions.animals["filly"].breeds["flea_bitten_grey"].sounds    = filly_sounds
 
 local AVATAR_DEFINITION = {
     zoom = -20,

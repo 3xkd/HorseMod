@@ -33,9 +33,10 @@ module HorseMod
   item HorseSaddleBags
   {
     DisplayName = Horse Saddlebags,
-    DisplayCategory = Accessory,
-    Type = Normal,
+    DisplayCategory = Bag,
+    Type = Container,
     Weight = 0.5,
+    Capacity = 40,
     Icon = HatSantaRed,
     BloodLocation = Head,
     BodyLocation = Hat,

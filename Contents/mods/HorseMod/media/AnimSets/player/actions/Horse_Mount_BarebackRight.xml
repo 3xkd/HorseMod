@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animNode>
-	<m_Name>Horse_Mount_Bareback</m_Name>
-	<m_AnimName>Bob_Mount_Bareback</m_AnimName>
+	<m_Name>Horse_Mount_Bareback_Right</m_Name>
+	<m_AnimName>Bob_Mount_Bareback_Right</m_AnimName>
 	<m_BlendTime>0.00</m_BlendTime>
 	<m_SpeedScale>1.00</m_SpeedScale>
     <m_Looped>false</m_Looped>
@@ -9,7 +9,7 @@
 	<m_Conditions x_name="71182087-1e3c-450f-a2e7-02b3a2b7a7a6">
 		<m_Name>PerformingAction</m_Name>
 		<m_Type>STRING</m_Type>
-		<m_Value>Bob_Mount_Bareback</m_Value>
+		<m_Value>Bob_Mount_Bareback_Right</m_Value>
 	</m_Conditions>
 	<m_Transitions>
         <m_Target>Idle_HorseMount</m_Target>
@@ -24,4 +24,9 @@
 	<m_SubStateBoneWeights>
 		<boneName>Translation_Data</boneName>
 	</m_SubStateBoneWeights>
+    <m_Events>
+		<m_EventName>SetVariable</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue>MountFinished=true</m_ParameterValue>
+	</m_Events>
 </animNode>

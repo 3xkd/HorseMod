@@ -101,7 +101,7 @@ function HorseRiding.mountHorse(player, horse)
         action.onMounted = function()
             HorseRiding.playerMounts[player:getPlayerNum()] = horse
             HorseRiding.lastMounted[player:getPlayerNum()]  = horse
-            player:setTurnDelta(0.8)
+            player:setTurnDelta(0.65)
             Events.OnTick.Remove(lockTick)
         end
 
@@ -199,9 +199,9 @@ local function toggleTrot(key)
         horse:setVariable("HorseTrot", not cur)
         player:setVariable("HorseTrot", not cur)
         if cur == true then
-            player:setTurnDelta(0.8)
+            player:setTurnDelta(0.65)
         else
-            player:setTurnDelta(0.8)
+            player:setTurnDelta(0.65)
         end
     end
 end

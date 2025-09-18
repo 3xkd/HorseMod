@@ -24,9 +24,24 @@ mountLeft:setAttachmentName("mountLeft")
 local mountRight = group:getOrCreateLocation("MountRight")
 mountRight:setAttachmentName("mountRight")
 
+-- MANE
+local maneTop = group:getOrCreateLocation("ManeTop")
+local maneMid = group:getOrCreateLocation("ManeMid")
+local maneBottom = group:getOrCreateLocation("ManeBottom")
+maneTop:setAttachmentName("maneTop")
+maneMid:setAttachmentName("maneMid")
+maneBottom:setAttachmentName("maneBottom")
 
 -- Known slots list
-local SLOTS = { "Saddle", "Saddlebags", "Head", "MountLeft", "MountRight" }
+local SLOTS = { "Saddle",
+                "Saddlebags",
+                "Head",
+                "MountLeft",
+                "MountRight",
+                "ManeTop",
+                "ManeMid",
+                "ManeBottom",
+              }
 
 local SADDLEBAG_SLOT = "Saddlebags"
 local SADDLEBAG_FULLTYPE = "HorseMod.HorseSaddleBags"
@@ -37,6 +52,9 @@ HorseMod.HorseAttachments = HorseMod.HorseAttachments or {
     ["HorseMod.HorseSaddle"] = { slot = "Saddle" },
     ["HorseMod.HorseBackpack"] = { slot = "Saddle" },
     ["HorseMod.HorseSaddleBags"] = { slot = "Saddlebags" },
+    ["HorseMod.HorseManeTop"] = { slot = "ManeTop" },
+    ["HorseMod.HorseManeMid"] = { slot = "ManeMid" },
+    ["HorseMod.HorseManeBottom"] = { slot = "ManeBottom" },
 }
 
 -----------------------------------------------------------------------
@@ -231,54 +249,6 @@ local function findSaddlebagWorldItem(animal, data)
     end
 
     return nil, sq
-end
-
-local function isInvContainerEmpty(item)
-    if not item then return true end
-    if item.IsInventoryContainer and item:IsInventoryContainer() then
-        local c = item.getItemContainer and item:getItemContainer() or nil
-        return (not c) or c:isEmpty()
-    end
-    return true
-end
-
-local function tryRemoveSaddlebagContainer(player, animal)
-    local data = getSaddlebagData(animal)
-    if not data then return true end
-
-    local worldObj, sq = findSaddlebagWorldItem(animal, data)
-    local invItem = worldObj and worldObj:getItem() or nil
-
-    if invItem and invItem:IsInventoryContainer() then
-        if not isInvContainerEmpty(invItem) then
-            if player and player.Say then
-                player:Say(getText("IGUI_Horse_SaddlebagNotEmpty") or "I should empty the saddlebags first.")
-            end
-            return false
-        end
-        if worldObj.removeFromSquare then worldObj:removeFromSquare() end
-        if worldObj.removeFromWorld then worldObj:removeFromWorld() end
-        disableSaddlebagTracking(animal)
-        refreshPlayerInventories(player)
-        return true
-    end
-
-    local inv = animal and animal:getInventory() or nil
-    if inv then
-        local stray = inv:FindAndReturn(SADDLEBAG_CONTAINER_TYPE)
-        if stray then
-            if not isInvContainerEmpty(stray) then
-                if player and player.Say then
-                    player:Say(getText("IGUI_Horse_SaddlebagNotEmpty") or "I should empty the saddlebags first.")
-                end
-                return false
-            end
-            inv:Remove(stray)
-        end
-    end
-
-    disableSaddlebagTracking(animal)
-    return true
 end
 
 local function takeSaddlebagContainerFromPlayer(player)
@@ -492,13 +462,148 @@ local function removeSaddlebagContainer(player, animal)
     disableSaddlebagTracking(animal)
 end
 
+local function getVisibleSaddlebagsItem(animal)
+    local it = getAttachedItem(animal, SADDLEBAG_SLOT)
+    if it and it.IsInventoryContainer and it:IsInventoryContainer() then
+        return it, it:getItemContainer()
+    end
+    return nil, nil
+end
+
+local function getInvisibleSaddlebags(animal)
+    local data = getSaddlebagData(animal)
+    if not data then return nil, nil, nil end
+    local wo, sq = findSaddlebagWorldItem(animal, data)
+    if not wo then return nil, nil, nil end
+    local it = wo:getItem()
+    if not (it and it.IsInventoryContainer and it:IsInventoryContainer()) then
+        return nil, nil, nil
+    end
+    return wo, sq, it:getItemContainer()
+end
+
+local function copyItemsToTable(itemContainer)
+    local out = {}
+    if not itemContainer then return out end
+    local list = itemContainer:getItems()
+    if list then
+        for i = 0, list:size() - 1 do
+            table.insert(out, list:get(i))
+        end
+    end
+    return out
+end
+
+-- Move all items from src -> dst using the shared transfer helper.
+-- dropSq is only needed when dst is the floor (not our case here).
+local function transferAll(character, srcCont, dstCont, dropSq)
+    if not (srcCont and dstCont) then return end
+    local toMove = copyItemsToTable(srcCont)
+    for i = 1, #toMove do
+        local it = toMove[i]
+        if it and it:getContainer() == srcCont then
+            -- authoritative, dup-safe move (handles equipped/world/vehicle/radios + net)
+            ISTransferAction:transferItem(character, it, srcCont, dstCont, dropSq)
+        end
+    end
+end
+
+-- On ATTACH: push items from the visible wearable container -> invisible ground container
+local function moveVisibleToInvisibleOnAttach(player, animal)
+    local visItem, visCont = getVisibleSaddlebagsItem(animal)
+    if not visCont then return end
+    local wo, sq, invisCont = getInvisibleSaddlebags(animal)
+    if not invisCont then return end
+    transferAll(player or getPlayer(), visCont, invisCont, nil)
+    refreshPlayerInventories(player or getPlayer())
+end
+
+-- On DETACH: pull items from invisible ground container -> visible wearable container, then delete world object
+local function moveInvisibleToVisibleThenRemove(player, animal)
+    local visItem, visCont = getVisibleSaddlebagsItem(animal)
+    local wo, sq, invisCont = getInvisibleSaddlebags(animal)
+
+    -- If either container missing, nothing to do (keep behavior graceful)
+    if invisCont and visCont then
+        transferAll(player or getPlayer(), invisCont, visCont, nil)
+    end
+
+    -- When empty (or regardless, if you want), remove the invisible world object and clear tracking
+    if wo and sq then
+        if sq.transmitRemoveItemFromSquare then
+            sq:transmitRemoveItemFromSquare(wo)
+        end
+        if wo.removeFromWorld then wo:removeFromWorld() end
+        if wo.removeFromSquare then wo:removeFromSquare() end
+        if wo.setSquare then wo:setSquare(nil) end
+    end
+    disableSaddlebagTracking(animal)
+    refreshPlayerInventories(player or getPlayer())
+end
+
+local function unequipAttachment(player, animal, slot)
+    local cur = getAttachedItem(animal, slot)
+    if not cur then return end
+    if slot == SADDLEBAG_SLOT then
+        -- Move items back into the wearable container we’re about to return to the player.
+        moveInvisibleToVisibleThenRemove(player, animal)
+        local d = getSaddlebagData(animal); if d then d.equipped = false end
+    end
+
+    setAttachedItem(animal, slot, nil)
+
+    local bySlot, ground = ensureHorseModData(animal)
+    bySlot[slot] = nil
+    ground[slot] = nil
+
+    giveBackToPlayerOrDrop(player, animal, cur)
+end
+
+local function dropHorseGearOnDeath(animal)
+    if not animal or (HorseUtils and not HorseUtils.isHorse(animal)) then return end
+
+    -- 1) Pull items out of the invisible bag, into the visible wearable
+    -- (no-ops safely if nothing is there)
+    moveInvisibleToVisibleThenRemove(nil, animal)
+
+    -- 2) Unequip all attachments (Saddle, Saddlebags, etc.); items drop at horse square
+    for i = 1, #SLOTS do
+        local slot = SLOTS[i]
+        if getAttachedItem(animal, slot) then
+            unequipAttachment(nil, animal, slot)
+        end
+    end
+
+    -- 3) Clear saved state and mark processed
+    local bySlot, ground = ensureHorseModData(animal)
+    for i = 1, #SLOTS do
+        local slot = SLOTS[i]
+        bySlot[slot]  = nil
+        ground[slot]  = nil
+    end
+    disableSaddlebagTracking(animal)
+
+    local md = animal:getModData()
+    md.HM_Attach = md.HM_Attach or {}
+    md.HM_Attach.DroppedOnDeath = true
+end
+
 local function updateTrackedSaddlebags()
     saddlebagTick = saddlebagTick + 1
     if saddlebagTick % SADDLEBAG_UPDATE_INTERVAL ~= 0 then return end
 
     for animal in pairs(_trackedSaddlebagHorses) do
-        if not animal or (animal.isRemovedFromWorld and animal:isRemovedFromWorld()) or (animal.isDead and animal:isDead()) or not HorseUtils.isHorse(animal) then
+        if not animal or (animal.isRemovedFromWorld and animal:isRemovedFromWorld()) or not HorseUtils.isHorse(animal) then
             _trackedSaddlebagHorses[animal] = nil
+
+        elseif (animal.isDead and animal:isDead()) then
+            local md = animal:getModData()
+            local already = md and md.HM_Attach and md.HM_Attach.DroppedOnDeath
+            if not already then
+                dropHorseGearOnDeath(animal)
+            end
+            _trackedSaddlebagHorses[animal] = nil
+
         else
             local data = getSaddlebagData(animal)
             if data and data.active then
@@ -532,9 +637,9 @@ local function equipAttachment(player, animal, item, itemsMap)
 
     local old = getAttachedItem(animal, slot)
     if old and old ~= item then
-        if slot == SADDLEBAG_SLOT and old:getFullType() == SADDLEBAG_FULLTYPE then
-            removeSaddlebagContainer(player, animal)
-        end
+        -- if slot == SADDLEBAG_SLOT and old:getFullType() == SADDLEBAG_FULLTYPE then
+        --     removeSaddlebagContainer(player, animal)
+        -- end
         setAttachedItem(animal, slot, nil)
         giveBackToPlayerOrDrop(player, animal, old)
     end
@@ -546,33 +651,18 @@ local function equipAttachment(player, animal, item, itemsMap)
     ground[slot] = nil
 
     if slot == SADDLEBAG_SLOT then
-    if ft == SADDLEBAG_FULLTYPE then
-        ensureSaddlebagContainer(animal, player, true)
-        local d = getSaddlebagData(animal); if d then d.equipped = true end
-    else
-        local d = getSaddlebagData(animal); if d then d.equipped = false end
-        removeSaddlebagContainer(player, animal)
+        if ft == SADDLEBAG_FULLTYPE then
+            -- Do NOT remove the old invisible container on replacement; keep items safe.
+            ensureSaddlebagContainer(animal, player, true)  -- adopt/spawn once if needed
+            moveVisibleToInvisibleOnAttach(player, animal)  -- push any pre-loaded items into the invis
+            local d = getSaddlebagData(animal); if d then d.equipped = true end
+        else
+            local d = getSaddlebagData(animal); if d then d.equipped = false end
+            -- If equipping a non-saddlebags item into this slot, clear the invisible container entirely.
+            moveInvisibleToVisibleThenRemove(player, animal)
+        end
     end
 end
-end
-
-local function unequipAttachment(player, animal, slot)
-    local cur = getAttachedItem(animal, slot)
-    if not cur then return end
-    if slot == SADDLEBAG_SLOT then
-        if not tryRemoveSaddlebagContainer(player, animal) then return end
-        local d = getSaddlebagData(animal); if d then d.equipped = false end
-    end
-
-    setAttachedItem(animal, slot, nil)
-
-    local bySlot, ground = ensureHorseModData(animal)
-    bySlot[slot] = nil
-    ground[slot] = nil
-
-    giveBackToPlayerOrDrop(player, animal, cur)
-end
-
 
 local function unequipAll(player, animal)
     for i = 1, #SLOTS do
@@ -829,8 +919,16 @@ Events.OnTick.Add(function()
                 if animals then
                     for i = 0, animals:size() - 1 do
                         local a = animals:get(i)
-                        if a:isOnScreen() then
-                            reapplyFor(a)
+                        if HorseUtils.isHorse(a) then
+                            if a.isDead and a:isDead() then
+                                local md = a:getModData()
+                                local already = md and md.HM_Attach and md.HM_Attach.DroppedOnDeath
+                                if not already then
+                                    dropHorseGearOnDeath(a)
+                                end
+                            elseif a:isOnScreen() then
+                                reapplyFor(a)
+                            end
                         end
                     end
                 end

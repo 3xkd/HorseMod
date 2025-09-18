@@ -6,6 +6,7 @@
 	<m_BlendOutTime>0.20</m_BlendOutTime>
 	<m_SpeedScale>0.80</m_SpeedScale>
 	<m_maxTorsoTwist>5.00</m_maxTorsoTwist>
+    <m_EarlyTransitionOut>false</m_EarlyTransitionOut>
 	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_ConditionPriority>10</m_ConditionPriority>
     <m_Conditions>
