@@ -18,7 +18,6 @@ module HorseMod
 			item 1 tags[SewingNeedle] mode:keep flags[MayDegradeLight],
 			item 1 tags[Awl] mode:keep flags[MayDegradeLight],
             item 1 tags[Hammer] mode:keep flags[MayDegradeVeryLight],
-            item 1 tags[SewingNeedle] mode:keep flags[MayDegradeLight],
             item 1 tags[MetalworkingPliers;Tongs] mode:keep flags[Prop2;MayDegradeLight],
             item 5 tags[HeavyThread],
             item 3 [Base.LeatherStrips] mode:destroy,
