@@ -28,7 +28,7 @@ module HorseMod
         }
         outputs
         {
-            item 1 HorseMod.HorseSaddle,
+            item 1 mapper:SaddleLeather,
         }
         itemMapper SaddleLeather
         {
@@ -62,7 +62,7 @@ module HorseMod
         }
         outputs
         {
-            item 1 HorseMod.HorseSaddleBags,
+            item 1 mapper:SaddleLeather,
         }
         itemMapper SaddleLeather
         {
