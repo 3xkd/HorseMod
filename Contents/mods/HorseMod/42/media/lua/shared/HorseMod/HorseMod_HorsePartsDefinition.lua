@@ -8,8 +8,7 @@ local fillyparts = {};
 local fillybones = {};
 local fillyxp = 10;
 
-table.insert(fillyparts, {item = "Base.Steak", minNb = 10, maxNb = 18})
-table.insert(fillyparts, {item = "Base.Beef", minNb = 10, maxNb = 18})
+table.insert(fillyparts, {item = "HorseMod.HorseMeat", minNb = 20, maxNb = 36})
 table.insert(fillyparts, {item = "Base.AnimalSinew", minNb = 3, maxNb = 7})
 
 table.insert(fillybones, {item = "Base.AnimalBone", minNb = 10, maxNb = 18})
@@ -21,8 +20,7 @@ local horseparts = {};
 local horsebones = {};
 local horsexp = 15;
 
-table.insert(horseparts, {item = "Base.Steak", minNb = 10, maxNb = 18})
-table.insert(horseparts, {item = "Base.Beef", minNb = 10, maxNb = 18})
+table.insert(horseparts, {item = "HorseMod.HorseMeat", minNb = 20, maxNb = 36})
 table.insert(horseparts, {item = "Base.AnimalSinew", minNb = 3, maxNb = 7})
 
 table.insert(horsebones, {item = "Base.LargeAnimalBone", minNb = 10, maxNb = 18})
