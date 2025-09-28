@@ -117,4 +117,30 @@ module HorseMod
 			scale = 0.5000,
 		}
 	}
+
+
+	model CookingPot_HorseGlueGround
+	{
+		mesh = WorldItems/CookingPotFull,
+		texture = WorldItems/CookingPot_HorseGlue,
+		scale = 0.4,
+		attachment Bip01_Prop1
+		{
+			offset = 0.0355 0.1534 -0.1613,
+			rotate = 90.806 0.2262 -0.1529,
+			scale = 0.89,
+		}
+	}
+	model CookingPotForged_HorseGlueGround
+	{
+		mesh = WorldItems/CookingPot_Forged_Food,
+		texture = WorldItems/CookingPot_Forged_HorseGlue,
+		scale = 0.1375,
+		attachment Bip01_Prop1
+		{
+			offset = -0.0003 0.1589 -0.1806,
+			rotate = 90.0 0.0 0.0,
+			scale = 1.0,
+		}
+	}
 }

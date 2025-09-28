@@ -102,6 +102,7 @@ module HorseMod
         time = 50,
         Tags = AnySurfaceCraft;Cooking,
         category = Cooking,
+        OnCreate = HorseGlueToWoodglue,
         inputs
         {
             item 1 [HorseMod.PotHorseGlue;HorseMod.PotForgedHorseGlue] flags[InheritCondition;ItemCount;IsCookedFoodItem] mode:destroy mappers[potType],
