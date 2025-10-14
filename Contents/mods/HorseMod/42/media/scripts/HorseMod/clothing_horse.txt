@@ -17,6 +17,17 @@ module HorseMod {
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
     }
 
+    item HorseBridle {
+        DisplayName = Horse Bridle,
+        DisplayCategory = Accessory,
+        Type = Normal,
+        Weight = 0.5,
+        Icon = HorseSaddle,
+        BodyLocation = Hat,
+        StaticModel = Horse_Bridle,
+        WorldStaticModel = Horse_Bridle,
+    }
+
     item HorseSaddleBags {
         DisplayName = Horse Saddlebags,
         DisplayCategory = Bag,
