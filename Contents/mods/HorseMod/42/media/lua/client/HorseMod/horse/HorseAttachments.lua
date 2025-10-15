@@ -20,6 +20,9 @@ saddlebags:setAttachmentName("saddlebags")
 local head = group:getOrCreateLocation("Head")
 head:setAttachmentName("head")
 
+local bridle = group:getOrCreateLocation("Bridle")
+bridle:setAttachmentName("bridle")
+
 local mountLeft = group:getOrCreateLocation("MountLeft")
 mountLeft:setAttachmentName("mountLeft")
 
@@ -85,6 +88,7 @@ local SLOTS = {
     "Saddle",
     "Saddlebags",
     "Head",
+    "Bridle",
     "MountLeft",
     "MountRight",
     "ManeStart",
@@ -103,6 +107,7 @@ HorseAttachments.items = {
     ["HorseMod.HorseSaddle"] = { slot = "Saddle" },
     ["HorseMod.HorseBackpack"] = { slot = "Saddle" },
     ["HorseMod.HorseSaddleBags"] = { slot = "Saddlebags" },
+    ["HorseMod.HorseBridle"] = { slot = "Bridle" },
     ["HorseMod.HorseManeStart"] = { slot = "ManeStart" },
     ["HorseMod.HorseManeMid"]   = { slot = "ManeMid1" },
     ["HorseMod.HorseManeEnd"]   = { slot = "ManeEnd" },
