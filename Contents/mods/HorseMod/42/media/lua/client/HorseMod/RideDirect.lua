@@ -153,87 +153,23 @@ local function hedgeMultFromTree(treeMult)
     return 1.0 - (1.0 - treeMult) * 0.5
 end
 
-local function isNearMountSide(player, horse, radius)
-    radius = radius or 1.0
-    local r2 = radius * radius
 
-    if not (horse and horse.getAttachmentWorldPos and player) then
-        return false, nil
+---@param playerIndex integer
+---@return boolean
+---@nodiscard
+local function joypadHasUIFocus(playerIndex)
+    local data = JoypadState.players[playerIndex + 1]
+
+    if not data then
+        return false
     end
 
-    local left  = horse:getAttachmentWorldPos("mountLeft")
-    local right = horse:getAttachmentWorldPos("mountRight")
-    if not (left and right) then return false, nil end
-
-    local px, py = player:getX(), player:getY()
-    local dl = (px - left:x())^2  + (py - left:y())^2
-    local dr = (px - right:x())^2 + (py - right:y())^2
-
-    if dl <= r2 or dr <= r2 then
-        return true, (dl <= dr) and "left" or "right"
-    end
-    return false, nil
+    return data.focus and data.focus:isVisible() or false
 end
 
-local function findNearbyMountableHorse(player, radius)
-    if not player then return nil end
-    radius = radius or 1.25
-    local px, py, pz = player:getX(), player:getY(), player:getZ()
-    local bestHorse, bestDist2 = nil, radius * radius
-    local cell = getCell()
-    if not cell then return nil end
 
-    local minx = math.floor(px - radius) - 1
-    local maxx = math.floor(px + radius) + 1
-    local miny = math.floor(py - radius) - 1
-    local maxy = math.floor(py + radius) + 1
-
-    for gx = minx, maxx do
-        for gy = miny, maxy do
-            local sq = cell:getGridSquare(gx, gy, pz)
-            if sq then
-                local moving = sq:getMovingObjects()
-                if moving then
-                    for i = 0, moving:size() - 1 do
-                        local obj = moving:get(i)
-                        if obj and instanceof(obj, "IsoAnimal") and obj:isExistInTheWorld() then
-                            local horse = obj
-                            if HorseRiding.canMountHorse(player, horse) then
-                                local near = isNearMountSide(player, horse, radius)
-                                if near then
-                                    local hx, hy = horse:getX(), horse:getY()
-                                    local dist2 = (hx - px) * (hx - px) + (hy - py) * (hy - py)
-                                    if dist2 <= bestDist2 then
-                                        bestHorse, bestDist2 = horse, dist2
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    return bestHorse
-end
-
-local function joypadHasUIFocus(playerNum)
-    if not JoypadState or not JoypadState.players then return false end
-    local data = JoypadState.players[playerNum + 1]
-    if not data then return false end
-    local focus = data.focus
-    if focus then
-        if focus.isVisible then
-            return focus:isVisible()
-        end
-        return true
-    end
-    return false
-end
-
+---@param player IsoPlayer
 local function handleJoypadMountButton(player)
-    if not player then return end
     local pid = player:getPlayerNum()
     local pad = player:getJoypadBind() or -1
     if pad == -1 then
@@ -257,7 +193,7 @@ local function handleJoypadMountButton(player)
     if player:getVehicle() then return end
     if player:getVariableBoolean("MountingHorse") then return end
 
-    local mountedHorse = HorseRiding.getMountedHorse and HorseRiding.getMountedHorse(player)
+    local mountedHorse = HorseRiding.getMountedHorse(player)
     if mountedHorse then
         if player:getVariableBoolean("RidingHorse") then
             HorseRiding.dismountHorse(player)
@@ -265,9 +201,7 @@ local function handleJoypadMountButton(player)
         return
     end
 
-    if not HorseRiding.canMountHorse then return end
-
-    local horse = findNearbyMountableHorse(player, 1.25)
+    local horse = HorseRiding.getBestMountableHorse(player, 1.25)
     if horse and horse:isExistInTheWorld() then
         player:setIsAiming(false)
         HorseRiding.mountHorse(player, horse)
@@ -823,6 +757,8 @@ Events.OnPlayerUpdate.Add(function(player)
     UpdateHorseAudio(player)
 end)
 
+
+-- TODO: external modification of a module, gross
 function HorseRiding._clearRideCache(pid)
     curSpeed[pid] = nil
     turnAcc[pid] = nil
