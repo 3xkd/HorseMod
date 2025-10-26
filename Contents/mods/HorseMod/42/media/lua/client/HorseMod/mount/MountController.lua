@@ -385,16 +385,6 @@ local TURN_STEPS_PER_SEC = 14
 local PLAYER_SYNC_TUNER = 0.96
 
 
----@param character IsoGameCharacter
----@param direction IsoDirections
-local function setFacingDirection(character, direction)
-    local vector = direction:ToVector()
-    vector:normalize()
-    character:setTargetAndCurrentDirection(
-        vector:getX(), vector:getY()
-    )
-end
-
 
 ---@namespace HorseMod
 
@@ -408,9 +398,6 @@ end
 ---
 ---Whether the most recent turn was a right turn
 ---@field lastTurnWasRight boolean
----
----Target of the current 180 turn. Nil if we aren't making a 180 turn currently.
----@field turn180Target IsoDirections | nil
 ---
 ---@field vegLingerT number
 ---
@@ -450,12 +437,6 @@ function MountController:turn(input, deltaTime)
         turnDistance = (-turnDistance + 4) % 8
     end
 
-    if absoluteTurnDistance == 4 and not self.turn180Target then
-        self.turn180Target = targetDirection
-        setFacingDirection(self.mount.pair.mount, currentDirection)
-        setFacingDirection(self.mount.pair.rider, currentDirection)
-    end
-
     local turns = math.min(
         math.floor(self.turnAcceleration),
         absoluteTurnDistance
@@ -487,10 +468,6 @@ function MountController:turn(input, deltaTime)
 
     -- lock both to the same stepped direction
     self.mount.pair:setDirection(currentDirection)
-
-    if self.turn180Target and currentDirection == self.turn180Target or targetDirection ~= self.turn180Target then
-        self.turn180Target = nil
-    end
 end
 
 
