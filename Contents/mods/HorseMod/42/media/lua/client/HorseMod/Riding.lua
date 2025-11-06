@@ -256,10 +256,15 @@ Events.OnKeyPressed.Add(toggleTrot)
 local function horseJump(key)
     local options = PZAPI.ModOptions:getOptions("HorseMod")
     local jumpKey = Keyboard.KEY_SPACE
+
     if options then
+        -- TODO: move mod options to a module
         local opt = options:getOption("HorseJumpButton")
-        if opt and opt.getValue then jumpKey = opt:getValue() end
+        assert(opt ~= nil and opt.type == "keybind")
+        ---@cast opt umbrella.ModOptions.Keybind
+        jumpKey = opt:getValue()
     end
+
     if key ~= jumpKey then return end
 
     local player = getSpecificPlayer(0)
@@ -282,7 +287,7 @@ local function initHorseMod()
     HorseRiding._clearRideCache(player:getPlayerNum())
 end
 
-Events.OnGameStart.Add(initHorseMod)
+Events.OnCreatePlayer.Add(initHorseMod)
 
 
 return HorseRiding
