@@ -8,7 +8,7 @@ local Stamina = {}
 
 -- Tunables (percent points per second)
 Stamina.MAX            = 100
-Stamina.DRAIN_RUN      = 3      -- while galloping
+Stamina.DRAIN_RUN      = 4      -- while galloping
 Stamina.REGEN_TROT     = 1.5     -- moving w/ HorseTrot true
 Stamina.REGEN_WALK     = 3.0     -- moving but not running/trotting
 Stamina.REGEN_IDLE     = 6.0     -- standing still
@@ -60,7 +60,7 @@ end
 ---@param horse IsoAnimal
 ---@param valueDelta number
 ---@param transmit boolean
----@return number stamina The horse's new stamina level 
+---@return number stamina The horse's new stamina level
 function Stamina.modify(horse, valueDelta, transmit)
     return Stamina.set(horse, Stamina.get(horse) + valueDelta, transmit)
 end
@@ -84,7 +84,7 @@ end
 ---@param moving boolean
 ---@return boolean
 ---@nodiscard
-function Stamina.canRun(horse, input, moving)
+function Stamina.shouldRun(horse, input, moving)
     local stamina = Stamina.get(horse)
     local minRunStamina = Stamina.MAX * Stamina.MIN_RUN_PERCENT
     local wantsRun = input.run and true or false
@@ -114,7 +114,6 @@ function Stamina.canRun(horse, input, moving)
             runAllowed = true
         end
     end
-    print("Stamina: ", Stamina.get(horse))
     return runAllowed
 end
 

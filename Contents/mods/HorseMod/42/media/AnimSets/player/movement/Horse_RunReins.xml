@@ -16,6 +16,11 @@
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
+        <m_Name>GallopToIdlePlayer</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_Value>false</m_Value>
+    </m_Conditions>
+    <m_Conditions>
         <m_Name>HasReins</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
@@ -40,6 +45,17 @@
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
+    <m_Transitions>
+        <m_Target>Horse_IdleReins</m_Target>
+        <m_blendInTime>0.60</m_blendInTime>
+        <m_BlendTime>0.80</m_BlendTime>
+        <m_blendOutTime>0.60</m_blendOutTime>
+        <m_Conditions>
+            <m_Name>HorseGallop</m_Name>
+            <m_Type>BOOL</m_Type>
+            <m_Value>false</m_Value>
+        </m_Conditions>
+    </m_Transitions>
     <m_Transitions>
         <m_Target>Horse_RunTurningLeft</m_Target>
         <m_blendInTime>0.60</m_blendInTime>
@@ -164,4 +180,8 @@
             <m_Value>true</m_Value>
         </m_Conditions>
     </m_Transitions>
+    <m_SubStateBoneWeights>
+        <boneName>Bip01</boneName>
+        <weight>0.00</weight>
+    </m_SubStateBoneWeights>
 </animNode>

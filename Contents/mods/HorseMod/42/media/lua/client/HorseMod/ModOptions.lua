@@ -6,18 +6,16 @@ local config = {
     horseJumpButton = nil
 }
 
+
+-- TODO: use translation strings for this
 local function HorseConfig()
-    local options = PZAPI.ModOptions:create("HorseMod", "Horse")
+    local options = PZAPI.ModOptions:create("HorseMod", getText("IGUI_ModOptions_HorseModName"))
 
-    options:addDescription("Change the volume of Horse sounds.")
-    config.horseSoundVolume = options:addSlider("HorseSoundVolume", "Horse Sound Volume (Default 0.40)", 0.01, 1, 0.01, 0.40, "Set sound volume of horse sounds.")
+    options:addDescription(getText("IGUI_ModOptions_HorseSoundVolumeDesc"))
+    config.horseSoundVolume = options:addSlider("HorseSoundVolume", getText("IGUI_ModOptions_HorseSoundVolumeName"), 0.01, 1, 0.01, 0.40, getText("IGUI_ModOptions_HorseSoundVolumeTooltip"))
 
-    options:addDescription("Change the horse speed.")
-    config.horseWalkSpeed = options:addSlider("HorseWalkSpeed", "Horse Walk Speed Multiplier (Default 1)", 0.10, 10, 0.10, 1.3, "Change walk speed of horse.")
-    config.horseGallopSpeed = options:addSlider("HorseGallopSpeed", "Horse Gallop Speed Multiplier (Default 1)", 0.10, 10, 0.10, 1, "Change gallop speed of horse.")
-
-    options:addDescription("Horse keybinds.")
-    config.horseJumpButton = options:addKeyBind("HorseJumpButton", "Horse Jump Button", Keyboard.KEY_SPACE, "Change the keybind for horse jumping.")
+    options:addDescription(getText("IGUI_ModOptions_HorseKeybind"))
+    config.horseJumpButton = options:addKeyBind("HorseJumpButton", getText("IGUI_ModOptions_HorseKeybindJumpName"), Keyboard.KEY_SPACE, getText("IGUI_ModOptions_HorseKeybindJumpTooltip"))
 end
 
 HorseConfig()

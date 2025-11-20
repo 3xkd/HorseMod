@@ -21,22 +21,6 @@
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Transitions>
-        <m_Target>Horse_Run</m_Target>
-        <m_AnimName>Bob_Mounted_Saddle</m_AnimName>
-        <m_BlendTime>0.30</m_BlendTime>
-        <m_speedScale>1.8</m_speedScale>
-        <m_Conditions>
-            <m_Name>isMoving</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>true</m_BoolValue>
-        </m_Conditions>
-        <m_Conditions>
-            <m_Name>pressedRunButton</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_BoolValue>true</m_BoolValue>
-        </m_Conditions>
-    </m_Transitions>
-    <m_Transitions>
         <m_Target>Horse_KickLeft</m_Target>
         <m_BlendTime>0.00</m_BlendTime>
         <m_blendInTime>0.10</m_blendInTime>

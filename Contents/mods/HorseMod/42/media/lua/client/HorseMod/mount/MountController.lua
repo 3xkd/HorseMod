@@ -2,26 +2,35 @@ local Stamina = require("HorseMod/Stamina")
 local HorseUtils = require("HorseMod/Utils")
 
 
-function GetSpeeds()
-    local options = PZAPI.ModOptions:getOptions("HorseMod")
-    if not options then return 1.0 end
-    -- TODO: replace mod options with sandbox options
-    local walk = options:getOption("HorseWalkSpeed"):getValue()
-    local gallop = options:getOption("HorseGallopSpeed"):getValue()
-    if walk and gallop then return walk, gallop end
-    return 1.0
-end
-
-local function getBaseGeneSpeed(horse)
-    local md = horse:getModData()
-    md.HM_Ride = md.HM_Ride or {}
-    if type(md.HM_Ride.geneBase) ~= "number" then
-        local v = tonumber(horse:getVariableString("geneSpeed")) or 1.0
-        md.HM_Ride.geneBase = v
+---@param state "walk"|"gallop"
+---@return number
+---@nodiscard
+local function getSpeed(state)
+    if state == "walk" then
+        return SandboxVars.HorseMod.WalkSpeed
+    else
+        return SandboxVars.HorseMod.GallopSpeed
     end
-    return md.HM_Ride.geneBase
 end
 
+
+---@deprecated Use getSpeed("walk"), getSpeed("gallop") instead.
+---@return number, number
+function GetSpeeds()
+    return getSpeed("walk"), getSpeed("gallop")
+end
+
+
+---@param horse IsoAnimal
+---@return number
+---@nodiscard
+local function getGeneticSpeed(horse)
+    return horse:getUsedGene("speed"):getCurrentValue()
+end
+
+---@param t number
+---@return number
+---@nodiscard
 local function smoothstep(t)
     if t <= 0 then return 0 end
     if t >= 1 then return 1 end
@@ -32,31 +41,33 @@ local function lerp(a, b, t) return a + (b - a) * t end
 
 local function getSq(x,y,z) return getCell():getGridSquare(math.floor(x), math.floor(y), z) end
 
+
+---@param treeMult number
+---@return number
+---@nodiscard
 local function hedgeMultFromTree(treeMult)
     return 1.0 - (1.0 - treeMult) * 0.5
 end
 
 
-local function detectVegetation(player)
-    local square   = player and player:getCurrentSquare() or nil
-    local tree     = square and square:getTree() or nil
-    local props    = square and square:getProperties() or nil
-    local movement = props and props:Val("Movement") or nil
+---@param square IsoGridSquare
+---@return "tree" | "hedge" | "bush" | "none"
+---@nodiscard
+local function getVegetationTypeAt(square)
+    local props = square:getProperties()
 
-    local isTree  = false
-    local isHedge = false
-    local isBush  = false
+    local tree = square:getTree()
+    local movementType = props:Val("Movement")
 
-    if tree then
-        isTree = (tree:getSize() > 2)
-        isBush = not isTree
-    elseif movement and (movement == "HedgeLow" or movement == "HedgeHigh") then
-        isHedge = true
+    if tree and tree:getSize() > 2 then
+        return "tree"
+    elseif movementType == "HedgeLow" or movementType == "HedgeHigh" then
+        return "hedge"
     elseif square and square:hasBush() then
-        isBush = true
+        return "bush"
     end
 
-    return isTree, isHedge, isBush
+    return "none"
 end
 
 -- CENTER blockers only (no WallN/WallW/Window* here!)
@@ -421,12 +432,13 @@ local PLAYER_SYNC_TUNER = 0.8
 ---Whether the most recent turn was a right turn
 ---@field lastTurnWasRight boolean
 ---
----@field vegLingerT number
+---Slowdown time remaining from vegetation.
+---@field vegetationLingerTime number
 ---
----@field vegLingerStartMult number
+---Speed multiplier from last vegetation.
+---@field vegetationLingerStartMult number
 ---
----@field prevInVeg boolean
----
+---Current movement speed.
 ---@field currentSpeed number
 local MountController = {}
 MountController.__index = MountController
@@ -505,6 +517,88 @@ end
 
 ---@param input MountController.Input
 ---@param deltaTime number
+---@return number
+---@nodiscard
+function MountController:getVegetationEffect(input, deltaTime)
+    local vegetationType = getVegetationTypeAt(self.mount.pair.rider:getSquare())
+
+    local treeMultiplier = input.run and TREES_GENE_MULT_RUN or TREES_GENE_MULT_WALK
+
+    if vegetationType ~= "none" then
+        local vegetationEffect
+        if vegetationType == "tree" then
+            vegetationEffect = treeMultiplier
+        elseif vegetationType == "hedge" then
+            vegetationEffect = hedgeMultFromTree(treeMultiplier)
+        else
+            vegetationEffect = 1.0
+        end
+
+        self.vegetationLingerTime = math.max(self.vegetationLingerTime, TREES_LINGER_SECONDS)
+        self.vegetationLingerStartMult = math.min(self.vegetationLingerStartMult, vegetationEffect)
+        return vegetationEffect
+    else
+        if self.vegetationLingerTime <= 0 then
+            return 1.0
+        end
+
+        local p = 1.0 - (self.vegetationLingerTime / TREES_LINGER_SECONDS)
+        local eased = smoothstep(p)
+
+        self.vegetationLingerTime = math.max(0, self.vegetationLingerTime - deltaTime)
+
+        return lerp(self.vegetationLingerStartMult, 1.0, eased)
+    end
+end
+
+
+---@param input MountController.Input
+---@param deltaTime number
+function MountController:updateSpeed(input, deltaTime)
+    local walkMultiplier = getSpeed("walk")
+    local gallopRawSpeed = getSpeed("gallop")
+    local gallopMultiplier = gallopRawSpeed
+
+    -- vegetation slowdown is applied through gene speed?
+    local geneSpeed = getGeneticSpeed(self.mount.pair.mount) * self:getVegetationEffect(input, deltaTime)
+
+    -- TODO: is this check really necessary? does changing the value cause more overhead than reading it?
+    local currentGeneSpeed = self.mount.pair.mount:getVariableFloat("geneSpeed", 0)
+    if currentGeneSpeed ~= geneSpeed then
+        self.mount.pair:setAnimationVariable("geneSpeed", geneSpeed)
+    end
+
+    if input.run then
+        local f = Stamina.runSpeedFactor(self.mount.pair.mount)
+        if f < 0.35 then
+            gallopMultiplier = 0.35
+        else
+            gallopMultiplier = gallopMultiplier * f
+        end
+    end
+
+    self.mount.pair.mount:setVariable("HorseWalkSpeed", walkMultiplier)
+    self.mount.pair.mount:setVariable("HorseTrotSpeed",  walkMultiplier * TROT_MULT)
+    self.mount.pair.mount:setVariable("HorseRunSpeed", gallopRawSpeed)
+
+    self.mount.pair.rider:setVariable("HorseWalkSpeed", walkMultiplier * PLAYER_SYNC_TUNER)
+    self.mount.pair.rider:setVariable("HorseTrotSpeed",  walkMultiplier * TROT_MULT * PLAYER_SYNC_TUNER)
+    self.mount.pair.rider:setVariable("HorseRunSpeed", gallopRawSpeed * PLAYER_SYNC_TUNER)
+
+    -- speed/locomotion
+    local moving = (input.movement.x ~= 0 or input.movement.y ~= 0)
+    local target = (moving and (input.run and RUN_SPEED * gallopMultiplier or WALK_SPEED * walkMultiplier)) or 0.0
+    local rate = (target > self.currentSpeed) and ACCEL_UP or DECEL_DOWN
+
+    self.currentSpeed = approach(self.currentSpeed, target, rate, deltaTime)
+    if self.currentSpeed < 0.0001 then
+        self.currentSpeed = 0
+    end
+end
+
+
+---@param input MountController.Input
+---@param deltaTime number
 function MountController:updateStamina(input, deltaTime)
     local staminaChange = 0.0
 
@@ -525,21 +619,47 @@ function MountController:updateStamina(input, deltaTime)
 end
 
 ---@param mount IsoAnimal
----@param state string
 ---@param reinsItem InventoryItem
-function MountController:updateHorseReinsModel(mount, state, reinsItem)
+---@param state string
+function MountController:setReinsState(mount, reinsItem, state)
     local model = HorseUtils.REINS_MODELS[state]
+    assert(model ~= nil, "No reins model for state " .. tostring(state))
     reinsItem:setStaticModel(model)
     mount:resetEquippedHandsModels()
 end
 
 
 ---@param input MountController.Input
+function MountController:updateReins(input)
+    local reinsItem = HorseUtils.getReins(self.mount.pair.mount)
+
+    if reinsItem then
+        local movementState
+        if (input.movement.x == 0 and input.movement.y == 0) or self.currentSpeed <= 0 then
+            movementState = "idle"
+        elseif input.run then
+            movementState = "gallop"
+        elseif input.trot then
+            movementState = "trot"
+        else
+            movementState = "walking"
+        end
+
+        self:setReinsState(self.mount.pair.mount, reinsItem, movementState)
+        self.mount.pair.rider:setVariable("HasReins", true)
+    else
+        self.mount.pair.rider:setVariable("HasReins", false)
+    end
+end
+
+
+---@param input MountController.Input
 function MountController:update(input)
-    -- FIXME: this sometimes fails when dismounting
+    -- FIXME: this fails when dismounting
     assert(self.mount.pair.rider:getVariableString("RidingHorse") == "true")
 
     self.mount.pair.rider:setSneaking(true)
+    self.mount.pair.rider:setIgnoreAutoVault(true)
 
     -- TODO i'm doubtful this is needed?
     self.mount.pair.mount:getPathFindBehavior2():reset()
@@ -549,7 +669,7 @@ function MountController:update(input)
     local moving = (input.movement.x ~= 0 or input.movement.y ~= 0)
 
     -- Prevent running at zero stamina
-    if not Stamina.canRun(self.mount.pair.mount, input, moving) then
+    if not Stamina.shouldRun(self.mount.pair.mount, input, moving) then
         input.run = false
     else
         input.run = true
@@ -557,104 +677,8 @@ function MountController:update(input)
 
     self:updateStamina(input, deltaTime)
     self:turn(input, deltaTime)
-
-    local walkMul, gallopRawSpeed = GetSpeeds()
-    local gallopMul = gallopRawSpeed
-
-    local baseGene = getBaseGeneSpeed(self.mount.pair.mount) or 1.0
-    local isTree, isHedge, isBush = detectVegetation(self.mount.pair.rider)
-
-    local treeMultNow  = (input.run and TREES_GENE_MULT_RUN or TREES_GENE_MULT_WALK)
-    local hedgeMultNow = hedgeMultFromTree(treeMultNow)
-
-    local vegMultNow
-    if isTree then
-        vegMultNow = treeMultNow
-    elseif isHedge then
-        vegMultNow = hedgeMultNow
-    else
-        vegMultNow = 1.0
-    end
-
-    local inVeg = (vegMultNow < 1.0)
-
-    if inVeg then
-        self.vegLingerT = 0
-        self.vegLingerStartMult = vegMultNow
-    else
-        if self.prevInVeg == true then
-            self.vegLingerT = TREES_LINGER_SECONDS
-            self.vegLingerStartMult = self.vegLingerStartMult or vegMultNow
-        end
-    end
-    self.prevInVeg = inVeg
-
-    local mult
-    if inVeg then
-        mult = vegMultNow
-    else
-        local tRemain = self.vegLingerT
-        if tRemain > 0 then
-            local p = 1.0 - (tRemain / TREES_LINGER_SECONDS)
-            local eased = smoothstep(p)
-            local start = self.vegLingerStartMult
-            mult = lerp(start, 1.0, eased)
-            self.vegLingerT = math.max(0, tRemain - deltaTime)
-        else
-            mult = 1.0
-        end
-    end
-
-    local effGene = baseGene * mult
-
-    local curGeneStr = self.mount.pair.mount:getVariableString("geneSpeed")
-    local effStr = string.format("%.3f", effGene)
-    if curGeneStr ~= effStr then
-        self.mount.pair.mount:setVariable("geneSpeed", effStr)
-        self.mount.pair.rider:setVariable("geneSpeed", effStr)
-    end
-
-    if input.run then
-        local f = Stamina.runSpeedFactor(self.mount.pair.mount)
-        if f < 0.35 then
-            gallopMul = 0.35
-        else
-            gallopMul = gallopMul * f
-        end
-    end
-    print("gallop speed: ", gallopMul)
-
-    self.mount.pair.mount:setVariable("HorseWalkSpeed", walkMul)
-    self.mount.pair.mount:setVariable("HorseTrotSpeed",  walkMul * TROT_MULT)
-    self.mount.pair.mount:setVariable("HorseRunSpeed", gallopRawSpeed)
-
-    self.mount.pair.rider:setVariable("HorseWalkSpeed", walkMul * PLAYER_SYNC_TUNER)
-    self.mount.pair.rider:setVariable("HorseTrotSpeed",  walkMul * TROT_MULT * PLAYER_SYNC_TUNER)
-    self.mount.pair.rider:setVariable("HorseRunSpeed", gallopRawSpeed * PLAYER_SYNC_TUNER)
-
-    -- speed/locomotion
-    local target  = (moving and (input.run and RUN_SPEED * gallopMul or WALK_SPEED * walkMul)) or 0.0
-    local rate    = (target > self.currentSpeed) and ACCEL_UP or DECEL_DOWN
-    self.currentSpeed = approach(self.currentSpeed, target, rate, deltaTime)
-    if self.currentSpeed < 0.0001 then self.currentSpeed = 0 end
-    self.currentSpeed = self.currentSpeed
-
-    local movementState
-    if not moving or self.currentSpeed <= 0 then
-        movementState = "idle"
-    elseif input.run then
-        movementState = "gallop"
-    elseif input.trot then
-        movementState = "trot"
-    else
-        movementState = "walking"
-    end
-
-    local reinsItem = HorseUtils.getReins(self.mount.pair.mount)
-
-    if reinsItem then
-        self:updateHorseReinsModel(self.mount.pair.mount, movementState, reinsItem)
-    end
+    self:updateSpeed(input, deltaTime)
+    self:updateReins(input)
 
     if moving and self.currentSpeed > 0 then
         local currentDirection = self.mount.pair.mount:getDir()
@@ -670,7 +694,7 @@ function MountController:update(input)
         self.mount.pair.mount:setVariable("animalWalking", false)
     end
 
-    local mirrorVars =  { "HorseGalloping","isTurningLeft","isTurningRight" }
+    local mirrorVars =  { "HorseGalloping","GallopToIdlePlayer","isTurningLeft","isTurningRight" }
     for i = 1, #mirrorVars do
         local k = mirrorVars[i]
         local v = self.mount.pair.mount:getVariableBoolean(k)
@@ -697,9 +721,8 @@ function MountController.new(mount)
             turnAcceleration = 0,
             lastTurnWasRight = false,
             currentSpeed = 0.0,
-            vegLingerT = 0.0,
-            vegLingerStartMult = 1.0,
-            prevInVeg = false
+            vegetationLingerTime = 0.0,
+            vegetationLingerStartMult = 1.0,
         },
         MountController
     )

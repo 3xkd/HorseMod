@@ -1,0 +1,9 @@
+ContextMenu_EN = {
+    ContextMenu_Horse_Gear = "Gear",
+    ContextMenu_Horse_Equip = "Equip",
+    ContextMenu_Horse_Replace = "Replace",
+    ContextMenu_Horse_With = "With",
+    ContextMenu_Horse_No_Compatible_Gear = "No Compatible Gear",
+    ContextMenu_Horse_Unequip = "Unequip",
+    ContextMenu_Horse_Unequip_All = "Unequip All",
+}

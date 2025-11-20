@@ -55,14 +55,7 @@
         <m_blendOutTime>0.40</m_blendOutTime>
         <m_blendInTime>0.80</m_blendInTime>
         <m_BlendTime>0.80</m_BlendTime>
-        <m_EarlyTransitionOut>true</m_EarlyTransitionOut>
-        <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
         <m_speedScale>1.00</m_speedScale>
-        <m_Conditions>
-            <m_Name>isHorse</m_Name>
-            <m_Type>BOOL</m_Type>
-            <m_Value>true</m_Value>
-        </m_Conditions>
         <m_Conditions>
             <m_Name>HorseGallop</m_Name>
             <m_Type>BOOL</m_Type>
@@ -137,5 +130,10 @@
         <m_EventName>SetVariable</m_EventName>
         <m_Time>Start</m_Time>
         <m_ParameterValue>isTurningRightSharp=false</m_ParameterValue>
+    </m_Events>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_TimePc>1.0</m_TimePc>
+        <m_ParameterValue>GallopToIdlePlayer=false</m_ParameterValue>
     </m_Events>
 </animNode>

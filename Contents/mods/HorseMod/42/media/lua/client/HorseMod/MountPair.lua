@@ -11,7 +11,7 @@ MountPair.__index = MountPair
 
 
 ---@param key string
----@param value number | boolean
+---@param value number | boolean | string
 function MountPair:setAnimationVariable(key, value)
     self.rider:setVariable(key, value)
     self.mount:setVariable(key, value)

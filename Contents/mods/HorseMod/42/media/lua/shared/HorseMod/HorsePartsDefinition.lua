@@ -8,9 +8,10 @@ local fillyparts = {};
 local fillybones = {};
 local fillyxp = 10;
 
-table.insert(fillyparts, {item = "Base.Steak", minNb = 10, maxNb = 18})
-table.insert(fillyparts, {item = "Base.Beef", minNb = 10, maxNb = 18})
+table.insert(fillyparts, {item = "HorseMod.Horse_Steak", minNb = 10, maxNb = 18})
+table.insert(fillyparts, {item = "HorseMod.Horse_Loin", minNb = 10, maxNb = 18})
 table.insert(fillyparts, {item = "Base.AnimalSinew", minNb = 3, maxNb = 7})
+table.insert(fillyparts, {item = "HorseMod.Horse_Hoof", nb = 4})
 
 table.insert(fillybones, {item = "Base.AnimalBone", minNb = 10, maxNb = 18})
 
@@ -21,9 +22,10 @@ local horseparts = {};
 local horsebones = {};
 local horsexp = 15;
 
-table.insert(horseparts, {item = "Base.Steak", minNb = 10, maxNb = 18})
-table.insert(horseparts, {item = "Base.Beef", minNb = 10, maxNb = 18})
+table.insert(horseparts, {item = "HorseMod.Horse_Steak", minNb = 10, maxNb = 18})
+table.insert(horseparts, {item = "HorseMod.Horse_Loin", minNb = 10, maxNb = 18})
 table.insert(horseparts, {item = "Base.AnimalSinew", minNb = 3, maxNb = 7})
+table.insert(horseparts, {item = "HorseMod.Horse_Hoof", nb = 4})
 
 table.insert(horsebones, {item = "Base.LargeAnimalBone", minNb = 10, maxNb = 18})
 
@@ -37,7 +39,7 @@ local fillyamerican_quarter = AnimalPartsDefinitions.animals["fillyamerican_quar
 fillyamerican_quarter.parts = fillyamerican_quarter.parts or horseparts;
 fillyamerican_quarter.bones = fillyamerican_quarter.bones or fillybones;
 fillyamerican_quarter.leather = "Base.CowLeather_Angus_Full";
-fillyamerican_quarter.head = "HorseMod.Horse_Head";
+fillyamerican_quarter.head = "HorseMod.Horse_Head_Foal_AQHP";
 fillyamerican_quarter.skull = "HorseMod.Horse_Skull";
 fillyamerican_quarter.xpPerItem = fillyamerican_quarter.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyamerican_quarter"] = fillyamerican_quarter
@@ -47,7 +49,7 @@ local mareamerican_quarter = AnimalPartsDefinitions.animals["mareamerican_quarte
 mareamerican_quarter.parts = mareamerican_quarter.parts or horseparts;
 mareamerican_quarter.bones = mareamerican_quarter.bones or horsebones;
 mareamerican_quarter.leather = "Base.CowLeather_Angus_Full";
-mareamerican_quarter.head = "HorseMod.Horse_Head";
+mareamerican_quarter.head = "HorseMod.Horse_Head_Female_AQHP";
 mareamerican_quarter.skull = "HorseMod.Horse_Skull";
 mareamerican_quarter.xpPerItem = mareamerican_quarter.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareamerican_quarter"] = mareamerican_quarter
@@ -57,7 +59,7 @@ local stallionamerican_quarter = AnimalPartsDefinitions.animals["stallionamerica
 stallionamerican_quarter.parts = stallionamerican_quarter.parts or horseparts;
 stallionamerican_quarter.bones = stallionamerican_quarter.bones or horsebones;
 stallionamerican_quarter.leather = "Base.CowLeather_Angus_Full";
-stallionamerican_quarter.head = "HorseMod.Horse_Head";
+stallionamerican_quarter.head = "HorseMod.Horse_Head_Male_AQHP";
 stallionamerican_quarter.skull = "HorseMod.Horse_Skull";
 stallionamerican_quarter.xpPerItem = stallionamerican_quarter.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionamerican_quarter"] = stallionamerican_quarter
@@ -71,7 +73,7 @@ local fillyamerican_paint = AnimalPartsDefinitions.animals["fillyamerican_paint"
 fillyamerican_paint.parts = fillyamerican_paint.parts or horseparts;
 fillyamerican_paint.bones = fillyamerican_paint.bones or fillybones;
 fillyamerican_paint.leather = "Base.CowLeather_Angus_Full";
-fillyamerican_paint.head = "HorseMod.Horse_Head";
+fillyamerican_paint.head = "HorseMod.Horse_Head_Foal_AP";
 fillyamerican_paint.skull = "HorseMod.Horse_Skull";
 fillyamerican_paint.xpPerItem = fillyamerican_paint.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyamerican_paint"] = fillyamerican_paint
@@ -81,7 +83,7 @@ local mareamerican_paint = AnimalPartsDefinitions.animals["mareamerican_paint"] 
 mareamerican_paint.parts = mareamerican_paint.parts or horseparts;
 mareamerican_paint.bones = mareamerican_paint.bones or horsebones;
 mareamerican_paint.leather = "Base.CowLeather_Angus_Full";
-mareamerican_paint.head = "HorseMod.Horse_Head";
+mareamerican_paint.head = "HorseMod.Horse_Head_Female_AP";
 mareamerican_paint.skull = "HorseMod.Horse_Skull";
 mareamerican_paint.xpPerItem = mareamerican_paint.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareamerican_paint"] = mareamerican_paint
@@ -91,7 +93,7 @@ local stallionamerican_paint = AnimalPartsDefinitions.animals["stallionamerican_
 stallionamerican_paint.parts = stallionamerican_paint.parts or horseparts;
 stallionamerican_paint.bones = stallionamerican_paint.bones or horsebones;
 stallionamerican_paint.leather = "Base.CowLeather_Angus_Full";
-stallionamerican_paint.head = "HorseMod.Horse_Head";
+stallionamerican_paint.head = "HorseMod.Horse_Head_Male_AP";
 stallionamerican_paint.skull = "HorseMod.Horse_Skull";
 stallionamerican_paint.xpPerItem = stallionamerican_paint.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionamerican_paint"] = stallionamerican_paint
@@ -104,7 +106,7 @@ local fillyappaloosa = AnimalPartsDefinitions.animals["fillyappaloosa"] or {};
 fillyappaloosa.parts = fillyappaloosa.parts or horseparts;
 fillyappaloosa.bones = fillyappaloosa.bones or fillybones;
 fillyappaloosa.leather = "Base.CowLeather_Angus_Full";
-fillyappaloosa.head = "HorseMod.Horse_Head";
+fillyappaloosa.head = "HorseMod.Horse_Head_Foal_GDA";
 fillyappaloosa.skull = "HorseMod.Horse_Skull";
 fillyappaloosa.xpPerItem = fillyappaloosa.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyappaloosa"] = fillyappaloosa
@@ -115,7 +117,7 @@ local mareappaloosa = AnimalPartsDefinitions.animals["mareappaloosa"] or {};
 mareappaloosa.parts = mareappaloosa.parts or horseparts;
 mareappaloosa.bones = mareappaloosa.bones or horsebones;
 mareappaloosa.leather = "Base.CowLeather_Angus_Full";
-mareappaloosa.head = "HorseMod.Horse_Head";
+mareappaloosa.head = "HorseMod.Horse_Head_Female_GDA";
 mareappaloosa.skull = "HorseMod.Horse_Skull";
 mareappaloosa.xpPerItem = mareappaloosa.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareappaloosa"] = mareappaloosa
@@ -125,7 +127,7 @@ local stallionappaloosa = AnimalPartsDefinitions.animals["stallionappaloosa"] or
 stallionappaloosa.parts = stallionappaloosa.parts or horseparts;
 stallionappaloosa.bones = stallionappaloosa.bones or horsebones;
 stallionappaloosa.leather = "Base.CowLeather_Angus_Full";
-stallionappaloosa.head = "HorseMod.Horse_Head";
+stallionappaloosa.head = "HorseMod.Horse_Head_Male_GDA";
 stallionappaloosa.skull = "HorseMod.Horse_Skull";
 stallionappaloosa.xpPerItem = stallionappaloosa.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionappaloosa"] = stallionappaloosa
@@ -138,7 +140,7 @@ local fillythoroughbred = AnimalPartsDefinitions.animals["fillythoroughbred"] or
 fillythoroughbred.parts = fillythoroughbred.parts or horseparts;
 fillythoroughbred.bones = fillythoroughbred.bones or fillybones;
 fillythoroughbred.leather = "Base.CowLeather_Angus_Full";
-fillythoroughbred.head = "HorseMod.Horse_Head";
+fillythoroughbred.head = "HorseMod.Horse_Head_Foal_T";
 fillythoroughbred.skull = "HorseMod.Horse_Skull";
 fillythoroughbred.xpPerItem = fillythoroughbred.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillythoroughbred"] = fillythoroughbred
@@ -148,7 +150,7 @@ local marethoroughbred = AnimalPartsDefinitions.animals["marethoroughbred"] or {
 marethoroughbred.parts = marethoroughbred.parts or horseparts;
 marethoroughbred.bones = marethoroughbred.bones or horsebones;
 marethoroughbred.leather = "Base.CowLeather_Angus_Full";
-marethoroughbred.head = "HorseMod.Horse_Head";
+marethoroughbred.head = "HorseMod.Horse_Head_Female_T";
 marethoroughbred.skull = "HorseMod.Horse_Skull";
 marethoroughbred.xpPerItem = marethoroughbred.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["marethoroughbred"] = marethoroughbred
@@ -157,7 +159,7 @@ local stallionthoroughbred = AnimalPartsDefinitions.animals["stallionthoroughbre
 stallionthoroughbred.parts = stallionthoroughbred.parts or horseparts;
 stallionthoroughbred.bones = stallionthoroughbred.bones or horsebones;
 stallionthoroughbred.leather = "Base.CowLeather_Angus_Full";
-stallionthoroughbred.head = "HorseMod.Horse_Head";
+stallionthoroughbred.head = "HorseMod.Horse_Head_Male_T";
 stallionthoroughbred.skull = "HorseMod.Horse_Skull";
 stallionthoroughbred.xpPerItem = stallionthoroughbred.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionthoroughbred"] = stallionthoroughbred
@@ -171,7 +173,7 @@ local fillyblue_roan = AnimalPartsDefinitions.animals["fillyblue_roan"] or {};
 fillyblue_roan.parts = fillyblue_roan.parts or horseparts;
 fillyblue_roan.bones = fillyblue_roan.bones or fillybones;
 fillyblue_roan.leather = "Base.CowLeather_Angus_Full";
-fillyblue_roan.head = "HorseMod.Horse_Head";
+fillyblue_roan.head = "HorseMod.Horse_Head_Foal_AQHBR";
 fillyblue_roan.skull = "HorseMod.Horse_Skull";
 fillyblue_roan.xpPerItem = fillyblue_roan.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyblue_roan"] = fillyblue_roan
@@ -181,7 +183,7 @@ local mareblue_roan = AnimalPartsDefinitions.animals["mareblue_roan"] or {};
 mareblue_roan.parts = mareblue_roan.parts or horseparts;
 mareblue_roan.bones = mareblue_roan.bones or horsebones;
 mareblue_roan.leather = "Base.CowLeather_Angus_Full";
-mareblue_roan.head = "HorseMod.Horse_Head";
+mareblue_roan.head = "HorseMod.Horse_Head_Female_AQHBR";
 mareblue_roan.skull = "HorseMod.Horse_Skull";
 mareblue_roan.xpPerItem = mareblue_roan.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareblue_roan"] = mareblue_roan
@@ -191,7 +193,7 @@ local stallionblue_roan = AnimalPartsDefinitions.animals["stallionblue_roan"] or
 stallionblue_roan.parts = stallionblue_roan.parts or horseparts;
 stallionblue_roan.bones = stallionblue_roan.bones or horsebones;
 stallionblue_roan.leather = "Base.CowLeather_Angus_Full";
-stallionblue_roan.head = "HorseMod.Horse_Head";
+stallionblue_roan.head = "HorseMod.Horse_Head_Male_AQHBR";
 stallionblue_roan.skull = "HorseMod.Horse_Skull";
 stallionblue_roan.xpPerItem = stallionblue_roan.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionblue_roan"] = stallionblue_roan
@@ -205,7 +207,7 @@ local fillyspotted_appaloosa = AnimalPartsDefinitions.animals["fillyspotted_appa
 fillyspotted_appaloosa.parts = fillyspotted_appaloosa.parts or horseparts;
 fillyspotted_appaloosa.bones = fillyspotted_appaloosa.bones or fillybones;
 fillyspotted_appaloosa.leather = "Base.CowLeather_Angus_Full";
-fillyspotted_appaloosa.head = "HorseMod.Horse_Head";
+fillyspotted_appaloosa.head = "HorseMod.Horse_Head_Foal_LPA";
 fillyspotted_appaloosa.skull = "HorseMod.Horse_Skull";
 fillyspotted_appaloosa.xpPerItem = fillyspotted_appaloosa.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyspotted_appaloosa"] = fillyspotted_appaloosa
@@ -215,7 +217,7 @@ local marespotted_appaloosa = AnimalPartsDefinitions.animals["marespotted_appalo
 marespotted_appaloosa.parts = marespotted_appaloosa.parts or horseparts;
 marespotted_appaloosa.bones = marespotted_appaloosa.bones or horsebones;
 marespotted_appaloosa.leather = "Base.CowLeather_Angus_Full";
-marespotted_appaloosa.head = "HorseMod.Horse_Head";
+marespotted_appaloosa.head = "HorseMod.Horse_Head_Female_LPA";
 marespotted_appaloosa.skull = "HorseMod.Horse_Skull";
 marespotted_appaloosa.xpPerItem = marespotted_appaloosa.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["marespotted_appaloosa"] = marespotted_appaloosa
@@ -225,7 +227,7 @@ local stallionspotted_appaloosa = AnimalPartsDefinitions.animals["stallionspotte
 stallionspotted_appaloosa.parts = stallionspotted_appaloosa.parts or horseparts;
 stallionspotted_appaloosa.bones = stallionspotted_appaloosa.bones or horsebones;
 stallionspotted_appaloosa.leather = "Base.CowLeather_Angus_Full";
-stallionspotted_appaloosa.head = "HorseMod.Horse_Head";
+stallionspotted_appaloosa.head = "HorseMod.Horse_Head_Male_LPA";
 stallionspotted_appaloosa.skull = "HorseMod.Horse_Skull";
 stallionspotted_appaloosa.xpPerItem = stallionspotted_appaloosa.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionspotted_appaloosa"] = stallionspotted_appaloosa
@@ -239,7 +241,7 @@ local fillyamerican_paint_overo = AnimalPartsDefinitions.animals["fillyamerican_
 fillyamerican_paint_overo.parts = fillyamerican_paint_overo.parts or horseparts;
 fillyamerican_paint_overo.bones = fillyamerican_paint_overo.bones or fillybones;
 fillyamerican_paint_overo.leather = "Base.CowLeather_Angus_Full";
-fillyamerican_paint_overo.head = "HorseMod.Horse_Head";
+fillyamerican_paint_overo.head = "HorseMod.Horse_Head_Foal_APHO";
 fillyamerican_paint_overo.skull = "HorseMod.Horse_Skull";
 fillyamerican_paint_overo.xpPerItem = fillyamerican_paint_overo.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyamerican_paint_overo"] = fillyamerican_paint_overo
@@ -249,7 +251,7 @@ local mareamerican_paint_overo = AnimalPartsDefinitions.animals["mareamerican_pa
 mareamerican_paint_overo.parts = mareamerican_paint_overo.parts or horseparts;
 mareamerican_paint_overo.bones = mareamerican_paint_overo.bones or horsebones;
 mareamerican_paint_overo.leather = "Base.CowLeather_Angus_Full";
-mareamerican_paint_overo.head = "HorseMod.Horse_Head";
+mareamerican_paint_overo.head = "HorseMod.Horse_Head_Female_APHO";
 mareamerican_paint_overo.skull = "HorseMod.Horse_Skull";
 mareamerican_paint_overo.xpPerItem = mareamerican_paint_overo.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareamerican_paint_overo"] = mareamerican_paint_overo
@@ -259,7 +261,7 @@ local stallionamerican_paint_overo = AnimalPartsDefinitions.animals["stallioname
 stallionamerican_paint_overo.parts = stallionamerican_paint_overo.parts or horseparts;
 stallionamerican_paint_overo.bones = stallionamerican_paint_overo.bones or horsebones;
 stallionamerican_paint_overo.leather = "Base.CowLeather_Angus_Full";
-stallionamerican_paint_overo.head = "HorseMod.Horse_Head";
+stallionamerican_paint_overo.head = "HorseMod.Horse_Head_Male_APHO";
 stallionamerican_paint_overo.skull = "HorseMod.Horse_Skull";
 stallionamerican_paint_overo.xpPerItem = stallionamerican_paint_overo.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionamerican_paint_overo"] = stallionamerican_paint_overo
@@ -273,7 +275,7 @@ local fillyflea_bitten_grey = AnimalPartsDefinitions.animals["fillyflea_bitten_g
 fillyflea_bitten_grey.parts = fillyflea_bitten_grey.parts or horseparts;
 fillyflea_bitten_grey.bones = fillyflea_bitten_grey.bones or fillybones;
 fillyflea_bitten_grey.leather = "Base.CowLeather_Angus_Full";
-fillyflea_bitten_grey.head = "HorseMod.Horse_Head";
+fillyflea_bitten_grey.head = "HorseMod.Horse_Head_Foal_FBG";
 fillyflea_bitten_grey.skull = "HorseMod.Horse_Skull";
 fillyflea_bitten_grey.xpPerItem = fillyflea_bitten_grey.xpPerItem or fillyxp
 AnimalPartsDefinitions.animals["fillyflea_bitten_grey"] = fillyflea_bitten_grey
@@ -283,7 +285,7 @@ local mareflea_bitten_grey = AnimalPartsDefinitions.animals["mareflea_bitten_gre
 mareflea_bitten_grey.parts = mareflea_bitten_grey.parts or horseparts;
 mareflea_bitten_grey.bones = mareflea_bitten_grey.bones or horsebones;
 mareflea_bitten_grey.leather = "Base.CowLeather_Angus_Full";
-mareflea_bitten_grey.head = "HorseMod.Horse_Head";
+mareflea_bitten_grey.head = "HorseMod.Horse_Head_Female_FBG";
 mareflea_bitten_grey.skull = "HorseMod.Horse_Skull";
 mareflea_bitten_grey.xpPerItem = mareflea_bitten_grey.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["mareflea_bitten_grey"] = mareflea_bitten_grey
@@ -293,7 +295,7 @@ local stallionflea_bitten_grey = AnimalPartsDefinitions.animals["stallionflea_bi
 stallionflea_bitten_grey.parts = stallionflea_bitten_grey.parts or horseparts;
 stallionflea_bitten_grey.bones = stallionflea_bitten_grey.bones or horsebones;
 stallionflea_bitten_grey.leather = "Base.CowLeather_Angus_Full";
-stallionflea_bitten_grey.head = "HorseMod.Horse_Head";
+stallionflea_bitten_grey.head = "HorseMod.Horse_Head_Male_FBG";
 stallionflea_bitten_grey.skull = "HorseMod.Horse_Skull";
 stallionflea_bitten_grey.xpPerItem = stallionflea_bitten_grey.xpPerItem or horsexp
 AnimalPartsDefinitions.animals["stallionflea_bitten_grey"] = stallionflea_bitten_grey
@@ -310,7 +312,35 @@ Events.OnGameStart.Add(function()
             local mapper = out:getOutputMapper()
             if mapper then
                 local list = ArrayList.new()
-                list:add("HorseMod.Horse_Head")
+                local horseHeads = {
+                    "HorseMod.Horse_Head_Foal_AQHP",
+                    "HorseMod.Horse_Head_Female_AQHP",
+                    "HorseMod.Horse_Head_Male_AQHP",
+                    "HorseMod.Horse_Head_Foal_AP",
+                    "HorseMod.Horse_Head_Female_AP",
+                    "HorseMod.Horse_Head_Male_AP",
+                    "HorseMod.Horse_Head_Foal_APHO",
+                    "HorseMod.Horse_Head_Female_APHO",
+                    "HorseMod.Horse_Head_Male_APHO",
+                    "HorseMod.Horse_Head_Foal_GDA",
+                    "HorseMod.Horse_Head_Female_GDA",
+                    "HorseMod.Horse_Head_Male_GDA",
+                    "HorseMod.Horse_Head_Foal_T",
+                    "HorseMod.Horse_Head_Female_T",
+                    "HorseMod.Horse_Head_Male_T",
+                    "HorseMod.Horse_Head_Foal_AQHBR",
+                    "HorseMod.Horse_Head_Female_AQHBR",
+                    "HorseMod.Horse_Head_Male_AQHBR",
+                    "HorseMod.Horse_Head_Foal_LPA",
+                    "HorseMod.Horse_Head_Female_LPA",
+                    "HorseMod.Horse_Head_Male_LPA",
+                    "HorseMod.Horse_Head_Foal_FBG",
+                    "HorseMod.Horse_Head_Female_FBG",
+                    "HorseMod.Horse_Head_Male_FBG",
+                }
+                for _, headItem in ipairs(horseHeads) do
+                    list:add(headItem)
+                end
                 mapper:addOutputEntree("HorseMod.Horse_Skull", list)
                 mapper:OnPostWorldDictionaryInit(recipe:getName())
             end
