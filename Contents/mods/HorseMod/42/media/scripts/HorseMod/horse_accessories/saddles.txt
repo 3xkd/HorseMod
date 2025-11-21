@@ -3,6 +3,7 @@ module HorseMod {
         Base
     }
 
+	/* CRUDE */
 	item HorseSaddle_Crude {
         DisplayCategory = Accessory,
         Type = Normal,
@@ -27,6 +28,7 @@ module HorseMod {
         static = true,
     }
 
+	/* COW: ANGUS */
 	item HorseSaddle_CowAngus {
         DisplayCategory = Accessory,
         Type = Normal,
@@ -51,6 +53,7 @@ module HorseMod {
         static = true,
     }
 
+	/* COW: HOLSTEIN */
 	item HorseSaddle_CowHolstein {
         DisplayCategory = Accessory,
         Type = Normal,
@@ -75,6 +78,7 @@ module HorseMod {
         static = true,
     }
 
+	/* COW: SIMMENTAL */
 	item HorseSaddle_CowSimmental {
         DisplayCategory = Accessory,
         Type = Normal,
@@ -99,6 +103,7 @@ module HorseMod {
         static = true,
     }
 
+	/* SHEEP LEATHER */
 	item HorseSaddle_SheepLeather {
         DisplayCategory = Accessory,
         Type = Normal,
@@ -121,5 +126,17 @@ module HorseMod {
         mesh = HorseMod/HorseSaddle_Ground,
         texture = Items/HorseSaddle_SheepLeather,
         static = true,
+    }
+
+	/* PIG: BLACK */
+	item HorseSaddle_PigBlack {
+        DisplayCategory = Accessory,
+        Type = Normal,
+        Weight = 5,
+        Icon = items/HorseSaddle_Black,
+        StaticModel = Horse_Saddle_CowAngus,
+        WorldStaticModel = Horse_Saddle_World_CowAngus,
+        RequiresEquippedBothHands = true,
+        ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
     }
 }
