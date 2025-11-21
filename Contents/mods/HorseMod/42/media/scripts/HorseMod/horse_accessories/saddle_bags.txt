@@ -3,28 +3,42 @@ module HorseMod {
         Base
     }
 
-    item HorseSaddleBags {
-        DisplayName = Horse Saddlebags,
-        DisplayCategory = Bag,
-        Type = Container,
-        Weight = 0.5,
-        Capacity = 40,
-        Icon = items/HorseSaddlebags,
-        BloodLocation = Head,
-        BodyLocation = Hat,
-        StaticModel = Horse_SaddleBags,
-        WorldStaticModel = Horse_SaddleBags,
-    }
-
     item HorseSaddleBagsContainer {
         DisplayCategory = Bag,
         Hidden = true,
         Type = Container,
         Tags = HeavyItem,
-        Weight = 0.1,
+        Weight = 0,
         Capacity = 40,
         Icon = items/HorseSaddlebags,
         StaticModel = Horse_SaddleBagsInvis,
         WorldStaticModel = Horse_SaddleBagsInvis,
     }
+    model Horse_SaddleBagsInvis {
+        mesh = HorseMod/HorseSaddlebags,
+        texture = Items/SaddleBags1_tex,
+        static = true,
+        scale = 0,
+    }
+
+    item HorseSaddleBags_Crude {
+        DisplayName = Horse Saddlebags,
+        DisplayCategory = Bag,
+        Type = Container,
+        Weight = 2,
+        Capacity = 40,
+        Icon = items/HorseSaddlebags_Brown,
+        StaticModel = Horse_SaddleBags_Crude,
+        WorldStaticModel = Horse_SaddleBags_Crude,
+    }
+    model Horse_SaddleBags_Crude {
+        mesh = HorseMod/HorseSaddlebags,
+        texture = Items/HorseSaddlebags_Brown,
+        static = true,
+        attachment world {
+            offset = 0.0 0.0 -0.0547,
+            rotate = -180 90 -90,
+        }
+    }
+
 }

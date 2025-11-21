@@ -117,9 +117,22 @@ HorseAttachmentLocations.SLOTS = {
 ---@return HorseAttachmentItemsMap
 function HorseAttachmentLocations.defaultItems()
     return {
-        ["HorseMod.HorseSaddle"] = { slot = "Saddle" },
-        ["HorseMod.HorseBackpack"] = { slot = "Saddle" },
-        ["HorseMod.HorseSaddleBags"] = { slot = "Saddlebags" },
+        -- saddles
+        ["HorseMod.HorseSaddle_Crude"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddle_CowAngus"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddle_CowHolstein"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddle_CowSimmental"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddle_SheepLeather"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddle_PigAngus"] = { slot = "Saddle" },
+
+        -- ["HorseMod.HorseBackpack"] = { slot = "Saddle" },
+        ["HorseMod.HorseSaddleBags_Crude"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddleBags_CowAngu"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddleBags_CowHolstein"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddleBags_CowSimmental"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddleBags_SheepLeather"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddleBags_PigAngus"] = { slot = "Saddlebags" },
+
         ["HorseMod.HorseReins"] = { slot = "Reins" },
         ["HorseMod.HorseManeStart"] = { slot = "ManeStart" },
         ["HorseMod.HorseManeMid"]   = { slot = "ManeMid1" },

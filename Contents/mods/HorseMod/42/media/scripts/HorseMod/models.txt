@@ -14,7 +14,7 @@ module HorseMod
 
 		attachment saddle
 		{
-			offset = 0.0000 0.1528 0.0429,
+			offset = 0.0000 0.1528 0.041,
 			rotate = 89.1355 0.4641 178.8851,
 			scale = 1.5102,
 			bone = DEF_Spine2,
@@ -22,9 +22,9 @@ module HorseMod
 
 		attachment saddlebags
 		{
-			offset = -0.0000 -0.0826 -0.1536,
-			rotate = 89.1355 0.4641 178.8851,
-			scale = 3.0087,
+			offset = -0.0000 -0.1 -0.16,
+			rotate = 90 0 180,
+			scale = 1.5,
 			bone = DEF_Spine2,
 		}
 
