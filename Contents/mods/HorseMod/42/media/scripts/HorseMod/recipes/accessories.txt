@@ -18,9 +18,10 @@ module HorseMod {
             item 1 tags[Hammer] mode:keep flags[Prop1;MayDegradeVeryLight],
             item 1 tags[MetalworkingPliers;Tongs] mode:keep flags[Prop2;MayDegradeLight],
             item 5 tags[HeavyThread],
-            item 3 [Base.LeatherStrips] mode:destroy,
-            item 3 [Base.Buckle] mode:destroy,
-            item 2 [Base.IronBandSmall] mode:destroy,
+            item 3 [Base.LeatherStrips],
+            item 3 [Base.Buckle],
+            item 2 [Base.IronBandSmall],
+            item 2 [Base.Nails],
             item 1 [Base.Leather_Crude_Large_Tan;2:Base.Leather_Crude_Medium_Tan;Base.CowLeather_Angus_Fur_Tan;2:Base.CowLeather_Angus_Fur_Tan_Medium;Base.CowLeather_Holstein_Fur_Tan;2:Base.CowLeather_Holstein_Fur_Tan_Medium;Base.CowLeather_Simmental_Fur_Tan;2:Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.PigLeather_Black_Fur_Tan;2:Base.SheepLeather_Fur_Tan] mode:destroy mappers[SaddleLeather],
         }
         outputs {
@@ -58,8 +59,9 @@ module HorseMod {
             item 1 tags[Hammer] mode:keep flags[Prop1;MayDegradeVeryLight],
             item 1 tags[MetalworkingPliers;Tongs] mode:keep flags[Prop2;MayDegradeLight],
             item 5 tags[HeavyThread],
-            item 1 [Base.LeatherStrips] mode:destroy,
-            item 2 [Base.Buckle] mode:destroy,
+            item 1 [Base.LeatherStrips],
+            item 2 [Base.Buckle],
+            item 1 [Base.Nails],
             item 1 [Base.Leather_Crude_Medium_Tan;2:Base.Leather_Crude_Small_Tan;Base.CowLeather_Angus_Fur_Tan_Medium;2:Base.CowLeather_Angus_Fur_Tan_Small;Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.CowLeather_Simmental_Fur_Tan_Small;Base.PigLeather_Black_Fur_Tan;2:Base.PigLeather_Black_Fur_Tan_Small;Base.SheepLeather_Fur_Tan;2:Base.SheepLeather_Fur_Tan_Small] mode:destroy mappers[SaddlebagsLeather],
         }
         outputs {
@@ -84,4 +86,36 @@ module HorseMod {
         }
     }
 
+    craftRecipe horseReins {
+        time = 200,
+        tags = AnySurfaceCraft,
+        skillRequired = Tailoring:4,
+        AutoLearnAll = Tailoring:6,
+        xpAward = Tailoring:40,
+        timedAction = MakingHammer_Surface,
+        category = Tailoring,
+        inputs {
+            item 1 tags[Scissors;SharpKnife] mode:keep flags[MayDegradeLight],
+            item 1 tags[SewingNeedle] mode:keep flags[MayDegradeLight],
+            item 1 tags[Awl] mode:keep flags[MayDegradeLight],
+            item 1 tags[Hammer] mode:keep flags[Prop1;MayDegradeVeryLight],
+            item 1 tags[MetalworkingPliers;Tongs] mode:keep flags[Prop2;MayDegradeLight],
+            item 1 [Base.LeatherStrips] mode:destroy,
+            item 4 [Base.Buckle] mode:destroy,
+            item 2 [Base.IronBandSmall] mode:destroy,
+            item 1 [Base.IronBarQuarter] mode:destroy,
+            item 1 [Base.Nails],
+            item 1 [2:Base.Leather_Crude_Small_Tan;2:Base.CowLeather_Angus_Fur_Tan_Small;2:Base.CowLeather_Simmental_Fur_Tan_Small;2:Base.PigLeather_Black_Fur_Tan_Small;2:Base.SheepLeather_Fur_Tan_Small] mode:destroy mappers[ReinsLeather],
+        }
+        outputs {
+            item 1 mapper:ReinsLeather,
+        }
+        itemMapper ReinsLeather {
+            HorseMod.HorseReins_Crude = Base.Leather_Crude_Small_Tan,
+            HorseMod.HorseReins_Black = Base.CowLeather_Angus_Fur_Tan_Small,
+            HorseMod.HorseReins_Brown = Base.CowLeather_Simmental_Fur_Tan_Small,
+            HorseMod.HorseReins_Black = Base.PigLeather_Black_Fur_Tan_Small,
+            HorseMod.HorseReins_White = Base.SheepLeather_Fur_Tan_Small,
+        }
+    }
 }
