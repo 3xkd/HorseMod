@@ -86,10 +86,10 @@ HorseUtils.getReins = function(animal)
 end
 
 HorseUtils.REINS_MODELS = {
-    idle = "HorseMod.Horse_Reins",
-    walking = "HorseMod.Horse_ReinsWalking",
-    trot = "HorseMod.Horse_ReinsTroting",
-    gallop = "HorseMod.Horse_ReinsRunning",
+    idle = "HorseMod.HorseReins",
+    walking = "HorseMod.HorseReins_Walking",
+    trot = "HorseMod.HorseReins_Troting",
+    gallop = "HorseMod.HorseReins_Running",
 }
 
 
