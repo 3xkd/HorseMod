@@ -54,6 +54,7 @@ function DismountHorseAction:start()
     self.horse:stopAllMovementNow()
 
     self._lockDir  = self.horse:getDir()
+    self.character:setVariable("DismountStarted", true)
 
     if self.side == "right" then
         if self.saddle then
@@ -73,6 +74,7 @@ end
 
 function DismountHorseAction:stop()
     self.horse:getBehavior():setBlockMovement(false)
+    self.character:setVariable("DismountStarted", false)
     ISBaseTimedAction.stop(self)
 end
 

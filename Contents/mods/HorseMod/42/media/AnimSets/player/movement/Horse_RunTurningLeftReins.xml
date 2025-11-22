@@ -26,6 +26,11 @@
         <m_Value>-30</m_Value>
     </m_Conditions>
     <m_Conditions>
+        <m_Name>IdleToRun</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_Value>false</m_Value>
+    </m_Conditions>
+    <m_Conditions>
         <m_Name>HorseGallop</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
@@ -127,4 +132,9 @@
         <boneName>Bip01</boneName>
         <weight>0.00</weight>
     </m_SubStateBoneWeights>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_TimePc>0</m_TimePc>
+        <m_ParameterValue>idleToRun=false</m_ParameterValue>
+    </m_Events>
 </animNode>

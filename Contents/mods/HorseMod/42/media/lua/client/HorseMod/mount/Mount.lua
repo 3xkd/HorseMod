@@ -133,6 +133,7 @@ function Mount:cleanup()
     self.pair.mount:getPathFindBehavior2():reset()
 
     self.pair.rider:setVariable("HorseTrot", false)
+    self.pair.rider:setVariable("DismountStarted", false)
     self.pair.rider:setAllowRun(true)
     self.pair.rider:setAllowSprint(true)
     self.pair.rider:setTurnDelta(1)

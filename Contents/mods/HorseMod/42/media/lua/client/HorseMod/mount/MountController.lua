@@ -1,8 +1,6 @@
 local Stamina = require("HorseMod/Stamina")
 local HorseUtils = require("HorseMod/Utils")
-local HorseRiding = require("HorseMod/Riding")
 
-local idleToGallopReached = false
 
 ---@param state "walk"|"gallop"
 ---@return number
