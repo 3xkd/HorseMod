@@ -22,7 +22,7 @@ module HorseMod {
             item 3 [Base.Buckle],
             item 2 [Base.IronBandSmall],
             item 2 [Base.Nails],
-            item 1 [Base.Leather_Crude_Large_Tan;2:Base.Leather_Crude_Medium_Tan;Base.CowLeather_Angus_Fur_Tan;2:Base.CowLeather_Angus_Fur_Tan_Medium;Base.CowLeather_Holstein_Fur_Tan;2:Base.CowLeather_Holstein_Fur_Tan_Medium;Base.CowLeather_Simmental_Fur_Tan;2:Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.PigLeather_Black_Fur_Tan;2:Base.PigLeather_Landrace_Fur_Tan;2:Base.SheepLeather_Fur_Tan;Base.HorseLeather_AP_Fur_Tan;2:Base.HorseLeather_AP_Fur_Tan_Medium;Base.HorseLeather_APHO_Fur_Tan;2:Base.HorseLeather_APHO_Fur_Tan_Medium;Base.HorseLeather_AQHBR_Fur_Tan;2:Base.HorseLeather_AQHBR_Fur_Tan_Medium;Base.HorseLeather_AQHP_Fur_Tan;2:Base.HorseLeather_AQHP_Fur_Tan_Medium;Base.HorseLeather_FBG_Fur_Tan;2:Base.HorseLeather_FBG_Fur_Tan_Medium;Base.HorseLeather_GDA_Fur_Tan;2:Base.HorseLeather_GDA_Fur_Tan_Medium;Base.HorseLeather_LPA_Fur_Tan;2:Base.HorseLeather_LPA_Fur_Tan_Medium;Base.HorseLeather_T_Fur_Tan;2:Base.HorseLeather_T_Fur_Tan_Medium] mode:destroy mappers[SaddleLeather],
+            item 1 [Base.Leather_Crude_Large_Tan;2:Base.Leather_Crude_Medium_Tan;Base.CowLeather_Angus_Fur_Tan;2:Base.CowLeather_Angus_Fur_Tan_Medium;Base.CowLeather_Holstein_Fur_Tan;2:Base.CowLeather_Holstein_Fur_Tan_Medium;Base.CowLeather_Simmental_Fur_Tan;2:Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.PigLeather_Black_Fur_Tan;2:Base.PigLeather_Landrace_Fur_Tan;2:Base.SheepLeather_Fur_Tan;HorseMod.HorseLeather_AP_Fur_Tan;2:HorseMod.HorseLeather_AP_Fur_Tan_Medium;HorseMod.HorseLeather_APHO_Fur_Tan;2:HorseMod.HorseLeather_APHO_Fur_Tan_Medium;HorseMod.HorseLeather_AQHBR_Fur_Tan;2:HorseMod.HorseLeather_AQHBR_Fur_Tan_Medium;HorseMod.HorseLeather_AQHP_Fur_Tan;2:HorseMod.HorseLeather_AQHP_Fur_Tan_Medium;HorseMod.HorseLeather_FBG_Fur_Tan;2:HorseMod.HorseLeather_FBG_Fur_Tan_Medium;HorseMod.HorseLeather_GDA_Fur_Tan;2:HorseMod.HorseLeather_GDA_Fur_Tan_Medium;HorseMod.HorseLeather_LPA_Fur_Tan;2:HorseMod.HorseLeather_LPA_Fur_Tan_Medium;HorseMod.HorseLeather_T_Fur_Tan;2:HorseMod.HorseLeather_T_Fur_Tan_Medium] mode:destroy mappers[SaddleLeather],
         }
         outputs {
             item 1 mapper:SaddleLeather,
@@ -54,36 +54,36 @@ module HorseMod {
             HorseMod.HorseSaddle_White = Base.SheepLeather_Fur_Tan,
 
             /* HORSE: AMERICAN PAINT */
-            HorseMod.HorseSaddle_AP = Base.HorseLeather_AP_Fur_Tan,
-            HorseMod.HorseSaddle_AP = Base.HorseLeather_AP_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_AP = HorseMod.HorseLeather_AP_Fur_Tan,
+            HorseMod.HorseSaddle_AP = HorseMod.HorseLeather_AP_Fur_Tan_Medium,
 
             /* HORSE: AMERICAN PAINT OVERO */
-            HorseMod.HorseSaddle_APHO = Base.HorseLeather_APHO_Fur_Tan,
-            HorseMod.HorseSaddle_APHO = Base.HorseLeather_APHO_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_APHO = HorseMod.HorseLeather_APHO_Fur_Tan,
+            HorseMod.HorseSaddle_APHO = HorseMod.HorseLeather_APHO_Fur_Tan_Medium,
 
             /* HORSE: BLUE ROAN */
-            HorseMod.HorseSaddle_AQHBR = Base.HorseLeather_AQHBR_Fur_Tan,
-            HorseMod.HorseSaddle_AQHBR = Base.HorseLeather_AQHBR_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_AQHBR = HorseMod.HorseLeather_AQHBR_Fur_Tan,
+            HorseMod.HorseSaddle_AQHBR = HorseMod.HorseLeather_AQHBR_Fur_Tan_Medium,
 
             /* HORSE: AMERICAN QUARTER */
-            HorseMod.HorseSaddle_AQHP = Base.HorseLeather_AQHP_Fur_Tan,
-            HorseMod.HorseSaddle_AQHP = Base.HorseLeather_AQHP_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_AQHP = HorseMod.HorseLeather_AQHP_Fur_Tan,
+            HorseMod.HorseSaddle_AQHP = HorseMod.HorseLeather_AQHP_Fur_Tan_Medium,
 
             /* HORSE: FLEA-BITTEN GREY */
-            HorseMod.HorseSaddle_FBG = Base.HorseLeather_FBG_Fur_Tan,
-            HorseMod.HorseSaddle_FBG = Base.HorseLeather_FBG_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_FBG = HorseMod.HorseLeather_FBG_Fur_Tan,
+            HorseMod.HorseSaddle_FBG = HorseMod.HorseLeather_FBG_Fur_Tan_Medium,
 
             /* HORSE: APPALOOSA */
-            HorseMod.HorseSaddle_GDA = Base.HorseLeather_GDA_Fur_Tan,
-            HorseMod.HorseSaddle_GDA = Base.HorseLeather_GDA_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_GDA = HorseMod.HorseLeather_GDA_Fur_Tan,
+            HorseMod.HorseSaddle_GDA = HorseMod.HorseLeather_GDA_Fur_Tan_Medium,
 
             /* HORSE: SPOTTED APPALOOSA */
-            HorseMod.HorseSaddle_LPA = Base.HorseLeather_LPA_Fur_Tan,
-            HorseMod.HorseSaddle_LPA = Base.HorseLeather_LPA_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_LPA = HorseMod.HorseLeather_LPA_Fur_Tan,
+            HorseMod.HorseSaddle_LPA = HorseMod.HorseLeather_LPA_Fur_Tan_Medium,
 
             /* HORSE: THOROUGHBRED */
-            HorseMod.HorseSaddle_T = Base.HorseLeather_T_Fur_Tan,
-            HorseMod.HorseSaddle_T = Base.HorseLeather_T_Fur_Tan_Medium,
+            HorseMod.HorseSaddle_T = HorseMod.HorseLeather_T_Fur_Tan,
+            HorseMod.HorseSaddle_T = HorseMod.HorseLeather_T_Fur_Tan_Medium,
         }
     }
 
@@ -105,7 +105,7 @@ module HorseMod {
             item 1 [Base.LeatherStrips],
             item 2 [Base.Buckle],
             item 1 [Base.Nails],
-			item 1 [Base.Leather_Crude_Medium_Tan;2:Base.Leather_Crude_Small_Tan;Base.CowLeather_Angus_Fur_Tan_Medium;2:Base.CowLeather_Angus_Fur_Tan_Small;Base.CowLeather_Holstein_Fur_Tan_Medium;2:Base.CowLeather_Holstein_Fur_Tan_Small;Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.CowLeather_Simmental_Fur_Tan_Small;Base.PigLeather_Black_Fur_Tan;2:Base.PigLeather_Black_Fur_Tan_Small;Base.PigLeather_Landrace_Fur_Tan;2:Base.PigLeather_Landrace_Fur_Tan_Small;Base.SheepLeather_Fur_Tan;2:Base.SheepLeather_Fur_Tan_Small;Base.HorseLeather_AP_Fur_Tan_Medium;2:Base.HorseLeather_AP_Fur_Tan_Small;Base.HorseLeather_APHO_Fur_Tan_Medium;2:Base.HorseLeather_APHO_Fur_Tan_Small;Base.HorseLeather_AQHBR_Fur_Tan_Medium;2:Base.HorseLeather_AQHBR_Fur_Tan_Small;Base.HorseLeather_AQHP_Fur_Tan_Medium;2:Base.HorseLeather_AQHP_Fur_Tan_Small;Base.HorseLeather_FBG_Fur_Tan_Medium;2:Base.HorseLeather_FBG_Fur_Tan_Small;Base.HorseLeather_GDA_Fur_Tan_Medium;2:Base.HorseLeather_GDA_Fur_Tan_Small;Base.HorseLeather_LPA_Fur_Tan_Medium;2:Base.HorseLeather_LPA_Fur_Tan_Small;Base.HorseLeather_T_Fur_Tan_Medium;2:Base.HorseLeather_T_Fur_Tan_Small] mode:destroy mappers[SaddlebagsLeather],
+			item 1 [Base.Leather_Crude_Medium_Tan;2:Base.Leather_Crude_Small_Tan;Base.CowLeather_Angus_Fur_Tan_Medium;2:Base.CowLeather_Angus_Fur_Tan_Small;Base.CowLeather_Holstein_Fur_Tan_Medium;2:Base.CowLeather_Holstein_Fur_Tan_Small;Base.CowLeather_Simmental_Fur_Tan_Medium;2:Base.CowLeather_Simmental_Fur_Tan_Small;Base.PigLeather_Black_Fur_Tan;2:Base.PigLeather_Black_Fur_Tan_Small;Base.PigLeather_Landrace_Fur_Tan;2:Base.PigLeather_Landrace_Fur_Tan_Small;Base.SheepLeather_Fur_Tan;2:Base.SheepLeather_Fur_Tan_Small;HorseMod.HorseLeather_AP_Fur_Tan_Medium;2:HorseMod.HorseLeather_AP_Fur_Tan_Small;HorseMod.HorseLeather_APHO_Fur_Tan_Medium;2:HorseMod.HorseLeather_APHO_Fur_Tan_Small;HorseMod.HorseLeather_AQHBR_Fur_Tan_Medium;2:HorseMod.HorseLeather_AQHBR_Fur_Tan_Small;HorseMod.HorseLeather_AQHP_Fur_Tan_Medium;2:HorseMod.HorseLeather_AQHP_Fur_Tan_Small;HorseMod.HorseLeather_FBG_Fur_Tan_Medium;2:HorseMod.HorseLeather_FBG_Fur_Tan_Small;HorseMod.HorseLeather_GDA_Fur_Tan_Medium;2:HorseMod.HorseLeather_GDA_Fur_Tan_Small;HorseMod.HorseLeather_LPA_Fur_Tan_Medium;2:HorseMod.HorseLeather_LPA_Fur_Tan_Small;HorseMod.HorseLeather_T_Fur_Tan_Medium;2:HorseMod.HorseLeather_T_Fur_Tan_Small] mode:destroy mappers[SaddlebagsLeather],
         }
         outputs {
             item 1 mapper:SaddlebagsLeather,
@@ -140,36 +140,36 @@ module HorseMod {
             HorseMod.HorseSaddlebags_White = Base.SheepLeather_Fur_Tan_Small,
 
 			/* HORSE: AMERICAN PAINT */
-			HorseMod.HorseSaddlebags_AP = Base.HorseLeather_AP_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_AP = Base.HorseLeather_AP_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_AP = HorseMod.HorseLeather_AP_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_AP = HorseMod.HorseLeather_AP_Fur_Tan_Small,
 
 			/* HORSE: AMERICAN PAINT OVERO */
-			HorseMod.HorseSaddlebags_APHO = Base.HorseLeather_APHO_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_APHO = Base.HorseLeather_APHO_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_APHO = HorseMod.HorseLeather_APHO_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_APHO = HorseMod.HorseLeather_APHO_Fur_Tan_Small,
 
 			/* HORSE: BLUE ROAN */
-			HorseMod.HorseSaddlebags_AQHBR = Base.HorseLeather_AQHBR_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_AQHBR = Base.HorseLeather_AQHBR_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_AQHBR = HorseMod.HorseLeather_AQHBR_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_AQHBR = HorseMod.HorseLeather_AQHBR_Fur_Tan_Small,
 
 			/* HORSE: AMERICAN QUARTER */
-			HorseMod.HorseSaddlebags_AQHP = Base.HorseLeather_AQHP_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_AQHP = Base.HorseLeather_AQHP_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_AQHP = HorseMod.HorseLeather_AQHP_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_AQHP = HorseMod.HorseLeather_AQHP_Fur_Tan_Small,
 
 			/* HORSE: FLEA-BITTEN GREY */
-			HorseMod.HorseSaddlebags_FBG = Base.HorseLeather_FBG_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_FBG = Base.HorseLeather_FBG_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_FBG = HorseMod.HorseLeather_FBG_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_FBG = HorseMod.HorseLeather_FBG_Fur_Tan_Small,
 
 			/* HORSE: APPALOOSA */
-			HorseMod.HorseSaddlebags_GDA = Base.HorseLeather_GDA_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_GDA = Base.HorseLeather_GDA_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_GDA = HorseMod.HorseLeather_GDA_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_GDA = HorseMod.HorseLeather_GDA_Fur_Tan_Small,
 
 			/* HORSE: SPOTTED APPALOOSA */
-			HorseMod.HorseSaddlebags_LPA = Base.HorseLeather_LPA_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_LPA = Base.HorseLeather_LPA_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_LPA = HorseMod.HorseLeather_LPA_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_LPA = HorseMod.HorseLeather_LPA_Fur_Tan_Small,
 
 			/* HORSE: THOROUGHBRED */
-			HorseMod.HorseSaddlebags_T = Base.HorseLeather_T_Fur_Tan_Medium,
-			HorseMod.HorseSaddlebags_T = Base.HorseLeather_T_Fur_Tan_Small,
+			HorseMod.HorseSaddlebags_T = HorseMod.HorseLeather_T_Fur_Tan_Medium,
+			HorseMod.HorseSaddlebags_T = HorseMod.HorseLeather_T_Fur_Tan_Small,
         }
     }
 
