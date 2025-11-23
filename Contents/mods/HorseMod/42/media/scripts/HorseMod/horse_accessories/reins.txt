@@ -8,13 +8,13 @@ module HorseMod {
         DisplayCategory = Accessory,
         Type = Normal,
         Weight = 0.5,
-        Icon = items/HorseReins_Crude,
+        Icon = accessories/HorseReins_Crude,
         StaticModel = HorseReins_Crude,
         WorldStaticModel = HorseReins_World_Crude,
     }	
     model HorseReins_Crude {
         mesh = HorseMod/HorseReins,
-        texture = Items/HorseReins_Crude,
+        texture = Items/Accessories/HorseReins_Crude,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -23,7 +23,7 @@ module HorseMod {
     }
     model HorseReins_World_Crude {
         mesh = HorseMod/HorseReins_Ground,
-        texture = Items/HorseReins_Crude,
+        texture = Items/Accessories/HorseReins_Crude,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -31,7 +31,7 @@ module HorseMod {
     }
     model HorseReins_Walking_Crude {
         mesh = HorseMod/HorseReinsWalking,
-        texture = Items/HorseReins_Crude,
+        texture = Items/Accessories/HorseReins_Crude,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -40,7 +40,7 @@ module HorseMod {
     }
     model HorseReins_Troting_Crude {
         mesh = HorseMod/HorseReinsTroting,
-        texture = Items/HorseReins_Crude,
+        texture = Items/Accessories/HorseReins_Crude,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -49,7 +49,7 @@ module HorseMod {
     }
     model HorseReins_Running_Crude {
         mesh = HorseMod/HorseReinsRunning,
-        texture = Items/HorseReins_Crude,
+        texture = Items/Accessories/HorseReins_Crude,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -63,13 +63,13 @@ module HorseMod {
         DisplayCategory = Accessory,
         Type = Normal,
         Weight = 0.5,
-        Icon = items/HorseReins_Brown,
+        Icon = accessories/HorseReins_Brown,
         StaticModel = HorseReins_Brown,
         WorldStaticModel = HorseReins_Ground_Brown,
     }	
     model HorseReins_Brown {
         mesh = HorseMod/HorseReins,
-        texture = Items/HorseReins_Brown,
+        texture = Items/Accessories/HorseReins_Brown,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -78,7 +78,7 @@ module HorseMod {
     }
     model HorseReins_Ground_Brown {
         mesh = HorseMod/HorseReins_Ground,
-        texture = Items/HorseReins_Brown,
+        texture = Items/Accessories/HorseReins_Brown,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -86,7 +86,7 @@ module HorseMod {
     }
     model HorseReins_Walking_Brown {
         mesh = HorseMod/HorseReinsWalking,
-        texture = Items/HorseReins_Brown,
+        texture = Items/Accessories/HorseReins_Brown,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -95,7 +95,7 @@ module HorseMod {
     }
     model HorseReins_Troting_Brown {
         mesh = HorseMod/HorseReinsTroting,
-        texture = Items/HorseReins_Brown,
+        texture = Items/Accessories/HorseReins_Brown,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -104,7 +104,7 @@ module HorseMod {
     }
     model HorseReins_Running_Brown {
         mesh = HorseMod/HorseReinsRunning,
-        texture = Items/HorseReins_Brown,
+        texture = Items/Accessories/HorseReins_Brown,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -118,13 +118,13 @@ module HorseMod {
         DisplayCategory = Accessory,
         Type = Normal,
         Weight = 0.5,
-        Icon = items/HorseReins_Black,
+        Icon = accessories/HorseReins_Black,
         StaticModel = HorseReins_Black,
         WorldStaticModel = HorseReins_World_Black,
     }	
     model HorseReins_Black {
         mesh = HorseMod/HorseReins,
-        texture = Items/HorseReins_Black,
+        texture = Items/Accessories/HorseReins_Black,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -133,7 +133,7 @@ module HorseMod {
     }
     model HorseReins_World_Black {
         mesh = HorseMod/HorseReins_Ground,
-        texture = Items/HorseReins_Black,
+        texture = Items/Accessories/HorseReins_Black,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -141,7 +141,7 @@ module HorseMod {
     }
     model HorseReins_Walking_Black {
         mesh = HorseMod/HorseReinsWalking,
-        texture = Items/HorseReins_Black,
+        texture = Items/Accessories/HorseReins_Black,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -150,7 +150,7 @@ module HorseMod {
     }
     model HorseReins_Troting_Black {
         mesh = HorseMod/HorseReinsTroting,
-        texture = Items/HorseReins_Black,
+        texture = Items/Accessories/HorseReins_Black,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -159,7 +159,7 @@ module HorseMod {
     }
     model HorseReins_Running_Black {
         mesh = HorseMod/HorseReinsRunning,
-        texture = Items/HorseReins_Black,
+        texture = Items/Accessories/HorseReins_Black,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -173,13 +173,13 @@ module HorseMod {
         DisplayCategory = Accessory,
         Type = Normal,
         Weight = 0.5,
-        Icon = items/HorseReins_White,
+        Icon = accessories/HorseReins_White,
         StaticModel = HorseReins_White,
         WorldStaticModel = HorseReins_World_White,
     }	
     model HorseReins_White {
         mesh = HorseMod/HorseReins,
-        texture = Items/HorseReins_White,
+        texture = Items/Accessories/HorseReins_White,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -188,7 +188,7 @@ module HorseMod {
     }
     model HorseReins_World_White {
         mesh = HorseMod/HorseReins_Ground,
-        texture = Items/HorseReins_White,
+        texture = Items/Accessories/HorseReins_White,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -196,7 +196,7 @@ module HorseMod {
     }
     model HorseReins_Walking_White {
         mesh = HorseMod/HorseReinsWalking,
-        texture = Items/HorseReins_White,
+        texture = Items/Accessories/HorseReins_White,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -205,7 +205,7 @@ module HorseMod {
     }
     model HorseReins_Troting_White {
         mesh = HorseMod/HorseReinsTroting,
-        texture = Items/HorseReins_White,
+        texture = Items/Accessories/HorseReins_White,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
@@ -214,7 +214,7 @@ module HorseMod {
     }
     model HorseReins_Running_White {
         mesh = HorseMod/HorseReinsRunning,
-        texture = Items/HorseReins_White,
+        texture = Items/Accessories/HorseReins_White,
         static = true,
         attachment world {
             offset = -0.0000 0.0001 -0.0547,
