@@ -144,7 +144,7 @@ end
 ---@param itemsMap HorseAttachmentItemsMap
 function HorseAttachmentContextMenu.init(itemsMap)
     ITEMS_MAP = itemsMap
-    Events.OnClickedAnimalForContext.Add(addAttachmentOptions)
+    -- Events.OnClickedAnimalForContext.Add(addAttachmentOptions)
 end
 
 

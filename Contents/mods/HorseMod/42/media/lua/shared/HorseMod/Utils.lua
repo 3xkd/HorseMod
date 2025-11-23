@@ -22,6 +22,25 @@ HorseUtils.getMountWorld = function(horse, name)
     return horse:getX() + dx, horse:getY(), horse:getZ()
 end
 
+---@param character IsoGameCharacter
+---@param horse IsoAnimal
+---@return number, number, number
+HorseUtils.getClosestMount = function(character, horse)
+    local lx, ly, lz = HorseUtils.getMountWorld(horse, "mountLeft")
+    local rx, ry, rz = HorseUtils.getMountWorld(horse, "mountRight")
+    local px, py     = character:getX(), character:getY()
+
+    local dl = (px - lx) * (px - lx) + (py - ly) * (py - ly)
+    local dr = (px - rx) * (px - rx) + (py - ry) * (py - ry)
+
+    local tx, ty, tz = lx, ly, lz
+    if dr < dl then
+        tx, ty, tz = rx, ry, rz
+    end
+
+    return tx, ty, tz
+end
+
 HorseUtils.lockHorseForInteraction = function(horse)
     if horse.getPathFindBehavior2 then horse:getPathFindBehavior2():reset() end
     if horse.getBehavior then

@@ -3,26 +3,43 @@
 ---REQUIREMENTS
 local HorseUtils = require("HorseMod/Utils")
 local Attachments = require("HorseMod/attachments/Attachments")
+local ISHorseEquipGear = require("HorseMod/attachments/timedAction/ISHorseEquipGear")
 
 ---@class AttachmentsManager
 local AttachmentsManager = {}
 
-
 ---@param player IsoPlayer
----@return ArrayList
----@nodiscard
-AttachmentsManager.getAvailableGear = function(player)
-    local playerInventory = player:getInventory()
-    local accessories = playerInventory:getAllTag("HorseAccessory", ArrayList.new())
-    return accessories
+---@param horse IsoAnimal
+---@param accessory InventoryItem
+AttachmentsManager.equipAccessory = function(player, horse, accessory)
+    local mx, my, mz = HorseUtils.getClosestMount(player, horse)
+    local path = ISPathFindAction:pathToLocationF(player, mx, my, mz)
+
+    local unlock, lockDir = HorseUtils.lockHorseForInteraction(horse)
+    local function cleanupOnFail()
+        unlock()
+    end
+
+    path:setOnFail(cleanupOnFail)
+    function path:stop()
+        cleanupOnFail()
+        self:stop()
+    end
+    path:setOnComplete(function(p)
+        p:setDir(lockDir)
+    end, player)
+    ISTimedActionQueue.add(path)
+    ISTimedActionQueue.add(ISHorseEquipGear:new(player, horse, accessory, unlock))
 end
+
+
 
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
 ---@param context ISContextMenu
 ---@param accessories ArrayList
 ---@param attachedItems InventoryItem[]
-AttachmentsManager.populateHorseOptions = function(player, horse, context, accessories, attachedItems)
+AttachmentsManager.populateHorseContextMenu = function(player, horse, context, accessories, attachedItems)
     -- verify that the horse subcontext menu exists
     -- might not be necessary, but in-case another mod fucks around with it for X reasons
     local horseOption = context:getOptionFromName(horse:getFullName())
@@ -30,7 +47,8 @@ AttachmentsManager.populateHorseOptions = function(player, horse, context, acces
     ---@cast horseOption umbrella.ISContextMenu.Option
 
     -- retrieve horse context menu
-    local horseSubMenu = context:getSubMenu(horseOption.subOption)
+    ---@diagnostic disable-next-line
+    local horseSubMenu = context:getSubMenu(horseOption.subOption) --[[@as ISContextMenu]]
 
     -- create gear submenu, even if no gear is available
     local gearOption = horseSubMenu:addOption(getText("ContextMenu_Horse_Gear"))
@@ -46,13 +64,20 @@ AttachmentsManager.populateHorseOptions = function(player, horse, context, acces
         gearSubMenu:addSubMenu(equipOption, equipSubMenu)
         for i = 0, accessoriesCount - 1 do
             local accessory = accessories:get(i)
-            equipSubMenu:addOption(accessory:getDisplayName())
+            equipSubMenu:addOption(
+                accessory:getDisplayName(),
+                player,
+                AttachmentsManager.equipAccessory,
+                horse,
+                accessory
+            )
         end
     else
         -- not item to equip
         local tooltip = ISWorldObjectContextMenu.addToolTip()
         tooltip.description = getText("ContextMenu_Horse_No_Compatible_Gear")
         equipOption.toolTip = tooltip
+        ---@diagnostic disable-next-line
         equipOption.notAvailable = true
     end
 
@@ -67,6 +92,11 @@ AttachmentsManager.populateHorseOptions = function(player, horse, context, acces
             local attachment = attachedItems[i] --[[@as InventoryItem]]
             unequipSubMenu:addOption(attachment:getDisplayName())
         end
+
+        -- unequip option if more than one item is present
+        if attachmentsCount > 1 then
+            unequipSubMenu:addOption(getText("ContextMenu_Horse_Unequip_All"), player)
+        end
     end
 end
 
@@ -76,13 +106,13 @@ end
 ---@param animals IsoAnimal[]
 AttachmentsManager.onClickedAnimalForContext = function(playerNum, context, animals)
     local player = getSpecificPlayer(playerNum)
-    local accessories = AttachmentsManager.getAvailableGear(player)
+    local accessories = Attachments.getAvailableGear(player)
     for i = 1, #animals do repeat
         local animal = animals[i]
         if HorseUtils.isHorse(animal) then
             DebugLog.log(tostring(animal))
             local attachedItems = Attachments.getAttachedItems(animal)
-            AttachmentsManager.populateHorseOptions(player, animal, context, accessories, attachedItems)
+            AttachmentsManager.populateHorseContextMenu(player, animal, context, accessories, attachedItems)
         end
     until true end
 end

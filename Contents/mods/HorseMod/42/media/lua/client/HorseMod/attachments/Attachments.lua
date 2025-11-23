@@ -5,6 +5,10 @@
 ---Defines an attachment item with its associated slots and extra data if needed.
 ---@class AttachmentDefinition
 ---@field slot AttachmentSlot
+---@field equipTime number?
+---@field unequipTime number?
+---@field equipAnim string?
+---@field unequipAnim string?
 
 ---Maps items' fulltype to their associated attachment definition.
 ---@alias AttachmentsItemsMap table<string, AttachmentDefinition>
@@ -39,21 +43,21 @@ local Attachments = {
 
         -- saddlebags
             -- vanilla animals
-        ["HorseMod.HorseSaddlebags_Crude"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_Black"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_CowHolstein"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_CowSimmental"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_White"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_Landrace"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddlebags_Crude"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_Black"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_CowHolstein"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_CowSimmental"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_White"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_Landrace"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
             -- horses
-        ["HorseMod.HorseSaddlebags_AP"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_APHO"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_AQHBR"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_AQHP"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_FBG"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_GDA"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_LPA"] = { slot = "Saddlebags" },
-        ["HorseMod.HorseSaddlebags_T"] = { slot = "Saddlebags" },
+        ["HorseMod.HorseSaddlebags_AP"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_APHO"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_AQHBR"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_AQHP"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_FBG"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_GDA"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_LPA"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
+        ["HorseMod.HorseSaddlebags_T"] = { slot = "Saddlebags", container = "HorseMod.HorseSaddlebagsContainer" },
 
         -- reins
         ["HorseMod.HorseReins_Crude"] = { slot = "Reins" },
@@ -109,7 +113,7 @@ end
 ---@param fullType string
 ---@return AttachmentDefinition
 ---@nodiscard
-Attachments.getAttachment = function(fullType)
+Attachments.getAttachmentDefinition = function(fullType)
     return Attachments.items[fullType]
 end
 
@@ -128,8 +132,6 @@ end
 ---@return InventoryItem[]
 ---@nodiscard
 Attachments.getAttachedItems = function(animal)
-    -- return animal:getAttachedItems()
-
     local attached = {}
     local slots = Attachments.SLOTS
     local mane_slots_set = Attachments.MANE_SLOTS_SET
@@ -151,6 +153,15 @@ end
 ---@param item InventoryItem
 Attachments.setAttachedItem = function(animal, slot, item)
     animal:setAttachedItem(slot, item)
+end
+
+---@param player IsoPlayer
+---@return ArrayList
+---@nodiscard
+Attachments.getAvailableGear = function(player)
+    local playerInventory = player:getInventory()
+    local accessories = playerInventory:getAllTag("HorseAccessory", ArrayList.new())
+    return accessories
 end
 
 return Attachments
