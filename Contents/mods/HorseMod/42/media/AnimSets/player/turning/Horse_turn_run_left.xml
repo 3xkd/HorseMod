@@ -54,4 +54,9 @@
         <boneName>Bip01_Prop2</boneName>
         <weight>0.00</weight>
     </m_SubStateBoneWeights>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_TimePc>0</m_TimePc>
+        <m_ParameterValue>idleToRun=false</m_ParameterValue>
+    </m_Events>
 </animNode>

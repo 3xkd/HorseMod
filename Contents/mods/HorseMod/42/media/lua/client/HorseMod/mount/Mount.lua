@@ -1,4 +1,6 @@
 local MountController = require("HorseMod/mount/MountController")
+local HorseDamage = require("HorseMod/horse/HorseDamage")
+local HorseUtils = require("HorseMod/Utils")
 
 
 local JOY_DEADZONE        = 0.30   -- ignore tiny stick drift
@@ -115,8 +117,29 @@ function Mount:getCurrentInput()
 end
 
 
+---@return boolean
+---@nodiscard
+function Mount:dying()
+    if self.pair.mount:getVariableBoolean("HorseDying") then
+        self.pair.rider:setIgnoreMovement(true)
+        self.pair.rider:setBlockMovement(true)
+        self.pair.rider:setIgnoreInputsForDirection(true)
+        self.pair.rider:setVariable("HorseDying", true)
+        HorseUtils.runAfter(0.5, function()
+            HorseDamage.knockDownNearbyZombies(self.pair.mount)
+        end)
+        return true
+    else
+        return false
+    end
+end
+
+
 function Mount:update()
     local input = self:getCurrentInput()
+    if self.pair.mount and self:dying() then
+        return
+    end
     self.controller:update(input)
 end
 
@@ -133,6 +156,7 @@ function Mount:cleanup()
     self.pair.mount:getPathFindBehavior2():reset()
 
     self.pair.rider:setVariable("HorseTrot", false)
+    self.pair.rider:setVariable("DismountStarted", false)
     self.pair.rider:setAllowRun(true)
     self.pair.rider:setAllowSprint(true)
     self.pair.rider:setTurnDelta(1)

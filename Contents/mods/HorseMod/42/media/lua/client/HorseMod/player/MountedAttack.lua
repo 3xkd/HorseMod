@@ -1,50 +1,74 @@
 local HorseRiding = require("HorseMod/Riding")
 
-local KICK_LOCK_SECONDS = 1.4
-local KickState = {}
+---@class MountedAttack
+---@field active boolean
+---@field timeLeft number
+---@field left boolean
+---@field right boolean
+---@type table<number, MountedAttack>
 
+local MountedAttack = {}
+
+MountedAttack.KICK_LOCK_SECONDS = 1.4
+
+
+---@param player IsoPlayer
 local function updateBannedAttacking(player)
     if not player then return end
+
     if player:getVariableBoolean("RidingHorse") then
         player:setBannedAttacking(true)
     else
         player:setBannedAttacking(false)
     end
 end
+
 Events.OnPlayerUpdate.Add(updateBannedAttacking)
 
+
+---@param player IsoPlayer
 local function updateKickCooldown(player)
     if not player then return end
+
     local id = player:getPlayerNum()
-    local ks = KickState[id]
+    local ks = MountedAttack[id]
     if not ks or not ks.active then return end
 
     if not player:getVariableBoolean("RidingHorse") then
         player:setVariable("kickLeft", false)
         player:setVariable("kickRight", false)
-        KickState[id] = nil
+        MountedAttack[id] = nil
         return
     end
 
     ks.timeLeft = ks.timeLeft - GameTime.getInstance():getTimeDelta()
     if ks.timeLeft <= 0 then
-        if ks.left  then player:setVariable("kickLeft",  false) end
-        if ks.right then player:setVariable("kickRight", false) end
+        if ks.left then
+            player:setVariable("kickLeft", false)
+        end
+
+        if ks.right then
+            player:setVariable("kickRight", false)
+        end
+
         player:setVariable("idleKicking", false)
         player:setVariable("moveKicking", false)
-        KickState[id] = nil
+        MountedAttack[id] = nil
     end
 end
+
 Events.OnPlayerUpdate.Add(updateKickCooldown)
 
-local function horseKick(key)
+
+---@param key number
+function MountedAttack.horseKick(key)
     if key ~= Keyboard.KEY_SPACE then return end
 
     local player = getSpecificPlayer(0)
     if not player or not player:getVariableBoolean("RidingHorse") then return end
 
     local id = player:getPlayerNum()
-    local ks = KickState[id]
+    local ks = MountedAttack[id]
     if ks and ks.active then
         return
     end
@@ -71,27 +95,32 @@ local function horseKick(key)
     end
     if not closest then return end
 
-    local mountLeft  = horse:getAttachmentWorldPos("mountLeft")
+    local mountLeft = horse:getAttachmentWorldPos("mountLeft")
     local mountRight = horse:getAttachmentWorldPos("mountRight")
-    local zx, zy     = closest:getX(), closest:getY()
-    local ldx, ldy   = zx - mountLeft:x(),  zy - mountLeft:y()
-    local rdx, rdy   = zx - mountRight:x(), zy - mountRight:y()
-    local leftDistSq  = ldx * ldx + ldy * ldy
+    local zx, zy = closest:getX(), closest:getY()
+    local ldx, ldy = zx - mountLeft:x(), zy - mountLeft:y()
+    local rdx, rdy = zx - mountRight:x(), zy - mountRight:y()
+    local leftDistSq = ldx * ldx + ldy * ldy
     local rightDistSq = rdx * rdx + rdy * rdy
 
     local kickLeft = (leftDistSq < rightDistSq)
-    player:setVariable("kickLeft",  kickLeft)
+    player:setVariable("kickLeft", kickLeft)
     player:setVariable("kickRight", not kickLeft)
 
-    KickState[id] = { active = true, timeLeft = KICK_LOCK_SECONDS, left = kickLeft, right = not kickLeft }
+    MountedAttack[id] = {
+        active = true,
+        timeLeft = MountedAttack.KICK_LOCK_SECONDS,
+        left = kickLeft,
+        right = not kickLeft,
+    }
 
     local zHp = closest:getHealth()
-    if zHp > 0 then
-        if closest.knockDown then
-            closest:knockDown(true)
-        end
+    if zHp > 0 and closest.knockDown then
+        closest:knockDown(true)
     end
 end
-Events.OnKeyPressed.Add(horseKick)
 
-return {}
+Events.OnKeyPressed.Add(MountedAttack.horseKick)
+
+
+return MountedAttack

@@ -52,11 +52,14 @@ function MountHorseAction:start()
     self.horse:getBehavior():setBlockMovement(true)
     self.horse:stopAllMovementNow()
 
+    self.horse:setVariable("HorseDying", false)
+
     self.lockDir = self.horse:getDir()
     self.character:setDir(self.lockDir)
 
     self.character:setVariable("MountingHorse", true)
     self.character:setVariable("MountFinished", false)
+    self.character:setVariable("HorseDying", false)
 
     if self.side == "right" then
         if self.saddle then

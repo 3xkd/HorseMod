@@ -24,6 +24,11 @@
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
+        <m_Name>IdleToRun</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_Value>false</m_Value>
+    </m_Conditions>
+    <m_Conditions>
         <m_Name>sneaking</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
@@ -116,6 +121,11 @@
             <m_Value>true</m_Value>
         </m_Conditions>
     </m_Transitions>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_TimePc>0</m_TimePc>
+        <m_ParameterValue>idleToRun=false</m_ParameterValue>
+    </m_Events>
     <m_SubStateBoneWeights>
         <boneName>Bip01</boneName>
         <weight>0.00</weight>

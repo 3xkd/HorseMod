@@ -19,36 +19,21 @@ local function findHorseBridle(horse)
     end
 end
 
--- local function onKeyPressed(key)
---     local player = getSpecificPlayer(0)
---     local mountedHorse = HorseRiding.getMountedHorse(player)
---     local bridleItem = findHorseBridle(mountedHorse)
---     bridleItem:setStaticModel("HorseMod.Horse_BridleWalking")
---     mountedHorse:resetEquippedHandsModels()
---     if key == Keyboard.KEY_G then
---         player:setVariable("swingAnim", true)
---         -- if bridleItem then
---         --     print("BRIDLE WALKING")
---             bridleItem:setStaticModel("HorseMod.Horse_BridleWalking")
---         --     -- mountedHorse:resetModel()
---         --     -- mountedHorse:resetModelNextFrame()
---             mountedHorse:resetEquippedHandsModels()
---         --     -- bridleItem:synchWithVisual()
---         -- end
---     end
---     -- if key == Keyboard.KEY_H then
---     --     if bridleItem then
---     --         print("BRIDLE RUNNING")
---     --         bridleItem:setStaticModel("HorseMod.Horse_BridleRunning")
---     --         -- mountedHorse:resetModel()
---     --         -- mountedHorse:resetModelNextFrame()
---     --         mountedHorse:resetEquippedHandsModels()
---     --         -- bridleItem:synchWithVisual()
---     --     end
---     -- end
--- end
+local function onKeyPressed(key)
+    local player = getSpecificPlayer(0)
+    if key == Keyboard.KEY_G then
+        player:setIgnoreMovement(true)
+        player:setBlockMovement(true)
+        player:setIgnoreInputsForDirection(true)
+    end
+    if key == Keyboard.KEY_H then
+        player:setIgnoreMovement(false)
+        player:setBlockMovement(false)
+        player:setIgnoreInputsForDirection(false)
+    end
+end
 
--- Events.OnKeyPressed.Add(onKeyPressed)
+Events.OnKeyPressed.Add(onKeyPressed)
 
 -- local function initOnStart()
 

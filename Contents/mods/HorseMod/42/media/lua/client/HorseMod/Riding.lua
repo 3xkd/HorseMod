@@ -1,4 +1,5 @@
 local Mount = require("HorseMod/mount/Mount")
+local HorseUtils = require("HorseMod/Utils")
 
 
 ---@namespace HorseMod
@@ -87,6 +88,8 @@ function HorseRiding.removeMount(player)
 
     mount:cleanup()
 
+    UpdateHorseAudio(mount.pair.rider)
+
     HorseRiding.playerMounts[mount.pair.rider:getPlayerNum()] = nil
 
     local modData = mount.pair.rider:getModData()
@@ -143,6 +146,28 @@ local function horseJump(key)
 end
 
 Events.OnKeyPressed.Add(horseJump)
+
+
+local function dismountOnHorseDeath(character)
+    if not character:isAnimal() or not HorseRiding.isMountableHorse(character) then
+        return
+    end
+
+    for _, mount in pairs(HorseRiding.playerMounts) do
+        if mount and mount.pair.mount == character then
+            HorseRiding.removeMount(mount.pair.rider)
+            HorseUtils.runAfter(4.1, function()
+                    mount.pair.rider:setBlockMovement(false)
+                    mount.pair.rider:setIgnoreMovement(false)
+                    mount.pair.rider:setIgnoreInputsForDirection(false)
+                    mount.pair.rider:setVariable("HorseDying", false)
+                end)
+            return
+        end
+    end
+end
+
+Events.OnCharacterDeath.Add(dismountOnHorseDeath)
 
 
 ---@param player IsoPlayer

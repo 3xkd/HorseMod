@@ -29,4 +29,14 @@
         <m_TimePc>0.35</m_TimePc>
         <m_ParameterValue>fallover</m_ParameterValue>
     </m_Events>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_Time>Start</m_Time>
+        <m_ParameterValue>HorseDying=true</m_ParameterValue>
+    </m_Events>
+    <m_Events>
+        <m_EventName>SetVariable</m_EventName>
+        <m_Time>End</m_Time>
+        <m_ParameterValue>HorseDead=true</m_ParameterValue>
+    </m_Events>
 </animNode>
