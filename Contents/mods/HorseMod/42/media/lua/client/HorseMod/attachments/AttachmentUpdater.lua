@@ -1,21 +1,21 @@
-local HorseUtils = require("HorseMod/Utils")
+---@namespace HorseMod
+
+---REQUIREMENTS
 local HorseManager = require("HorseMod/HorseManager")
-local AttachmentUtils = require("HorseMod/horse/attachments/AttachmentUtils")
-local HorseAttachmentSaddlebags = require("HorseMod/horse/attachments/AttachmentSaddlebags")
-local HorseAttachmentGear = require("HorseMod/horse/attachments/AttachmentGear")
-local HorseAttachmentManes = require("HorseMod/horse/attachments/AttachmentManes")
+local HorseUtils = require("HorseMod/Utils")
 
-
----@class HorseAttachmentReapply
-local HorseAttachmentReapply = {}
-
-
-local REAPPLY_RADIUS = 20
-local reapplyTick = 0
+---@class AttachmentUpdater
+---@field PENDING_HORSES IsoAnimal[]
+local AttachmentUpdater = {
+    PENDING_HORSES = {}
+}
+local PENDING_HORSES = AttachmentUpdater.PENDING_HORSES
 
 
 ---@param animal IsoAnimal
-local function reapplyFor(animal)
+AttachmentUpdater.reapplyFor = function(animal)
+    if true then return end
+
     if not HorseUtils.isHorse(animal) then
         return
     end
@@ -74,56 +74,12 @@ local function reapplyFor(animal)
     end
 end
 
-HorseAttachmentReapply.reapplyFor = reapplyFor
 
 
-Events.OnTick.Add(function()
-    if true then return end
-    reapplyTick = reapplyTick + 1
-    if reapplyTick % 120 ~= 0 then
-        return
-    end
 
-    local player = getPlayer()
-    if not player then
-        return
-    end
-
-    local cell = getCell()
-    local z    = player:getZ()
-    local px   = math.floor(player:getX())
-    local py   = math.floor(player:getY())
-
-    for x = px - REAPPLY_RADIUS, px + REAPPLY_RADIUS do
-        for y = py - REAPPLY_RADIUS, py + REAPPLY_RADIUS do
-            local sq = cell:getGridSquare(x, y, z)
-            if sq then
-                local animals = sq:getAnimals()
-                if animals then
-                    for i = 0, animals:size() - 1 do
-                        local a = animals:get(i)
-                        if HorseUtils.isHorse(a) then
-                            if a:isDead() then
-                                local md = a:getModData()
-                                local already = md and md.HM_Attach and md.HM_Attach.DroppedOnDeath
-                                if not already then
-                                    HorseAttachmentGear.dropHorseGearOnDeath(a)
-                                end
-                            elseif a:isOnScreen() then
-                                reapplyFor(a)
-                                HorseAttachmentManes.ensureManesPresentAndColored(a)
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
-
+---Handle horse death.
 ---@param character IsoGameCharacter
-local function onCharacterDeath(character)
+AttachmentUpdater.onCharacterDeath = function(character)
     if not character:isAnimal() or not HorseUtils.isHorse(character) then
         return
     end
@@ -132,38 +88,67 @@ local function onCharacterDeath(character)
     HorseAttachmentGear.dropHorseGearOnDeath(character)
 end
 
--- Events.OnCharacterDeath.Add(onCharacterDeath)
+Events.OnCharacterDeath.Add(AttachmentUpdater.onCharacterDeath)
 
 
----@type IsoAnimal[]
-local pendingHorses = {}
-
-local function addAttachmentsToHorses()
-    for i = #pendingHorses, 1, -1 do
-        local horse = pendingHorses[i]
+local UPDATE_RATE = 8
+local TICK_AMOUNT = 0
+local checked = {}
+AttachmentUpdater.updateHorses = function(ticks)
+    -- apply attachments to new horses
+    for i = #PENDING_HORSES, 1, -1 do
+        local horse = PENDING_HORSES[i]
         if horse:isOnScreen() then
-            table.remove(pendingHorses, i)
-            reapplyFor(horse)
-            HorseAttachmentManes.ensureManesPresentAndColored(horse)
+            table.remove(PENDING_HORSES, i)
+            AttachmentUpdater.reapplyFor(horse)
+            -- HorseAttachmentManes.ensureManesPresentAndColored(horse)
         end
     end
+
+    -- check UPDATE_RATE-th IsoMovingObjects per tick
+    local isoMovingObjects = getCell():getObjectList()
+    local size = isoMovingObjects:size()
+    local updateRate = math.min(UPDATE_RATE,size)
+    TICK_AMOUNT = TICK_AMOUNT < updateRate - 1 and TICK_AMOUNT + 1 or 0
+
+    for i = TICK_AMOUNT, size - 1, updateRate do repeat
+        local isoMovingObject = isoMovingObjects:get(i)
+
+        -- verify it's a horse
+        if not instanceof(isoMovingObject, "IsoAnimal") 
+            or HorseUtils.isHorse(isoMovingObject)
+            then break end
+        ---@cast isoMovingObject IsoAnimal
+
+        if isoMovingObject:isDead() then
+            local md = HorseUtils.getModData(isoMovingObject)
+            local already = md and md.HM_Attach and md.HM_Attach.DroppedOnDeath
+            if not already then
+                HorseAttachmentGear.dropHorseGearOnDeath(isoMovingObject)
+            end
+        elseif isoMovingObject:isOnScreen() then
+            AttachmentUpdater.reapplyFor(isoMovingObject)
+            HorseAttachmentManes.ensureManesPresentAndColored(isoMovingObject)
+        end
+    until true end
 end
 
--- Events.OnTick.Add(addAttachmentsToHorses)
+Events.OnTick.Add(AttachmentUpdater.updateHorses)
 
 
 HorseManager.onHorseAdded:add(function(horse)
-    pendingHorses[#pendingHorses + 1] = horse
+    PENDING_HORSES[#PENDING_HORSES + 1] = horse
 end)
 
 
 HorseManager.onHorseRemoved:add(function(horse)
-    for i = 1, #pendingHorses do
-        if pendingHorses[i] == horse then
-            table.remove(pendingHorses, i)
+    for i = 1, #PENDING_HORSES do
+        if PENDING_HORSES[i] == horse then
+            table.remove(PENDING_HORSES, i)
             break
         end
     end
 end)
 
-return HorseAttachmentReapply
+
+return AttachmentUpdater
