@@ -74,7 +74,7 @@ local function isSquareRough(square)
     local floor = square:getFloor()
     if floor and floor.getProperties then
         local props = floor:getProperties()
-        if props and props.Val then
+        if props then
             local mat = props:Val("FootstepMaterial")
             if mat and roughMaterials[mat] then
                 return true
@@ -86,9 +86,9 @@ local function isSquareRough(square)
     if objects then
         for i = 0, objects:size() - 1 do
             local obj = objects:get(i)
-            if obj and obj.getProperties then
+            if obj then
                 local props = obj:getProperties()
-                if props and props.Val then
+                if props then
                     local mat = props:Val("FootstepMaterial")
                     if mat and roughMaterials[mat] then
                         return true
@@ -121,11 +121,11 @@ end
 ---@param horse IsoAnimal | nil
 function HorseSounds.playMountSnort(rider, horse)
     local emitter
-    if horse and horse.getEmitter then
+    if horse then
         emitter = horse:getEmitter()
     end
 
-    if not emitter and rider and rider.getEmitter then
+    if not emitter and rider then
         emitter = rider:getEmitter()
     end
 

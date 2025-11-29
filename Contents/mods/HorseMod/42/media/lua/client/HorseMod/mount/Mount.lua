@@ -53,7 +53,7 @@ function Mount:getCurrentInput()
         y = getJoypadMovementAxisY(pad)
 
         x = processJoypadAxisInput(x)
-        y = processJoypadAxisInput(x)
+        y = processJoypadAxisInput(y)
 
         -- dpad, only active if the joystick is netural
         if x == 0 or y == 0 then

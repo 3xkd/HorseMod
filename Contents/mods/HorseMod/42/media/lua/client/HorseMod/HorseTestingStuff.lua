@@ -1,5 +1,6 @@
 local HorseBridleModel = {}
 local HorseRiding = require("HorseMod/Riding")
+local HorseManager = require("HorseMod/HorseManager")
 
 local function findHorseBridle(horse)
     if horse.getAttachedItems then
@@ -19,17 +20,41 @@ local function findHorseBridle(horse)
     end
 end
 
+local function getClosestHorse(player)
+    local closestHorse = nil
+    local closestDistanceSquared = math.huge
+
+    for i = 1, #HorseManager.horses do
+        local horse = HorseManager.horses[i]
+        if horse and horse.isExistInTheWorld and horse:isExistInTheWorld() then
+            local distanceSquared = player:DistToSquared(horse:getX(), horse:getY())
+            if distanceSquared < closestDistanceSquared then
+                closestHorse = horse
+                closestDistanceSquared = distanceSquared
+            end
+        end
+    end
+
+    return closestHorse
+end
+
 local function onKeyPressed(key)
     local player = getSpecificPlayer(0)
+    if not player then
+        return
+    end
+
     if key == Keyboard.KEY_G then
-        player:setIgnoreMovement(true)
-        player:setBlockMovement(true)
-        player:setIgnoreInputsForDirection(true)
+        local horse = getClosestHorse(player)
+        if horse and horse.getBehavior then
+            horse:getBehavior():setBlockMovement(true)
+        end
     end
     if key == Keyboard.KEY_H then
-        player:setIgnoreMovement(false)
-        player:setBlockMovement(false)
-        player:setIgnoreInputsForDirection(false)
+        local horse = getClosestHorse(player)
+        if horse and horse.getBehavior then
+            horse:getBehavior():setBlockMovement(false)
+        end
     end
 end
 

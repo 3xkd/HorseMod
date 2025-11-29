@@ -16,7 +16,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_Crude,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_Crude {
@@ -43,7 +43,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_Black,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_Black {
@@ -69,7 +69,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_CowHolstein,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_CowHolstein {
@@ -95,7 +95,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_CowSimmental,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_CowSimmental {
@@ -121,7 +121,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_White,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_White {
@@ -147,7 +147,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_Landrace,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_Landrace {
@@ -175,7 +175,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_AP,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_AP {
@@ -201,7 +201,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_APHO,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_APHO {
@@ -227,7 +227,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_AQHBR,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_AQHBR {
@@ -253,7 +253,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_AQHP,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_AQHP {
@@ -279,7 +279,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_FBG,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_FBG {
@@ -305,7 +305,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_GDA,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_GDA {
@@ -331,7 +331,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_LPA,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_LPA {
@@ -357,7 +357,7 @@ module HorseMod {
         texture = Items/Accessories/HorseSaddle_T,
         static = true,
         attachment Bip01_Prop1 {
-            scale = 0.8000,
+            scale = 1.0000,
         }
     }
     model HorseSaddle_World_T {
