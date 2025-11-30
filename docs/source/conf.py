@@ -27,6 +27,10 @@ highlight_language = "lua"
 
 lua_ls_project_root = "../../"
 lua_ls_backend = "emmylua"
+lua_ls_default_options = {
+    "require-separator": "/",
+    "annotate-require": "always"
+}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
