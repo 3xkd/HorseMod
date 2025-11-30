@@ -1,55 +1,48 @@
+---REQUIREMENTS
 local Mount = require("HorseMod/mount/Mount")
 local HorseUtils = require("HorseMod/Utils")
-
+local ModOptions = require("HorseMod/ModOptions")
 
 ---@namespace HorseMod
 
+---@class HorseRiding
+---@field playerMounts {[integer]: Mount | nil}
+local HorseRiding = {
+    playerMounts = {},
+}
 
-local HorseRiding = {}
-
-
----@type {[integer]: Mount | nil}
-HorseRiding.playerMounts = {}
-
-
----@param animal IsoAnimal
----@return boolean
----@nodiscard
-function HorseRiding.isMountableHorse(animal)
-    return HorseUtils.isAdult(animal)
-end
-
-
+---Verify that the player can mount a horse.
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
 ---@return boolean
 ---@return string?
 ---@nodiscard
 function HorseRiding.canMountHorse(player, horse)
+    -- already mounted
     if HorseRiding.playerMounts[player:getPlayerNum()] then
         return false
-    end
 
-    if horse:isDead() then
+    --dead
+    elseif horse:isDead() then
         return false, "IsDead"
-    end
 
-    if horse:getVariableBoolean("animalRunning") then
+    -- on butcher hook
+    elseif horse:isOnHook() then
         return false
-    end
-
-    if horse:isRunning() then
+    
+    -- running
+    elseif horse:getVariableBoolean("animalRunning") then
         return false, "IsRunning"
-    end
-
-    if not HorseUtils.isAdult(horse) then
+    
+    -- not an adult horse
+    elseif not HorseUtils.isAdult(horse) then
         return false, "NotAdult"
     end
 
-    return HorseRiding.isMountableHorse(horse)
+    return true
 end
 
-
+---Retrieve the mount of the player.
 ---@param player IsoPlayer
 ---@return IsoAnimal | nil
 ---@nodiscard
@@ -62,7 +55,7 @@ function HorseRiding.getMountedHorse(player)
     return mount.pair.mount
 end
 
-
+---Retrieve the player mount
 ---@param rider IsoPlayer
 ---@return Mount | nil
 ---@nodiscard
@@ -116,59 +109,42 @@ Events.OnTick.Add(HorseRiding.updateMounts)
 
 
 ---@param key integer
-local function toggleTrot(key)
-    if key ~= Keyboard.KEY_X then return end
+HorseRiding.onKeyPressed = function(key)
+    ---TROT
+    if key == ModOptions.HorseTrotButton then
+        local player = getPlayer()
+        local mount = HorseRiding.getMount(player)
+        if mount and player:getVariableBoolean("RidingHorse") then
+            local current = mount.pair.mount:getVariableBoolean("HorseTrot")
 
-    local player = getSpecificPlayer(0)
-    local mount = HorseRiding.getMount(player)
-    if mount and player:getVariableBoolean("RidingHorse") then
-        local current = mount.pair.mount:getVariableBoolean("HorseTrot")
+            mount.pair:setAnimationVariable("HorseTrot", not current)
+        end
 
-        mount.pair:setAnimationVariable("HorseTrot", not current)
+    ---JUMP
+    elseif key == ModOptions.HorseJumpButton then
+        local player = getPlayer()
+        local mount = HorseRiding.getMount(player)
+        if mount and player:getVariableBoolean("RidingHorse") and mount.pair.mount:getVariableBoolean("HorseGallop") then
+            mount.pair:setAnimationVariable("HorseJump", true)
+        end
     end
 end
 
-Events.OnKeyPressed.Add(toggleTrot)
 
-
----@param key integer
-local function horseJump(key)
-    local options = PZAPI.ModOptions:getOptions("HorseMod")
-    local jumpKey = Keyboard.KEY_SPACE
-
-    if options then
-        -- TODO: move mod options to a module
-        local opt = options:getOption("HorseJumpButton")
-        assert(opt ~= nil and opt.type == "keybind")
-        ---@cast opt umbrella.ModOptions.Keybind
-        jumpKey = opt:getValue()
-    end
-
-    if key ~= jumpKey then return end
-
-    local player = getSpecificPlayer(0)
-    local mount = HorseRiding.getMount(player)
-    if mount and player:getVariableBoolean("RidingHorse") and mount.pair.mount:getVariableBoolean("HorseGallop") then
-        mount.pair:setAnimationVariable("HorseJump", true)
-    end
-end
-
-Events.OnKeyPressed.Add(horseJump)
-
-
-local function dismountOnHorseDeath(character)
+HorseRiding.dismountOnHorseDeath = function(character)
     if not character:isAnimal() or not HorseRiding.isMountableHorse(character) then
         return
     end
 
     for _, mount in pairs(HorseRiding.playerMounts) do
         if mount and mount.pair.mount == character then
-            HorseRiding.removeMount(mount.pair.rider)
+            local rider = mount.pair.rider
+            HorseRiding.removeMount(rider)
             HorseUtils.runAfter(4.1, function()
-                    mount.pair.rider:setBlockMovement(false)
-                    mount.pair.rider:setIgnoreMovement(false)
-                    mount.pair.rider:setIgnoreInputsForDirection(false)
-                    mount.pair.rider:setVariable("HorseDying", false)
+                    rider:setBlockMovement(false)
+                    rider:setIgnoreMovement(false)
+                    rider:setIgnoreInputsForDirection(false)
+                    rider:setVariable("HorseDying", false)
                 end)
             return
         end
