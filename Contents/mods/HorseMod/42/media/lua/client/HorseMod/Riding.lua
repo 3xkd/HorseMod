@@ -124,21 +124,32 @@ HorseRiding.onKeyPressed = function(key)
     if key == ModOptions.HorseTrotButton then
         local player = getPlayer()
         local mount = HorseRiding.getMount(player)
-        if mount and player:getVariableBoolean("RidingHorse") then
-            local current = mount.pair.mount:getVariableBoolean("HorseTrot")
+        if not mount then return end
 
-            mount.pair:setAnimationVariable("HorseTrot", not current)
+        if player:getVariableBoolean("RidingHorse") then
+            local mountPair = mount.pair
+            local current = mountPair.mount:getVariableBoolean("HorseTrot")
+            mountPair:setAnimationVariable("HorseTrot", not current)
         end
 
     ---JUMP
     elseif key == ModOptions.HorseJumpButton then
         local player = getPlayer()
         local mount = HorseRiding.getMount(player)
-        if mount and player:getVariableBoolean("RidingHorse") and mount.pair.mount:getVariableBoolean("HorseGallop") then
-            mount.pair:setAnimationVariable("HorseJump", true)
+        if not mount then return end
+
+        local mountPair = mount.pair
+        local horse = mountPair.mount
+        player:addLineChatElement(tostring(mount and mountPair:getAnimationVariableBoolean("HorseJump")))
+        if player:getVariableBoolean("RidingHorse") 
+            and horse:getVariableBoolean("HorseGallop")
+            and not mountPair:getAnimationVariableBoolean("HorseJump") then
+            mountPair:setAnimationVariable("HorseJump", true)
         end
     end
 end
+
+Events.OnKeyPressed.Add(HorseRiding.onKeyPressed)
 
 
 HorseRiding.dismountOnHorseDeath = function(character)

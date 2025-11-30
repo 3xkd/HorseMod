@@ -10,6 +10,14 @@
 local MountPair = {}
 MountPair.__index = MountPair
 
+---Get the animation variable for both pairs. Returns false if all are false, else true.
+---@param key string
+function MountPair:getAnimationVariableBoolean(key)
+    local boolRider = self.rider:getVariableBoolean(key)
+    local boolMount = self.mount:getVariableBoolean(key)
+    return boolRider or boolMount -- false if all false, else true
+end
+
 
 ---Set the animation variable for both pairs.
 ---@param key string
