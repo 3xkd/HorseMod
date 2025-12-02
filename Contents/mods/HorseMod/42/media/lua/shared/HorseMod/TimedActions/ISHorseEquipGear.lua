@@ -62,20 +62,19 @@ function ISHorseEquipGear:perform()
     local slot = attachmentDef.slot
 
     -- remove item from player's inventory and add to horse inventory
-    -- local hInv = horse:getInventory()
-    -- local itemContainer = accessory:getContainer()
     accessory:getContainer():Remove(accessory)
-    horse:getInventory():AddItem(accessory)
-
-    -- set new accessory
-    Attachments.setAttachedItem(horse, slot, accessory)
-    self:updateModData(horse, slot, accessory:getFullType(), nil)
 
     -- init container
     local containerBehavior = attachmentDef.containerBehavior
     if containerBehavior then
         ContainerManager.initContainer(self.character, horse, attachmentDef, accessory)
     end
+
+    horse:getInventory():AddItem(accessory)
+
+    -- set new accessory
+    Attachments.setAttachedItem(horse, slot, accessory)
+    self:updateModData(horse, slot, accessory:getFullType(), nil)
 
     ---@TODO
     -- if slot == SADDLEBAG_SLOT then

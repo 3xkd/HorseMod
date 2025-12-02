@@ -2,7 +2,6 @@ module HorseMod {
 	/* INVISIBLE CONTAINER ITEM FOR ACCESS FROM THE HORSE */
     item HorseSaddlebagsContainer {
         DisplayCategory = Bag,
-        Tags = HorseAccessory,
         Hidden = true,
         Type = Container,
         Tags = HeavyItem,
