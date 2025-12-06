@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <animNode>
-    <m_Name>Horse_EquipSaddle</m_Name>
-    <m_AnimName>Bob_EquipSaddle</m_AnimName>
+    <m_Name>Horse_EquipSaddleLeft</m_Name>
+    <m_AnimName>Bob_EquipSaddle_Left</m_AnimName>
     <m_BlendTime>0.00</m_BlendTime>
     <m_SpeedScale>1.00</m_SpeedScale>
     <m_useDeferedRotation>false</m_useDeferedRotation>
@@ -12,7 +12,7 @@
     <m_Conditions x_name="71182087-1e3c-450f-a2e7-02b3a2b7a7a6">
         <m_Name>PerformingAction</m_Name>
         <m_Type>STRING</m_Type>
-        <m_Value>Horse_EquipSaddle</m_Value>
+        <m_Value>Horse_EquipSaddle_Left</m_Value>
     </m_Conditions>
     <m_Transitions>
         <m_Target>Idle_HorseMount</m_Target>
