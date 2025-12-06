@@ -139,28 +139,44 @@ HorseUtils.pathfindToHorse = function(player, horse)
     return unlock
 end
 
+
+---Unlock functions cached for horses.
+---@type table<IsoAnimal, fun()?>
+local _unlocks = {}
+
 ---@param horse IsoAnimal
 ---@return fun()
 ---@return IsoDirections
 HorseUtils.lockHorseForInteraction = function(horse)
-    if horse.getPathFindBehavior2 then horse:getPathFindBehavior2():reset() end
-    if horse.getBehavior then
-        local bh = horse:getBehavior()
-        bh:setBlockMovement(true)
-        bh:setDoingBehavior(false)
+    -- make sure to unlock the horse if it was already unlocked
+    local lastUnlock = _unlocks[horse]
+    if lastUnlock then
+        lastUnlock()
     end
-    if horse.stopAllMovementNow then horse:stopAllMovementNow() end
 
+    -- stop any pathfinding of the horse and lock it in place
+    horse:getPathFindBehavior2():reset()
+    local bh = horse:getBehavior()
+    bh:setBlockMovement(true)
+    bh:setDoingBehavior(false)
+    horse:stopAllMovementNow()
+
+    -- stop the horse from moving
     local lockDir = horse:getDir()
     local function lockTick()
         if horse and horse:isExistInTheWorld() then horse:setDir(lockDir) end
     end
     Events.OnTick.Add(lockTick)
 
+    -- unlock function to stop the horse from staying in place
     local function unlock()
+        _unlocks[horse] = nil -- remove the cached unlock
         Events.OnTick.Remove(lockTick)
-        if horse and horse.getBehavior then horse:getBehavior():setBlockMovement(false) end
+        if horse and horse:isExistInTheWorld() then horse:getBehavior():setBlockMovement(false) end
     end
+
+    -- cache unlock
+    _unlocks[horse] = unlock
 
     return unlock, lockDir
 end
