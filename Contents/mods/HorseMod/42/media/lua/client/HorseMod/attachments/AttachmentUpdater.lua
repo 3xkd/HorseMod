@@ -51,7 +51,7 @@ end
 
 ---@TODO set to update rate 8 for performance reasons
 -- local UPDATE_RATE = 8
-local UPDATE_RATE = 1
+local UPDATE_RATE = 10
 local TICK_AMOUNT = 0
 
 ---Verify that the horse doesn't need to get its attachments reapplied, and if yes
@@ -68,6 +68,7 @@ function AttachmentUpdater:update(horses, delta)
 
     for i = TICK_AMOUNT, size, update_rate do
         local horse = horses[i] --[[@as IsoAnimal]]
+        ContainerManager.track(horse)
 
         -- if horse model is visible, set it as needing an update if not already reapplied
         local status = IS_REAPPLIED[horse]
@@ -83,9 +84,6 @@ function AttachmentUpdater:update(horses, delta)
             end
         end
     end
-
-    -- update container tracking
-    ContainerManager.track(horses)
 end
 
 

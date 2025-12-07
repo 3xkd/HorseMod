@@ -292,37 +292,34 @@ ContainerManager.moveWorldItem = function(squareHorse, containerInfo, worldItem)
     containerInfo.z = worldItem:getZ()
 end
 
----@param horses IsoAnimal[]
-ContainerManager.track = function(horses)
-    for i = 1, #horses do repeat
-        local horse = horses[i]
-        local squareHorse = horse:getSquare()
-        if not squareHorse then break end -- horse is flying ?
+---@param horse IsoAnimal
+ContainerManager.track = function(horse)
+    local squareHorse = horse:getSquare()
+    if not squareHorse then return end -- horse is flying ?
 
-        -- get containers linked to the horse
-        local modData = HorseUtils.getModData(horse)
-        local containers = modData.containers
+    -- get containers linked to the horse
+    local modData = HorseUtils.getModData(horse)
+    local containers = modData.containers
 
-        -- for each container, retrieve its worldItem and move it if needed
-        for slot, containerInfo in pairs(containers) do repeat
-            -- if world item ref is cached, then handle move
-            local worldItem = containerInfo.worldItem
-            if worldItem then
-                -- update its position if the square is different
-                local square = worldItem:getRenderSquare()
-                if square and square ~= squareHorse then
-                    ContainerManager.moveWorldItem(squareHorse, containerInfo, worldItem)
-                end
-
-            -- search for the container world item
-            else
-                local worldItemNew = ContainerManager.findContainer(horse, containerInfo, squareHorse)
-                if worldItemNew then
-                    ContainerManager.moveWorldItem(squareHorse, containerInfo, worldItemNew)
-                end
+    -- for each container, retrieve its worldItem and move it if needed
+    for slot, containerInfo in pairs(containers) do repeat
+        -- if world item ref is cached, then handle move
+        local worldItem = containerInfo.worldItem
+        if worldItem then
+            -- update its position if the square is different
+            local square = worldItem:getRenderSquare()
+            if square and square ~= squareHorse then
+                ContainerManager.moveWorldItem(squareHorse, containerInfo, worldItem)
             end
-        until true end
-    until true end    
+
+        -- search for the container world item
+        else
+            local worldItemNew = ContainerManager.findContainer(horse, containerInfo, squareHorse)
+            if worldItemNew then
+                ContainerManager.moveWorldItem(squareHorse, containerInfo, worldItemNew)
+            end
+        end
+    until true end
 end
 
 -- consider horse loses all world item refs
