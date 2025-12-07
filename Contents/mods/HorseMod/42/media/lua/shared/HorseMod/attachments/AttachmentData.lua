@@ -23,17 +23,18 @@
 
 ---Defines an attachment item with its associated slots and extra data if needed.
 ---@class AttachmentDefinition
----@field slot AttachmentSlot Slot the attachment goes on
 ---@field equipBehavior EquipBehavior? Equip timed action behavior
 ---@field unequipBehavior EquipBehavior? Unequip timed action behavior
 ---@field model string? Model script ID to show when attached [not fully tested]
 ---@field hidden boolean? Hide the item in menus [not fully tested]
 ---@field containerBehavior ContainerBehavior? Container behavior.
 
+---@alias ItemDefinition table<AttachmentSlot, AttachmentDefinition>
+
 ---Stores the various attachment data which are required to work with attachments for horses.
 local AttachmentData = {
     ---Maps items' fulltype to their associated attachment definition.
-    ---@type table<string, AttachmentDefinition>
+    ---@type table<string, ItemDefinition>
     items = {},
 
     ---Holds the unique full types of world items for container behaviors.
@@ -41,56 +42,84 @@ local AttachmentData = {
     CONTAINER_ITEMS = {},
 
     ---Default attachment definitions.
-    ---@type table<string, AttachmentDefinition>
+    ---@type {[string]: ItemDefinition}
     DEFAULT_ATTACHMENT_DEFS = {
-        SADDLE = { 
-            slot = "Saddle", 
-            equipBehavior = {
-                time = -1,
-                anim = {
-                    ["Left"] = "Horse_EquipSaddle_Left",
-                    ["Right"] = "Horse_EquipSaddle_Right",
+        ---@type ItemDefinition
+        SADDLE = {
+            ["Saddle"] = {
+                equipBehavior = {
+                    time = -1,
+                    anim = {
+                        ["Left"] = "Horse_EquipSaddle_Left",
+                        ["Right"] = "Horse_EquipSaddle_Right",
+                    },
+                    shouldHold = true,
                 },
-                shouldHold = true,
             },
         },
-        SADDLEBAGS = { 
-            slot = "Saddlebags", 
-            containerBehavior = {
-                worldItem = "HorseMod.HorseSaddlebagsContainer",
+        ---@type ItemDefinition
+        SADDLEBAGS = {
+            ["Saddlebags"] = {
+                containerBehavior = {
+                    worldItem = "HorseMod.HorseSaddlebagsContainer",
+                },
             },
         },
     },
 
-    ---Every available attachment slots.
-    ---@type AttachmentSlot[]
-    SLOTS = {
-        "Saddle",
-        "Saddlebags",
-        "Head",
-        "Reins",
-        "MountLeft",
-        "MountRight",
-        "ManeStart",
-        "ManeMid1",
-        "ManeMid2",
-        "ManeMid3",
-        "ManeMid4",
-        "ManeMid5",
-        "ManeEnd",
+    ---Sets attachment model points and mane properties for attachment slots.
+    ---@type table<AttachmentSlot, {modelAttachment: string, isMane: boolean?, defaultMane: string?}>
+    SLOTS_DEFINITION = {
+        ---ACCESSORIES
+        ["Saddle"] = {modelAttachment="saddle"},
+        ["Saddlebags"] = {modelAttachment="saddlebags"},
+        ["Head"] = {modelAttachment="head"},
+        ["Reins"] = {modelAttachment="reins"},
+
+        ---MOUNTING POINTS
+        ["MountLeft"] = {modelAttachment="mountLeft"},
+        ["MountRight"] = {modelAttachment="mountRight"},
+
+        ---MANES
+        ["ManeStart"] = {
+            modelAttachment="maneStart", 
+            isMane=true, defaultMane="HorseMod.HorseManeStart"
+        },
+        ["ManeMid1"] = {
+            modelAttachment="maneMid1", 
+            isMane=true, defaultMane="HorseMod.HorseManeMid"
+        },
+        ["ManeMid2"] = {
+            modelAttachment="maneMid2", 
+            isMane=true, defaultMane="HorseMod.HorseManeMid"
+        },
+        ["ManeMid3"] = {
+            modelAttachment="maneMid3", 
+            isMane=true, defaultMane="HorseMod.HorseManeMid"
+        },
+        ["ManeMid4"] = {
+            modelAttachment="maneMid4", 
+            isMane=true, defaultMane="HorseMod.HorseManeMid"
+        },
+        ["ManeMid5"] = {
+            modelAttachment="maneMid5", 
+            isMane=true, defaultMane="HorseMod.HorseManeMid"
+        },
+        ["ManeEnd"] = {
+            modelAttachment="maneEnd", 
+            isMane=true, defaultMane="HorseMod.HorseManeEnd"
+        },
     },
+
+    ---Every available attachment slots. 
+    ---Automatically generated in `server/HorseMod/AttachmentsLoad.lua` from `SLOTS_DEFINITION`.
+    ---@type AttachmentSlot[]
+    SLOTS = {},
 
     ---Mane slots associated to their default mane items.
+    ---Automatically generated in `server/HorseMod/AttachmentsLoad.lua` from `SLOTS_DEFINITION`.
     ---@type table<AttachmentSlot, string>
-    MANE_SLOTS_SET = {
-        ManeStart = "HorseMod.HorseManeStart",
-        ManeMid1  = "HorseMod.HorseManeMid",
-        ManeMid2  = "HorseMod.HorseManeMid",
-        ManeMid3  = "HorseMod.HorseManeMid",
-        ManeMid4  = "HorseMod.HorseManeMid",
-        ManeMid5  = "HorseMod.HorseManeMid",
-        ManeEnd   = "HorseMod.HorseManeEnd",
-    },
+    MANE_SLOTS_SET = {},
 
     ---Breeds associated to their mane colors.
     ---@type table<string, HexColor>
@@ -103,7 +132,7 @@ local AttachmentData = {
         spotted_appaloosa = "#FFF7E4",
         american_paint_overo = "#292524",
         flea_bitten_grey = "#FCECC5",
-        __default = "#6B5642",
+        _default = "#6B5642",
     },
 
     ---Suffix for rein model swapping during horse riding.
@@ -115,9 +144,11 @@ local AttachmentData = {
         gallop = "_Running"
     },
 }
+
 local DEFAULT_ATTACHMENT_DEFS = AttachmentData.DEFAULT_ATTACHMENT_DEFS
 
 --- Data holding attachment informations
+
 AttachmentData.items = {
     -- saddles
         -- vanilla animals
@@ -156,15 +187,30 @@ AttachmentData.items = {
     ["HorseMod.HorseSaddlebags_T"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
 
     -- reins
-    ["HorseMod.HorseReins_Crude"] = { slot = "Reins", model = "HorseMod.HorseReins_Crude" },
-    ["HorseMod.HorseReins_Black"] = { slot = "Reins", model = "HorseMod.HorseReins_Black" },
-    ["HorseMod.HorseReins_White"] = { slot = "Reins", model = "HorseMod.HorseReins_White" },
-    ["HorseMod.HorseReins_Brown"] = { slot = "Reins", model = "HorseMod.HorseReins_Brown" },
+    ["HorseMod.HorseReins_Crude"] = { ["Reins"] = {model = "HorseMod.HorseReins_Crude"} },
+    ["HorseMod.HorseReins_Black"] = { ["Reins"] = {model = "HorseMod.HorseReins_Black"} },
+    ["HorseMod.HorseReins_White"] = { ["Reins"] = {model = "HorseMod.HorseReins_White"} },
+    ["HorseMod.HorseReins_Brown"] = { ["Reins"] = {model = "HorseMod.HorseReins_Brown"} },
 
     -- manes
-    ["HorseMod.HorseManeStart"] = { hidden = true, slot = "ManeStart" },
-    ["HorseMod.HorseManeMid"]   = { hidden = true, slot = "ManeMid1" },
-    ["HorseMod.HorseManeEnd"]   = { hidden = true, slot = "ManeEnd" },
+    ["HorseMod.HorseManeStart"] = { ["ManeStart"] = {hidden = true} },
+    ["HorseMod.HorseManeMid"]   = { ["ManeMid1"] = {hidden = true} },
+    ["HorseMod.HorseManeEnd"]   = { ["ManeEnd"] = {hidden = true} },
 }
+
+---@param itemDefinitions table<string, ItemDefinition>
+AttachmentData.addNewAttachments = function(itemDefinitions)
+    local items = AttachmentData.items
+    for fullType, itemDef in pairs(itemDefinitions) do
+        local itemDefEntry = items[fullType] or {}
+        for slot, attachmentDef in pairs(itemDef) do
+            local attachmentDefEntry = itemDefEntry[slot]
+            if not attachmentDefEntry then
+                itemDefEntry[slot] = itemDef
+            end
+        end
+        items[fullType] = itemDefEntry
+    end
+end
 
 return AttachmentData

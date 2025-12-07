@@ -10,6 +10,7 @@ local ContainerManager = require("HorseMod/attachments/ContainerManager")
 ---@field accessory InventoryItem
 ---@field attachmentDef AttachmentDefinition
 ---@field equipBehavior EquipBehavior
+---@field slot AttachmentSlot
 ---@field side string
 ---@field unlockPerform fun()?
 ---@field unlockStop fun()?
@@ -27,7 +28,6 @@ function ISHorseEquipGear:start()
     self.character:setVariable("EquipFinished", false)
 
     local anim = equipBehavior.anim
-    DebugLog.log(tostring(self.side))
     local animationVar = anim and anim[self.side] or "Loot"
     self:setActionAnim(animationVar)
 
@@ -64,7 +64,7 @@ function ISHorseEquipGear:perform()
     local horse = self.horse
     local accessory = self.accessory
     local attachmentDef = self.attachmentDef
-    local slot = attachmentDef.slot
+    local slot = self.slot
 
     -- remove item from player's inventory and add to horse inventory
     accessory:getContainer():Remove(accessory)
@@ -72,7 +72,7 @@ function ISHorseEquipGear:perform()
     -- init container
     local containerBehavior = attachmentDef.containerBehavior
     if containerBehavior then
-        ContainerManager.initContainer(self.character, horse, attachmentDef, accessory)
+        ContainerManager.initContainer(self.character, horse, slot, containerBehavior, accessory)
     end
 
     horse:getInventory():AddItem(accessory)
@@ -90,19 +90,22 @@ end
 ---@param character IsoGameCharacter
 ---@param horse IsoAnimal
 ---@param accessory InventoryItem
+---@param slot AttachmentSlot
 ---@param side string
 ---@param unlockPerform fun()? should unlock after performing the action
 ---@param unlockStop fun()? unlock function when force stop the action, if unlockPerform is not provided
 ---@return ISHorseEquipGear
 ---@nodiscard
-function ISHorseEquipGear:new(character, horse, accessory, side, unlockPerform, unlockStop)
+function ISHorseEquipGear:new(character, horse, accessory, slot, side, unlockPerform, unlockStop)
     local o = ISBaseTimedAction.new(self,character) --[[@as ISHorseEquipGear]]
     o.horse = horse
     o.accessory = accessory
 
     -- retrieve attachment informations
-    local attachmentDef = Attachments.getAttachmentDefinition(accessory:getFullType())
+    local attachmentDef = Attachments.getAttachmentDefinition(accessory:getFullType(), slot)
+    assert(attachmentDef ~= nil, "Accessory ("..accessory:getFullType()..") was passed to equip to a slot "..slot.." without an attachment definition for it, or isn't an attachment.")
     o.attachmentDef = attachmentDef
+    o.slot = slot
     
     -- equip behavior
     local equipBehavior = attachmentDef.equipBehavior or {}

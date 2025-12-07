@@ -145,6 +145,7 @@ HorseUtils.lockHorseForInteraction = function(horse)
     -- stop the horse from moving
     local lockDir = horse:getDir()
     local function lockTick()
+        ---@diagnostic disable-next-line
         if horse and horse:isExistInTheWorld() then horse:setDir(lockDir) end
     end
     Events.OnTick.Add(lockTick)
@@ -302,7 +303,7 @@ end
 
 ---@param debugString string The string from getAnimationDebug().
 ---@param matchString string The name of the animation to look for.
----@return table animationData The animation names found between "Anim:" and "Weight".
+---@return table? animationData The animation names found between "Anim:" and "Weight".
 ---@nodiscard
 HorseUtils.getAnimationFromDebugString = function(debugString, matchString)
     local searchStart = 1
@@ -338,6 +339,7 @@ HorseUtils.getAnimationFromDebugString = function(debugString, matchString)
 
         searchStart = weightStart + 1
     end
+    return nil
 end
 
 return HorseUtils

@@ -76,9 +76,10 @@ end
 
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
----@param attachmentDef AttachmentDefinition
+---@param slot AttachmentSlot
+---@param containerBehavior ContainerBehavior
 ---@param accessory InventoryContainer
-ContainerManager.initContainer = function(player, horse, attachmentDef, accessory)
+ContainerManager.initContainer = function(player, horse, slot, containerBehavior, accessory)
     print("Init container")
     -- retrieve the container of the accessory
     local srcContainer = accessory:getItemContainer()
@@ -90,7 +91,6 @@ ContainerManager.initContainer = function(player, horse, attachmentDef, accessor
     assert(square ~= nil, "Horse isn't on a square.")
 
     -- create the invisible container
-    local containerBehavior = attachmentDef.containerBehavior --[[@as ContainerBehavior]]
     local containerItem = square:AddWorldInventoryItem(containerBehavior.worldItem, 0,0,0)
     assert(containerItem:IsInventoryContainer(), "Invisible container ("..containerBehavior.worldItem..") used for "..accessory:getFullType().." isn't a container.")
     ---@cast containerItem InventoryContainer
@@ -106,7 +106,7 @@ ContainerManager.initContainer = function(player, horse, attachmentDef, accessor
     refreshInventories(player)
 
     -- register in the data of the horse the container being attached
-    ContainerManager.registerContainerInformation(horse, attachmentDef.slot, worldItem)
+    ContainerManager.registerContainerInformation(horse, slot, worldItem)
 end
 
 ---@param player IsoPlayer
@@ -250,7 +250,7 @@ ContainerManager.getContainer = function(horse, slot)
     -- if container not cached, find it
     local worldItem = containerInfo.worldItem
     if not worldItem then
-        worldItem = ContainerManager.findContainer(horse, containerInfo)
+        worldItem = ContainerManager.findContainer(horse, containerInfo, horse:getSquare())
 
         -- cache container or nil
         containerInfo.worldItem = worldItem
@@ -297,6 +297,7 @@ ContainerManager.track = function(horses)
 
         -- for each container, retrieve its worldItem and move it if needed
         for slot, containerInfo in pairs(containers) do repeat
+            -- if world item ref is cached, then handle move
             local worldItem = containerInfo.worldItem
             if worldItem then
                 -- update its position if the square is different
@@ -304,6 +305,8 @@ ContainerManager.track = function(horses)
                 if square and square ~= squareHorse then
                     ContainerManager.moveWorldItem(squareHorse, containerInfo, worldItem)
                 end
+
+            -- search for the container world item
             else
                 local worldItemNew = ContainerManager.findContainer(horse, containerInfo, squareHorse)
                 if worldItemNew then
@@ -320,7 +323,7 @@ HorseManager.onHorseRemoved:add(function(horse)
     local modData = HorseUtils.getModData(horse)
     local containers = modData.containers
 
-    -- for each container, retrieve its worldItem and move it if needed
+    -- for each container, retrieve its worldItem and reset its world item ref
     for slot, containerInfo in pairs(containers) do
         containerInfo.worldItem = nil
     end

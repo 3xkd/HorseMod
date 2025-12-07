@@ -10,32 +10,40 @@ local Attachments = {}
 
 ---Checks if the given item full type is an attachment, and optionally if it has a slot `_slot`.
 ---@param fullType string
----@param _slot string?
+---@param _slot AttachmentSlot?
 ---@return boolean
 ---@nodiscard
 Attachments.isAttachment = function(fullType, _slot)
-    local attachmentDef = AttachmentData.items[fullType]
+    local itemDef = AttachmentData.items[fullType]
     if _slot then
-        return attachmentDef and attachmentDef.slot == _slot or false
+        return itemDef and itemDef[_slot] ~= nil or false
     end
-    return attachmentDef ~= nil
+    return itemDef ~= nil
 end
 
 ---Retrieve the attachment slot of a given item fullType.
 ---@param fullType string
----@return AttachmentSlot?
+---@return AttachmentSlot[]
 ---@nodiscard
-Attachments.getSlot = function(fullType)
-    local def = AttachmentData.items[fullType]
-    return def and def.slot
+Attachments.getSlots = function(fullType)
+    local itemDef = AttachmentData.items[fullType]
+    local slots = {}
+    for slot,_ in pairs(itemDef) do
+        if slot ~= "_count" then
+            table.insert(slots, slot)
+        end
+    end
+    return slots
 end
 
 ---Retrieves the attachments associated to the given item full type.
 ---@param fullType string
----@return AttachmentDefinition
+---@param slot AttachmentSlot
+---@return AttachmentDefinition?
 ---@nodiscard
-Attachments.getAttachmentDefinition = function(fullType)
-    return AttachmentData.items[fullType]
+Attachments.getAttachmentDefinition = function(fullType, slot)
+    local itemDef = AttachmentData.items[fullType]
+    return itemDef and itemDef[slot] or nil
 end
 
 ---Retrieve the attached item on the specified `slot` of `animal`.
@@ -46,12 +54,11 @@ end
 Attachments.getAttachedItem = function(animal, slot)
     local ai = animal:getAttachedItems()
     return ai and ai:getItem(slot)
-    -- return animal:getAttachedItem(slot)
 end
 
 ---Retrieve a table with every attached items on the horse.
 ---@param animal IsoAnimal
----@return InventoryItem[]
+---@return {item: InventoryItem, slot: AttachmentSlot}[]
 ---@nodiscard
 Attachments.getAttachedItems = function(animal)
     local attached = {}
@@ -62,7 +69,7 @@ Attachments.getAttachedItems = function(animal)
         if not mane_slots_set[slot] then
             local attachment = Attachments.getAttachedItem(animal, slot)
             if attachment then
-                table.insert(attached, attachment)
+                table.insert(attached, {item=attachment, slot=slot})
             end
         end
     end
@@ -140,18 +147,11 @@ Attachments.unequipAttachment = function(animal, slot, player)
     end
 
     -- ignore if attachment should stay hidden from the player
-    local attachmentDef = AttachmentData.items[cur:getFullType()]
-    if attachmentDef and attachmentDef.hidden then
+    local attachmentDef = Attachments.getAttachmentDefinition(cur:getFullType(), slot)
+    assert(attachmentDef ~= nil, "Called unequip on an item ("..cur:getFullType()..") that isn't an attachment or doesn't have an attachment definition for the slot "..slot..".")
+    if not attachmentDef or attachmentDef.hidden then
         return
     end
-
-    -- if slot == SADDLEBAG_SLOT then
-    --     HorseAttachmentSaddlebags.moveInvisibleToVisibleThenRemove(player, animal)
-    --     local d = HorseAttachmentSaddlebags.getSaddlebagData(animal)
-    --     if d then
-    --         d.equipped = false
-    --     end
-    -- end
 
     Attachments.setAttachedItem(animal, slot, nil)
     Attachments.giveBackToPlayerOrDrop(player, animal, cur)

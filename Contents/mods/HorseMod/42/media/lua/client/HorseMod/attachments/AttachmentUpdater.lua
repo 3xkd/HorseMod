@@ -71,7 +71,6 @@ function AttachmentUpdater:update(horses, delta)
 
         -- if horse model is visible, set it as needing an update if not already reapplied
         local status = IS_REAPPLIED[horse]
-        horse:addLineChatElement(tostring(horse:getAnimalID()))
         if horse:getModel() then
             if not status then
                 DebugLog.log("set for reapply: "..tostring(horse:getFullName()).." (tick ".. tostring(os.time()) ..")")
@@ -113,6 +112,7 @@ Events.OnCharacterDeath.Add(AttachmentUpdater.onCharacterDeath)
 
 ---@TODO remove/comment for proper release, this is used to hot reload in-game for testing
 for i, system in ipairs(HorseManager.systems) do
+    ---@diagnostic disable-next-line
     if system.DEBUG_AttachmentUpdater then
         table.remove(HorseManager.systems,i)
     end

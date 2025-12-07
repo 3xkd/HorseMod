@@ -26,7 +26,7 @@ end
 ---@nodiscard
 ManeManager.getManeColor = function(horse)
     local breed = horse:getBreed()
-    local breedName = breed:getName() or "__default"
+    local breedName = breed:getName() or "_default"
     local hex = AttachmentData.MANE_HEX_BY_BREED[breedName]
     local r, g, b = HorseUtils.hexToRGBf(hex)
 
