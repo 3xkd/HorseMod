@@ -12,9 +12,9 @@
         "nonstandardSymbol": [],
         "requireLikeFunction": [],
         "requirePattern": [
-            "Contents/mods/HorseMod/42/media/lua/shared/?.lua",
-            "Contents/mods/HorseMod/42/media/lua/client/?.lua",
-            "Contents/mods/HorseMod/42/media/lua/server/?.lua"
+            "shared/?.lua",
+            "client/?.lua",
+            "server/?.lua"
         ],
         "special": {},
         "version": "Lua5.1"
