@@ -53,7 +53,7 @@ function ISFeedAnimalFromHand:getDuration()
 	if HorseUtils.isHorse(self.animal) then
         return 240
     end
-    _originalFeedFromHandGetDuration(self)
+    return _originalFeedFromHandGetDuration(self)
 end
 
 local _originalFeedFromHandWaitToStart = ISFeedAnimalFromHand.waitToStart
