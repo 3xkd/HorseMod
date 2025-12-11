@@ -236,7 +236,7 @@ function Mounting.dismountHorse(player)
     local action = DismountHorseAction:new(
         mount,
         side,
-        saddleItem,
+        saddleItem ~= nil,
         tx,
         ty,
         tz

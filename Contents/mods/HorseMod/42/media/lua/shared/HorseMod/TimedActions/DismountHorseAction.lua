@@ -18,7 +18,7 @@ local HorseRiding = require("HorseMod/Riding")
 ---
 ---@field side "left" | "right"
 ---
----@field saddle boolean
+---@field hasSaddle boolean
 ---
 ---@field landX number
 ---
@@ -57,13 +57,13 @@ function DismountHorseAction:start()
     self.character:setVariable("DismountStarted", true)
 
     if self.side == "right" then
-        if self.saddle then
+        if self.hasSaddle then
             self:setActionAnim("Bob_Dismount_Saddle_Right")
         else
             self:setActionAnim("Bob_Dismount_Bareback_Right")
         end
     else
-        if self.saddle then
+        if self.hasSaddle then
             self:setActionAnim("Bob_Dismount_Saddle_Left")
         else
             self:setActionAnim("Bob_Dismount_Bareback_Left")
@@ -79,14 +79,18 @@ function DismountHorseAction:stop()
 end
 
 
+function DismountHorseAction:complete()
+    HorseRiding.removeMount(self.character)
+    return true
+end
+
+
 function DismountHorseAction:perform()
     assert(self._lockDir ~= nil)
 
     self.character:setX(self.landX)
     self.character:setY(self.landY)
     self.character:setZ(self.landZ)
-
-    HorseRiding.removeMount(self.character)
 
     ISBaseTimedAction.perform(self)
 end
@@ -103,19 +107,21 @@ end
 
 ---@param mount Mount
 ---@param side "left" | "right"
----@param saddleItem InventoryItem | nil
+---@param hasSaddle boolean
 ---@param landX number
 ---@param landY number
 ---@param landZ number
 ---@return self
 ---@nodiscard
-function DismountHorseAction:new(mount, side, saddleItem, landX, landY, landZ)
+function DismountHorseAction:new(mount, side, hasSaddle, landX, landY, landZ)
     ---@type DismountHorseAction
     local o = ISBaseTimedAction.new(self, mount.pair.rider)
+
+    -- FIXME: this probably loses its metatable when transmitted to the server
     o.mount = mount
     o.horse = mount.pair.mount
     o.side = side
-    o.saddle = saddleItem ~= nil
+    o.hasSaddle = hasSaddle
     o.landX = landX
     o.landY = landY
     o.landZ = landZ

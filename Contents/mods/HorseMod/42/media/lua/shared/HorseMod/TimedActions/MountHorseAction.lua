@@ -94,9 +94,13 @@ function MountHorseAction:stop()
 end
 
 
-function MountHorseAction:perform()
+function MountHorseAction:complete()
     HorseRiding.createMountFromPair(self.pair)
+    return true
+end
 
+
+function MountHorseAction:perform()
     HorseSounds.playMountSnort(self.character, self.horse)
 
     ISBaseTimedAction.perform(self)
@@ -120,6 +124,8 @@ end
 function MountHorseAction:new(pair, side, saddle)
     ---@type MountHorseAction
     local o = ISBaseTimedAction.new(self, pair.rider)
+
+    -- FIXME: this probably loses its metatable when transmitted to the server
     o.pair = pair
     o.horse = pair.mount
     o.side = side
