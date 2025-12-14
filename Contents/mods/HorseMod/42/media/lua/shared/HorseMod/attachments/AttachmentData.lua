@@ -3,14 +3,17 @@
 ---Available attachment slots.
 ---@alias AttachmentSlot "Saddle"|"Saddlebags"|"Reins"|"ManeStart"|"ManeMid1"|"ManeMid2"|"ManeMid3"|"ManeMid4"|"ManeMid5"|"ManeEnd"|"Head"|"MountLeft"|"MountRight"
 
+
 ---Hex color code (#rrggbb).
 ---@alias HexColor string
+
 
 ---Table holding a RGB mane color.
 ---@class ManeColor
 ---@field r number
 ---@field g number
 ---@field b number
+
 
 ---Equip behavior to use during equip or unequip timed actions for attachments.
 ---@class EquipBehavior
@@ -24,11 +27,13 @@
 ---Whenever the item should be held in hand when equipping it.
 ---@field shouldHold boolean?
 
+
 ---Used to assign container behavior handling to an attachment.
 ---@class ContainerBehavior
 ---
 ---Full type of the item being used as the invisible container.
----@field worldItem string 
+---@field worldItem string
+
 
 ---Defines an attachment item with its associated slots and extra data if needed.
 ---@class AttachmentDefinition
@@ -47,8 +52,13 @@
 ---
 ---Equip timed action behavior component.
 ---@field equipBehavior EquipBehavior? 
+---
+---Whenever the player can reach from mount this attachment, always considered reachable by default. Notably used for containers.
+---@field notReachableFromMount boolean?
+
 
 ---@alias ItemDefinition table<AttachmentSlot, AttachmentDefinition>
+
 
 ---Stores the various attachment data which are required to work with attachments for horses.
 local AttachmentData = {
