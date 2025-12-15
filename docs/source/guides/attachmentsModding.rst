@@ -2,8 +2,11 @@ Attachment modding
 ==================
 This guide explains how to create new attachments for horses using the HorseMod attachment API.
 
-.. note::
+.. hint::
   If you want more in-depth information of how the attachment system works internally, please refer to :doc:`attachmentsAPI`.
+
+.. important::
+  A full example mod showcasing how to create new attachments for the horse is available on the HorseMod GitHub repository `here <https://github.com/demiurgeQuantified/HorseMod/HorseModExampleMod>`_.
 
 Creating a new slot
 -------------------
@@ -20,6 +23,27 @@ To add a new slot, add a new :lua:class:`HorseMod.SlotDefinition` entry to the :
   })
 
 The slots are first defined in the table :lua:obj:`HorseMod.attachments.AttachmentData.slotsDefinitions`, which is then processed when the server Lua folder gets loaded to generate the various tables used by the attachment system. See :ref:`attachmentsload-label` for more details on that process.
+
+.. important::
+  First verify that the default slots of the HorseMod listed in :lua:obj:`HorseMod.attachments.AttachmentData.slotsDefinitions` don't already provide what you need before creating a new one to avoid redundancy.
+
+Defining a new attachment point on the horse model
+--------------------------------------------------
+When defining a custom slot, you don't necessarily need to use an existing model attachment point on the horse model. You can define your own custom attachment points by adding a new `attachment point <https://pzwiki.net/wiki/Attachment_(scripts)>`_ to the horse model via a helper function provided by the HorseMod. This function is :lua:obj:`HorseMod.attachments.AttachmentData.addNewModelAttachment`.
+
+Below is an example of adding a new model attachment point called "leftAttachTestPoint" to the horse model:
+::
+  
+  local AttachmentData = require("HorseMod/attachments/AttachmentData")
+
+  AttachmentData.addNewModelAttachment("leftAttachTestPoint", {
+      bone = "DEF_Spine2",
+      offset = {x=0.3, y=0.1528, z=0.041},
+      rotate = {x=0.0, y=0.0, z=0.0},
+  })
+
+.. warning::
+  You should not modify the horse model script directly via the use of a model script override, as Project Zomboid provides all the tools needed to directly modify, add or remove attachment points on models scripts via Lua.
 
 Defining a new attachment
 -------------------------
@@ -43,4 +67,5 @@ Below is an example usage:
   }
   AttachmentData.addNewAttachment("MyMod.MyItemFullType", "Reins", attachmentDef)
 
-.. note:: Attachments should be added from the shared folder so that both the server and client are aware of them.
+.. warning:: 
+  Attachments should be added from the shared folder so that both the server and client are aware of them.

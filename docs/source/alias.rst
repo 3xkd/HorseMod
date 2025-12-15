@@ -5,3 +5,4 @@ Alias
 
   alias/AttachmentSlot
   alias/ItemDefinition
+  alias/XYZ
