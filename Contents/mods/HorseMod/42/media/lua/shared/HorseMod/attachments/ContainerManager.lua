@@ -123,7 +123,14 @@ ContainerManager.initContainer = function(player, horse, slot, containerBehavior
     assert(square ~= nil, "Horse isn't on a square.")
 
     -- create the invisible container
-    local containerItem = square:AddWorldInventoryItem(containerBehavior.worldItem, 0,0,0)
+    local containerItem = square:AddWorldInventoryItem(
+        containerBehavior.worldItem,
+        0,
+        0,
+        0,
+        false,
+        true
+    )
     assert(containerItem:IsInventoryContainer(), "Invisible container ("..containerBehavior.worldItem..") used for "..accessory:getFullType().." isn't a container.")
     ---@cast containerItem InventoryContainer
 
