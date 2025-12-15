@@ -41,7 +41,7 @@ Container managing
 ------------------
 Containers attached on horses need to be accessible by the player while attached to the horse, but the attachment system of the base game loses the item references when those get attached on the horse and as such the containers get deleted and lost. To work around that, the attachment system uses invisible containers spawned in the world which follow the horse around and hold the items instead.
 
-Whenever :lua:class:`HorseMod.ISHorseEquipGear` is used by the player and the attachment has a :lua:class:`HorseMod.ContainerBehavior`, :lua:obj:`HorseMod.attachments.ContainerManager.initContainer` is called to create the invisible world container and transfer all the content to it. This container receives in its mod data, stored under the ``HorseMod.container`` key, a :lua:class:`HorseMod.ContainerInformation` entry to track which horse and slot it is associated with.
+Whenever :lua:class:`HorseMod.HorseEquipGear` is used by the player and the attachment has a :lua:class:`HorseMod.ContainerBehavior`, :lua:obj:`HorseMod.attachments.ContainerManager.initContainer` is called to create the invisible world container and transfer all the content to it. This container receives in its mod data, stored under the ``HorseMod.container`` key, a :lua:class:`HorseMod.ContainerInformation` entry to track which horse and slot it is associated with.
 
 When the player unequips the attachment, :lua:obj:`HorseMod.attachments.ContainerManager.removeContainer` is called to transfer back all the items from the invisible world container to the accessory item and delete the world container.
 

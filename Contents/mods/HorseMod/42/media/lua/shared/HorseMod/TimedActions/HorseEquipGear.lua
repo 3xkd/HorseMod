@@ -6,7 +6,7 @@ local ContainerManager = require("HorseMod/attachments/ContainerManager")
 local AnimationVariables = require("HorseMod/AnimationVariables")
 
 ---Timed action for equipping gear on a horse.
----@class ISHorseEquipGear : ISBaseTimedAction, umbrella.NetworkedTimedAction
+---@class HorseEquipGear : ISBaseTimedAction, umbrella.NetworkedTimedAction
 ---@field horse IsoAnimal
 ---@field accessory InventoryItem
 ---@field attachmentDef AttachmentDefinition
@@ -14,15 +14,15 @@ local AnimationVariables = require("HorseMod/AnimationVariables")
 ---@field slot AttachmentSlot
 ---@field side string
 ---@field unlockPerform fun()? Should unlock after performing the action ?
----@field unlockStop fun()? Unlock function when force stopping the action, if :lua:obj:`HorseMod.ISHorseEquipGear.unlockPerform` is not provided.
-local ISHorseEquipGear = ISBaseTimedAction:derive("HorseMod_ISHorseEquipGear")
+---@field unlockStop fun()? Unlock function when force stopping the action, if :lua:obj:`HorseMod.HorseEquipGear.unlockPerform` is not provided.
+local HorseEquipGear = ISBaseTimedAction:derive("HorseMod_HorseEquipGear")
 
 ---@return boolean
-function ISHorseEquipGear:isValid()
+function HorseEquipGear:isValid()
     return self.horse and self.horse:isExistInTheWorld()
 end
 
-function ISHorseEquipGear:start()
+function HorseEquipGear:start()
     local equipBehavior = self.equipBehavior
     
     -- set the action animation
@@ -41,7 +41,7 @@ function ISHorseEquipGear:start()
     self.character:faceThisObject(self.horse)
 end
 
-function ISHorseEquipGear:update()
+function HorseEquipGear:update()
     self.character:faceThisObject(self.horse)
 
     -- end when
@@ -51,13 +51,13 @@ function ISHorseEquipGear:update()
     end
 end
 
-function ISHorseEquipGear:stop()
+function HorseEquipGear:stop()
     if self.unlockStop then self.unlockStop() end
     ISBaseTimedAction.stop(self)
 end
 
 
-function ISHorseEquipGear:perform()
+function HorseEquipGear:perform()
     if self.unlockPerform then
         self.unlockPerform()
     end
@@ -65,7 +65,7 @@ function ISHorseEquipGear:perform()
 end
 
 
-function ISHorseEquipGear:complete()
+function HorseEquipGear:complete()
     -- remove item from player's inventory and add to horse inventory
     local characterInventory = self.character:getInventory()
     characterInventory:Remove(self.accessory)
@@ -96,7 +96,7 @@ function ISHorseEquipGear:complete()
 end
 
 
-function ISHorseEquipGear:getDuration()
+function HorseEquipGear:getDuration()
     if self.character:isTimedActionInstant() then
         return 1
     end
@@ -119,8 +119,8 @@ end
 ---@param unlockStop fun()?
 ---@return self
 ---@nodiscard
-function ISHorseEquipGear:new(character, horse, accessory, slot, side, unlockPerform, unlockStop)
-    local o = ISBaseTimedAction.new(self,character) --[[@as ISHorseEquipGear]]
+function HorseEquipGear:new(character, horse, accessory, slot, side, unlockPerform, unlockStop)
+    local o = ISBaseTimedAction.new(self,character) --[[@as HorseEquipGear]]
     o.horse = horse
     o.accessory = accessory
 
@@ -147,7 +147,7 @@ function ISHorseEquipGear:new(character, horse, accessory, slot, side, unlockPer
 end
 
 
-_G[ISHorseEquipGear.Type] = ISHorseEquipGear
+_G[HorseEquipGear.Type] = HorseEquipGear
 
 
-return ISHorseEquipGear
+return HorseEquipGear

@@ -2,14 +2,14 @@
 
 ---REQUIREMENTS
 local Attachments = require("HorseMod/attachments/Attachments")
-local ISHorseEquipGear = require("HorseMod/TimedActions/ISHorseEquipGear")
+local HorseEquipGear = require("HorseMod/TimedActions/HorseEquipGear")
 local ContainerManager = require("HorseMod/attachments/ContainerManager")
 
 ---Timed action for unequipping gear from a horse.
----@class ISHorseUnequipGear : ISHorseEquipGear
-local ISHorseUnequipGear = ISHorseEquipGear:derive("HorseMod_ISHorseUnequipGear")
+---@class HorseUnequipGear : HorseEquipGear
+local HorseUnequipGear = HorseEquipGear:derive("HorseMod_HorseUnequipGear")
 
-function ISHorseUnequipGear:complete()
+function HorseUnequipGear:complete()
     local horse = self.horse
     local character = self.character
     local accessory = self.accessory
@@ -30,7 +30,7 @@ function ISHorseUnequipGear:complete()
 end
 
 
-function ISHorseUnequipGear:getDuration()
+function HorseUnequipGear:getDuration()
     if self.character:isTimedActionInstant() then
         return 1
     end
@@ -44,8 +44,8 @@ function ISHorseUnequipGear:getDuration()
 end
 
 
-function ISHorseUnequipGear:new(character, horse, accessory, slot, side, unlockPerform, unlockStop)
-    local o = ISHorseEquipGear.new(self, character, horse, accessory, slot, side, unlockPerform, unlockStop) --[[@as ISHorseUnequipGear]]
+function HorseUnequipGear:new(character, horse, accessory, slot, side, unlockPerform, unlockStop)
+    local o = HorseEquipGear.new(self, character, horse, accessory, slot, side, unlockPerform, unlockStop) --[[@as HorseUnequipGear]]
 
     o.maxTime = o:getDuration()
     o.equipBehavior = o.attachmentDef.unequipBehavior or {}
@@ -54,7 +54,7 @@ function ISHorseUnequipGear:new(character, horse, accessory, slot, side, unlockP
 end
 
 
-_G[ISHorseUnequipGear.Type] = ISHorseUnequipGear
+_G[HorseUnequipGear.Type] = HorseUnequipGear
 
 
-return ISHorseUnequipGear
+return HorseUnequipGear

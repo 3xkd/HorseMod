@@ -4,6 +4,6 @@ Timed actions
 
 .. toctree::
 
-  timedactions/ISHorseEquipGear
-  timedactions/ISHorseUnequipGear
+  timedactions/HorseEquipGear
+  timedactions/HorseUnequipGear
   
