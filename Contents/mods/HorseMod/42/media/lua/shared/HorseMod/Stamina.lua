@@ -1,4 +1,5 @@
 local HorseManager = require("HorseMod/HorseManager")
+local AnimationVariables = require("HorseMod/AnimationVariables")
 
 
 ---@namespace HorseMod
@@ -89,7 +90,7 @@ function Stamina.shouldRun(horse, input, moving)
     local minRunStamina = Stamina.MAX * Stamina.MIN_RUN_PERCENT
     local wantsRun = input.run and true or false
     local runAllowed = false
-    local isGalloping = horse:getVariableBoolean("HorseGallop")
+    local isGalloping = horse:getVariableBoolean(AnimationVariables.GALLOP)
     local needsStaminaRecovery = false
 
     if isGalloping then

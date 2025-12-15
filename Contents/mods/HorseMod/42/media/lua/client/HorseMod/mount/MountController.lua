@@ -2,6 +2,7 @@ local Stamina = require("HorseMod/Stamina")
 local HorseUtils = require("HorseMod/Utils")
 local AttachmentData = require("HorseMod/attachments/AttachmentData")
 local Attachments = require("HorseMod/attachments/Attachments")
+local AnimationVariables = require("HorseMod/AnimationVariables")
 
 
 ---@param state "walk"|"gallop"
@@ -158,7 +159,7 @@ local function blockedBetween(fromSq, toSq, horse)
     -- FENCE
     local hop = edgeHoppableBetween(fromSq, toSq)
     if hop and hop:isHoppable() then
-        if horse and horse:getVariableBoolean("HorseJump") then
+        if horse and horse:getVariableBoolean(AnimationVariables.JUMP) then
             return false
         else
             return true
@@ -663,9 +664,9 @@ function MountController:updateSpeed(input, deltaTime)
     local geneSpeed = getGeneticSpeed(self.mount.pair.mount) * self:getVegetationEffect(input, deltaTime)
 
     -- TODO: is this check really necessary? does changing the value cause more overhead than reading it?
-    local currentGeneSpeed = self.mount.pair.mount:getVariableFloat("geneSpeed", 0)
+    local currentGeneSpeed = self.mount.pair.mount:getVariableFloat(AnimationVariables.GENE_SPEED, 0)
     if currentGeneSpeed ~= geneSpeed then
-        self.mount.pair:setAnimationVariable("geneSpeed", geneSpeed)
+        self.mount.pair:setAnimationVariable(AnimationVariables.GENE_SPEED, geneSpeed)
     end
 
     if input.run then
@@ -677,13 +678,13 @@ function MountController:updateSpeed(input, deltaTime)
         end
     end
 
-    self.mount.pair.mount:setVariable("HorseWalkSpeed", walkMultiplier)
-    self.mount.pair.mount:setVariable("HorseTrotSpeed",  walkMultiplier * TROT_MULT)
-    self.mount.pair.mount:setVariable("HorseRunSpeed", gallopRawSpeed)
+    self.mount.pair.mount:setVariable(AnimationVariables.WALK_SPEED, walkMultiplier)
+    self.mount.pair.mount:setVariable(AnimationVariables.TROT_SPEED,  walkMultiplier * TROT_MULT)
+    self.mount.pair.mount:setVariable(AnimationVariables.RUN_SPEED, gallopRawSpeed)
 
-    self.mount.pair.rider:setVariable("HorseWalkSpeed", walkMultiplier * PLAYER_SYNC_TUNER)
-    self.mount.pair.rider:setVariable("HorseTrotSpeed",  walkMultiplier * TROT_MULT * PLAYER_SYNC_TUNER)
-    self.mount.pair.rider:setVariable("HorseRunSpeed", gallopRawSpeed * PLAYER_SYNC_TUNER)
+    self.mount.pair.rider:setVariable(AnimationVariables.WALK_SPEED, walkMultiplier * PLAYER_SYNC_TUNER)
+    self.mount.pair.rider:setVariable(AnimationVariables.TROT_SPEED,  walkMultiplier * TROT_MULT * PLAYER_SYNC_TUNER)
+    self.mount.pair.rider:setVariable(AnimationVariables.RUN_SPEED, gallopRawSpeed * PLAYER_SYNC_TUNER)
 
     -- speed/locomotion
     local moving = (input.movement.x ~= 0 or input.movement.y ~= 0)
@@ -706,7 +707,7 @@ function MountController:updateStamina(input, deltaTime)
     if input.movement.x ~= 0 or input.movement.y ~= 0 then
         if input.run then
             staminaChange = -Stamina.DRAIN_RUN
-        elseif self.mount.pair.mount:getVariableBoolean("HorseTrot") == true then
+        elseif self.mount.pair.mount:getVariableBoolean(AnimationVariables.TROT) == true then
             staminaChange = Stamina.REGEN_TROT
         else
             staminaChange = Stamina.REGEN_WALK
@@ -765,16 +766,16 @@ function MountController:updateReins(input)
         self:setReinsState(mount, reinsItem, movementState)
 
         ---@TODO these states should be defined when the rider mounts the horse
-        mountPair.rider:setVariable("HasReins", true)
+        mountPair.rider:setVariable(AnimationVariables.HAS_REINS, true)
     else
-        mountPair.rider:setVariable("HasReins", false)
+        mountPair.rider:setVariable(AnimationVariables.HAS_REINS, false)
     end
 end
 
 
 ---@param input MountController.Input
 function MountController:update(input)
-    assert(self.mount.pair.rider:getVariableString("RidingHorse") == "true")
+    assert(self.mount.pair.rider:getVariableString(AnimationVariables.RIDING_HORSE) == "true")
 
     self.mount.pair.rider:setSneaking(true)
     self.mount.pair.rider:setIgnoreAutoVault(true)
@@ -805,10 +806,10 @@ function MountController:update(input)
 
         self.mount.pair.mount:setVariable("bPathfind", true)
         self.mount.pair.mount:setVariable("animalWalking", not input.run)
-        self.mount.pair:setAnimationVariable("HorseGallop", input.run)
+        self.mount.pair:setAnimationVariable(AnimationVariables.GALLOP, input.run)
     else
         self.mount.pair.mount:setVariable("bPathfind", false)
-        self.mount.pair:setAnimationVariable("HorseGallop", false)
+        self.mount.pair:setAnimationVariable(AnimationVariables.GALLOP, false)
         self.mount.pair.mount:setVariable("animalWalking", false)
     end
 
@@ -833,7 +834,6 @@ function MountController:update(input)
     self.mount.pair.rider:setX(self.mount.pair.mount:getX())
     self.mount.pair.rider:setY(self.mount.pair.mount:getY())
     self.mount.pair.rider:setZ(self.mount.pair.mount:getZ())
-    self.mount.pair.rider:setVariable("mounted", true)
     UpdateHorseAudio(self.mount.pair.rider)
 end
 

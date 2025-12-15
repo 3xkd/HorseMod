@@ -1,6 +1,7 @@
 require("TimedActions/ISBaseTimedAction")
 
 local MountPair = require("HorseMod/MountPair")
+local AnimationVariables = require("HorseMod/AnimationVariables")
 
 
 ---@namespace HorseMod
@@ -38,8 +39,8 @@ function MountHorseAction:update()
     self.horse:setDir(self.lockDir)
     self.character:setDir(self.lockDir)
 
-    if self.character:getVariableBoolean("MountFinished") == true then
-        self.character:setVariable("MountFinished", false)
+    if self.character:getVariableBoolean(AnimationVariables.MOUNT_FINISHED) == true then
+        self.character:setVariable(AnimationVariables.MOUNT_FINISHED, false)
         self:forceComplete()
     end
 end
@@ -51,14 +52,14 @@ function MountHorseAction:start()
     self.horse:getBehavior():setBlockMovement(true)
     self.horse:stopAllMovementNow()
 
-    self.horse:setVariable("HorseDying", false)
+    self.horse:setVariable(AnimationVariables.DYING, false)
 
     self.lockDir = self.horse:getDir()
     self.character:setDir(self.lockDir)
 
-    self.character:setVariable("MountingHorse", true)
-    self.character:setVariable("MountFinished", false)
-    self.character:setVariable("HorseDying", false)
+    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, true)
+    self.character:setVariable(AnimationVariables.MOUNT_FINISHED, false)
+    self.character:setVariable(AnimationVariables.DYING, false)
 
     if self.side == "right" then
         if self.saddle then
@@ -81,13 +82,13 @@ end
 function MountHorseAction:stop()
     self.horse:getBehavior():setBlockMovement(false)
 
-    self.pair:setAnimationVariable("RidingHorse", false)
-    self.character:setVariable("MountingHorse", false)
+    self.pair:setAnimationVariable(AnimationVariables.RIDING_HORSE, false)
+    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, false)
     self.character:setVariable("isTurningLeft", false)
     self.character:setVariable("isTurningRight", false)
     self.character:setTurnDelta(1)
 
-    self.character:setVariable("MountingHorse", false)
+    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, false)
 
     ISBaseTimedAction.stop(self)
 end

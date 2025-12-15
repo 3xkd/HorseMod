@@ -1,6 +1,7 @@
 local HorseRiding = require("HorseMod/Riding")
 local HorseUtils = require("HorseMod/Utils")
 local HorseDamage = require("HorseMod/horse/HorseDamage")
+local AnimationVariables = require("HorseMod/AnimationVariables")
 
 local PlayerDamage = {}
 
@@ -348,7 +349,7 @@ function PlayerDamage.onZombieAttack_checkAndRedirect(zombie)
     if not player then
         return
     end
-    if not player:getVariableBoolean("RidingHorse") then
+    if not player:getVariableBoolean(AnimationVariables.RIDING_HORSE) then
         return
     end
     local target = zombie:getTarget()

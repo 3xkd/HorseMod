@@ -1,5 +1,7 @@
 require("TimedActions/ISBaseTimedAction")
 
+local AnimationVariables = require("HorseMod/AnimationVariables")
+
 
 ---@namespace HorseMod
 
@@ -39,8 +41,8 @@ function DismountHorseAction:update()
     -- keep the horse locked facing the stored direction
     self.horse:setDir(self._lockDir)
 
-    if self.character:getVariableBoolean("DismountFinished") == true then
-        self.character:setVariable("DismountFinished", false)
+    if self.character:getVariableBoolean(AnimationVariables.DISMOUNT_FINISHED) == true then
+        self.character:setVariable(AnimationVariables.DISMOUNT_FINISHED, false)
         self:forceComplete()
     end
 end
@@ -52,7 +54,7 @@ function DismountHorseAction:start()
     self.horse:stopAllMovementNow()
 
     self._lockDir  = self.horse:getDir()
-    self.character:setVariable("DismountStarted", true)
+    self.character:setVariable(AnimationVariables.DISMOUNT_STARTED, true)
 
     if self.side == "right" then
         if self.hasSaddle then
@@ -72,7 +74,7 @@ end
 
 function DismountHorseAction:stop()
     self.horse:getBehavior():setBlockMovement(false)
-    self.character:setVariable("DismountStarted", false)
+    self.character:setVariable(AnimationVariables.DISMOUNT_STARTED, false)
     ISBaseTimedAction.stop(self)
 end
 
