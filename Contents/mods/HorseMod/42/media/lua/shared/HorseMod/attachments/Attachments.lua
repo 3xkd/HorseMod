@@ -5,6 +5,7 @@ local HorseUtils = require("HorseMod/Utils")
 local HorseRegistries = require("HorseMod/HorseRegistries")
 local AttachmentData = require("HorseMod/attachments/AttachmentData")
 local ContainerManager = require("HorseMod/attachments/ContainerManager")
+
 local rdm = newrandom()
 
 ---Holds utility functions related to the attachment system of horses.
@@ -54,8 +55,8 @@ end
 ---@return InventoryItem?
 ---@nodiscard
 Attachments.getAttachedItem = function(animal, slot)
-    local ai = animal:getAttachedItems()
-    return ai and ai:getItem(slot)
+    local attachedItems = animal:getAttachedItems()
+    return attachedItems and attachedItems:getItem(slot)
 end
 
 ---Retrieve a table with every attached items on the horse.
@@ -95,12 +96,14 @@ end
 ---@param animal IsoAnimal
 ---@param item InventoryItem
 Attachments.removeAttachedItem = function(animal, item)
-    local ai = animal:getAttachedItems()
-    if ai then
-        local slot = ai:getLocation(item) --[[@as AttachmentSlot]]
-        ai:remove(item)
+    local attachedItems = animal:getAttachedItems()
+    if attachedItems then
+        local slot = attachedItems:getLocation(item) --[[@as AttachmentSlot]]
+        attachedItems:remove(item)
+        sendAttachedItem(animal, slot, nil)
         local modData = HorseUtils.getModData(animal)
         modData.bySlot[slot] = nil
+        animal:transmitModData()
     end
 end
 
@@ -119,22 +122,23 @@ end
 ---@param horse IsoAnimal
 ---@param item InventoryItem
 Attachments.giveBackToPlayerOrDrop = function(player, horse, item)
-    -- no item so ignore
-    if not item then
-        return
-    end
-
     -- put in player inventory
-    local pinv = player and player:getInventory()
-    if pinv and pinv:addItem(item) then
-        return
+    if player then
+        -- was this meant to check if the player has space?
+        -- the old code looked like it might have intended to, but it didn't work...
+        local inventory = player:getInventory()
+        inventory:addItem(item)
+        sendAddItemToContainer(inventory, item)
     end
 
     -- place on the square at random offsets
-    local sq = horse:getSquare() or (player and player:getSquare())
-    if sq then
-        sq:AddWorldInventoryItem(item, rdm:random(0,1), rdm:random(0,1), 0.0)
-    end
+    horse:getSquare():AddWorldInventoryItem(
+        item,
+        rdm:random(0, 1),
+        rdm:random(0, 1),
+        0.0,
+        true
+    )
 end
 
 ---Unequip instantly the attachment from the horse if it isn't a mane and store it in the player inventory or drop it on the ground.
@@ -147,26 +151,26 @@ Attachments.unequipAttachment = function(animal, slot, player)
         return
     end
 
-    local cur = Attachments.getAttachedItem(animal, slot)
-    if not cur then
+    local current = Attachments.getAttachedItem(animal, slot)
+    if not current then
         return
     end
 
     -- ignore if attachment should stay hidden from the player
-    local attachmentDef = Attachments.getAttachmentDefinition(cur:getFullType(), slot)
-    assert(attachmentDef ~= nil, "Called unequip on an item ("..cur:getFullType()..") that isn't an attachment or doesn't have an attachment definition for the slot "..slot..".")
+    local attachmentDef = Attachments.getAttachmentDefinition(current:getFullType(), slot)
+    assert(attachmentDef ~= nil, "Called unequip on an item ("..current:getFullType()..") that isn't an attachment or doesn't have an attachment definition for the slot "..slot..".")
     if not attachmentDef or attachmentDef.hidden or AttachmentData.MANE_SLOTS_SET[slot] then
         return
     end
     
     Attachments.setAttachedItem(animal, slot, nil)
-    Attachments.giveBackToPlayerOrDrop(player, animal, cur)
+    Attachments.giveBackToPlayerOrDrop(player, animal, current)
 
     -- remove container
     local containerBehavior = attachmentDef.containerBehavior
     if containerBehavior then
         player = player or getPlayer() ---@TODO probably should change that to not be necessary
-        ContainerManager.removeContainer(player, animal, slot, cur)
+        ContainerManager.removeContainer(player, animal, slot, current)
     end
 end
 
