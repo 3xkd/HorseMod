@@ -121,6 +121,7 @@ local AttachmentData = {
     },
 
     ---Sets attachment model points and mane properties for attachment slots.
+    ---!doctype table
     ---@type table<AttachmentSlot, SlotDefinition>
     slotsDefinitions = {
         ---ACCESSORIES
