@@ -264,3 +264,5 @@ for animalType, isAdult in pairs(HorseDefinitions.ANIMALS) do
     -- apply avatar definition
     AnimalAvatarDefinition[animalType] = HorseDefinitions.AVATAR_DEFINITION
 end
+
+return HorseDefinitions
