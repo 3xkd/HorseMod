@@ -2,6 +2,9 @@ if isClient() then
     return
 end
 
+local mountcommands = require("HorseMod/networking/mountcommands")
+local commands = require("HorseMod/networking/commands")
+
 local Mounts = {}
 
 
@@ -17,6 +20,14 @@ Mounts.mountPlayerMap = {}
 function Mounts.addMount(player, animal)
     Mounts.playerMountMap[player] = animal
     Mounts.mountPlayerMap[animal] = player
+
+    mountcommands.Mount:send(
+        nil,
+        {
+            animal = commands.getAnimalId(animal),
+            character = commands.getPlayerId(player),
+        }
+    )
 end
 
 
@@ -25,6 +36,13 @@ function Mounts.removeMount(player)
     local mount = Mounts.playerMountMap[player]
     Mounts.playerMountMap[player] = nil
     Mounts.mountPlayerMap[mount] = nil
+    
+    mountcommands.Dismount:send(
+        nil,
+        {
+            character = commands.getPlayerId(player)
+        }
+    )
 end
 
 

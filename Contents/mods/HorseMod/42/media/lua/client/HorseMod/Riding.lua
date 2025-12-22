@@ -4,6 +4,11 @@ local HorseUtils = require("HorseMod/Utils")
 local ModOptions = require("HorseMod/ModOptions")
 local AnimationVariables = require("HorseMod/AnimationVariables")
 
+local client = require("HorseMod/networking/client")
+local mountcommands = require("HorseMod/networking/mountcommands")
+local commands = require("HorseMod/networking/commands")
+local MountPair = require("HorseMod/MountPair")
+
 ---@namespace HorseMod
 
 ---Holds horse riding utility and keybind handling.
@@ -201,6 +206,24 @@ local function initHorseMod(_, player)
 end
 
 Events.OnCreatePlayer.Add(initHorseMod)
+
+client.registerCommandHandler(mountcommands.Mount, function(args)
+    local player = commands.getPlayer(args.character)
+    if player and player:isLocalPlayer() then
+        local animal = commands.getAnimal(args.animal)
+        assert(animal ~= nil, "could not find mounted animal sent by server")
+        HorseRiding.createMountFromPair(
+            MountPair.new(player, animal)
+        )
+    end
+end)
+
+client.registerCommandHandler(mountcommands.Dismount, function(args)
+    local player = commands.getPlayer(args.character)
+    if player and player:isLocalPlayer() then
+        HorseRiding.removeMount(player)
+    end
+end)
 
 ---@FIXME this is because this file should be in shared but in the current state it is it cannot be easily moved there, so we expose the namespace globally for now
 _G["HorseRiding"] = HorseRiding

@@ -51,7 +51,8 @@ local function tryRemountPlayer()
         local pair = MountPair.new(player, horse)
         pair:setDirection(horse:getDir())
 
-        HorseRiding.createMountFromPair(pair)
+        -- FIXME: this is a server module, won't work in MP
+        require("HorseMod/Mounts").addMount(pair.rider, pair.mount)
         Events.OnTick.Remove(tryRemountPlayer)
     end
 end

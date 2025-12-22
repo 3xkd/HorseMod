@@ -80,7 +80,7 @@ end
 
 
 function DismountHorseAction:complete()
-    require("HorseMod/Riding").removeMount(self.character)
+    -- TODO: this might take a bit to inform the client, so we should consider faking it in perform()
     require("HorseMod/Mounts").removeMount(self.character)
     return true
 end
