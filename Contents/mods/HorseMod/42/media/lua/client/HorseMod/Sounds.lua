@@ -1,10 +1,26 @@
+---REQUIREMENTS
 local HorseRiding = require("HorseMod/Riding")
 local HorseUtils = require("HorseMod/Utils")
 local Stamina = require("HorseMod/Stamina")
 local AnimationVariables = require("HorseMod/AnimationVariables")
+local HorseManager = require("HorseMod/HorseManager")
 
-
-local HorseSounds = {}
+local HorseSounds = {
+    SPEEDS = {
+        Walk = 0.42,
+        Trot = 0.28,
+        Gallop = 0.18,
+    },
+    ROUGH_MATERIALS = {
+        Sand = true,
+        Grass = true,
+        Gravel = true,
+        Dirt = true,
+    },
+    STRESS_MIN_INTERVAL = 15,
+    IDLE_MIN_INTERVAL = 60,
+    STRESS_THRESHOLD = 70,
+}
 
 
 local secAccum = {}
@@ -13,38 +29,16 @@ local currentSoundId = {}
 local lastEmitterByKey = {}
 local tiredSoundId = {}
 
-
-local STRESS_MIN_INTERVAL = 15
-local IDLE_MIN_INTERVAL = 60
-local STRESS_THRESHOLD = 70
-
-
 local stressAccum = {}
 local idleAccum = {}
 
 
-local speeds = {
-    Walk = 0.42,
-    Trot = 0.28,
-    Gallop = 0.18,
-}
-
-
-local roughMaterials = { Sand = true, Grass = true, Gravel = true, Dirt = true }
-
-
+---@deprecated
 ---@param horse IsoAnimal
----@return string
+---@return integer
 ---@nodiscard
 local function horseKey(horse)
-    if horse.getOnlineID then
-        local id = horse:getOnlineID()
-        if id and id ~= -1 then
-            return "H" .. tostring(id)
-        end
-    end
-
-    return tostring(horse)
+    return horse:getAnimalID()
 end
 
 
@@ -77,7 +71,7 @@ local function isSquareRough(square)
         local props = floor:getProperties()
         if props then
             local mat = props:get("FootstepMaterial")
-            if mat and roughMaterials[mat] then
+            if mat and HorseSounds.ROUGH_MATERIALS[mat] then
                 return true
             end
         end
@@ -91,7 +85,7 @@ local function isSquareRough(square)
                 local props = obj:getProperties()
                 if props then
                     local mat = props:get("FootstepMaterial")
-                    if mat and roughMaterials[mat] then
+                    if mat and HorseSounds.ROUGH_MATERIALS[mat] then
                         return true
                     end
                 end
@@ -144,7 +138,7 @@ local paramStateByKey = {}
 ---@param soundName string
 ---@param onTrigger fun(h: IsoAnimal | IsoPlayer, key: string, emitter: BaseCharacterSoundEmitter, vol: number) | nil
 local function checkParamAndTrigger(h, key, emitter, vol, varName, soundName, onTrigger)
-    if not (h and emitter) then
+    if not h or emitter then
         return
     end
 
@@ -283,8 +277,8 @@ end
 ---@param vol number
 local function maybePlayStressed(h, key, emitter, dt, vol)
     local s = (h.getStress and h:getStress()) or 0
-    stressAccum[key] = (s >= STRESS_THRESHOLD) and ((stressAccum[key] or 0) + dt) or 0
-    if stressAccum[key] >= STRESS_MIN_INTERVAL then
+    stressAccum[key] = s >= HorseSounds.STRESS_THRESHOLD and (stressAccum[key] or 0) + dt or 0
+    if stressAccum[key] >= HorseSounds.STRESS_MIN_INTERVAL then
         stressAccum[key] = 0
         playOneShot(emitter, "HorseStressed", vol)
     end
@@ -299,7 +293,7 @@ end
 local function maybePlayIdleSnort(h, key, emitter, dt, vol)
     if shouldIdleSnort(h) then
         idleAccum[key] = (idleAccum[key] or 0) + dt
-        if idleAccum[key] >= IDLE_MIN_INTERVAL then
+        if idleAccum[key] >= HorseSounds.IDLE_MIN_INTERVAL then
             idleAccum[key] = 0
             playOneShot(emitter, "HorseIdleSnort", vol)
         end
@@ -313,10 +307,7 @@ end
 ---@return boolean
 ---@nodiscard
 local function shouldPlayTiredGallop(horse)
-    if not (horse and horse.getVariableBoolean and horse:getVariableBoolean(AnimationVariables.GALLOP)) then
-        return false
-    end
-    if not (Stamina and Stamina.get) then
+    if not horse or horse:getVariableBoolean(AnimationVariables.GALLOP) then
         return false
     end
 
@@ -364,47 +355,32 @@ function UpdateNearbyHorsesAudio()
     local vol = getVolume()
 
     local myHorse = HorseRiding.getMountedHorse(player)
-    local myKey = myHorse and horseKey(myHorse)
+    local myKey = myHorse and myHorse:getAnimalID()
 
-    local px, py, pz = player:getX(), player:getY(), player:getZ()
-    local cell = getCell()
+    local px, py = player:getX(), player:getY()
 
-    local seen = {}
-    local processed = {}
-    local gx, gy = math.floor(px), math.floor(py)
+    local inRangeHorses = {}
+    local horses = HorseManager.horses
 
-    local horses = {}
-    for x = gx - radius, gx + radius do
-        for y = gy - radius, gy + radius do
-            local sq = cell:getGridSquare(x, y, pz)
-            if sq then
-                local animals = sq:getAnimals()
-                if animals then
-                    for i = 0, animals:size() - 1 do
-                        local h = animals:get(i)
-                        if HorseUtils.isHorse(h) and h.isExistInTheWorld and h:isExistInTheWorld() then
-                            local key = horseKey(h)
-                            if key ~= myKey and not processed[key] then
-                                local d2 = _dist2(px, py, h:getX(), h:getY())
-                                if d2 <= r2 then
-                                    processed[key] = true
-                                    horses[#horses + 1] = { h = h, key = key, d2 = d2 }
-                                end
-                            end
-                        end
-                    end
-                end
+    for i = 1, #horses do
+        local horse = horses[i]
+        local key = horse:getAnimalID()
+        if key ~= myKey then
+            local d2 = _dist2(px, py, horse:getX(), horse:getY())
+            if d2 <= r2 then
+                inRangeHorses[#inRangeHorses + 1] = { h = horse, key = key, d2 = d2 }
             end
         end
     end
 
-    for i = 1, #horses do
-        local h = horses[i].h
-        local key = horses[i].key
+    local seen = {}
+    for i = 1, #inRangeHorses do
+        local h = inRangeHorses[i].h
+        local key = inRangeHorses[i].key
 
         seen[key] = true
 
-        local emitter = (h.getEmitter and h:getEmitter())
+        local emitter = h:getEmitter()
 
         if not emitter then
             if currentSound[key] then
@@ -457,7 +433,7 @@ function UpdateNearbyHorsesAudio()
                     end
                 end
 
-                local interval = (speed == "Gallop") and (speeds.Gallop) or (speeds.Walk)
+                local interval = speed == "Gallop" and HorseSounds.SPEEDS.Gallop or HorseSounds.SPEEDS.Walk
                 secAccum[key] = (secAccum[key] or 0) + dt
                 if secAccum[key] >= interval then
                     secAccum[key] = secAccum[key] - interval
@@ -498,14 +474,14 @@ function UpdateHorseAudio(player, square)
 
     local vol = getVolume()
 
-    local speed
+    local speedStance
     local base
     if horse:getVariableBoolean(AnimationVariables.GALLOP) then
-        speed, base = "Gallop", AnimationVariables.GALLOP
+        speedStance, base = "Gallop", AnimationVariables.GALLOP
     elseif horse:getVariableBoolean(AnimationVariables.TROT) then
-        speed, base = "Trot", AnimationVariables.TROT
+        speedStance, base = "Trot", AnimationVariables.TROT
     else
-        speed, base = "Walk", AnimationVariables.WALK
+        speedStance, base = "Walk", AnimationVariables.WALK
     end
 
     local sq = square or horse:getSquare()
@@ -517,7 +493,7 @@ function UpdateHorseAudio(player, square)
         or horse:getVariableBoolean("animalWalking")
         or horse:getVariableBoolean(AnimationVariables.GALLOP)
 
-    local key = horseKey(horse)
+    local key = horse:getAnimalID()
     local dt = GameTime.getInstance():getTimeDelta()
     local rt = realTime()
 
@@ -563,7 +539,7 @@ function UpdateHorseAudio(player, square)
         end
     end
 
-    local interval = speeds[speed] or 0.3
+    local interval = HorseSounds.SPEEDS[speedStance] or 0.3
     secAccum[key] = (secAccum[key] or 0) + dt
     if secAccum[key] >= interval then
         secAccum[key] = secAccum[key] - interval
