@@ -5,6 +5,7 @@ local HorseUtils = require("HorseMod/Utils")
 local Attachments = require("HorseMod/attachments/Attachments")
 local HorseEquipGear = require("HorseMod/TimedActions/HorseEquipGear")
 local HorseUnequipGear = require("HorseMod/TimedActions/HorseUnequipGear")
+local Mounts = require("HorseMod/Mounts")
 
 local AttachmentsManager = {}
 
@@ -67,6 +68,31 @@ AttachmentsManager.unequipAllAccessory = function(context, player, horse, oldAcc
 end
 
 
+---@param character IsoGameCharacter
+---@param animal IsoAnimal
+---@return boolean canChange
+---@return string? reason Translation string to display to user.
+function AttachmentsManager.canChangeAttachments(character, animal)
+    if animal:getVariableBoolean("animalRunning") then
+        return false, "ContextMenu_Horse_IsRunning"
+    end
+
+    if not HorseUtils.isAdult(animal) then
+        return false, "ContextMenu_Horse_NotAdult"
+    end
+
+    if Mounts.getMount(character) ~= nil then
+        return false, "ContextMenu_Horse_CantChangeAttachmentsWhilePlayerMounted"
+    end
+
+    if Mounts.getRider(animal) ~= nil then
+        return false, "ContextMenu_Horse_CantChangeAttachmentsWhileAnimalMounted"
+    end
+
+    return true
+end
+
+
 ---Add the equip and unequip context menu options for horse gear.
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
@@ -77,24 +103,22 @@ AttachmentsManager.populateHorseContextMenu = function(player, horse, context, a
     -- retrieve horse context menu
     ---@diagnostic disable-next-line
     local horseSubMenu = context:getSubMenu(horseOption.subOption) --[[@as ISContextMenu]]
-
+    
     -- create gear submenu, even if no gear is available
     local gearOption = horseSubMenu:addOption(getText("ContextMenu_Horse_Gear"))
-    if horse:getVariableBoolean("animalRunning") then
-        -- can't equip gear on a running horse
-        ---@diagnostic disable-next-line until updated in Umrella as valid field
+
+    local canChangeGear, reason = AttachmentsManager.canChangeAttachments(player, horse)
+
+    if not canChangeGear then
+        if reason then
+            local tooltip = ISWorldObjectContextMenu.addToolTip()
+            tooltip.description = getText(reason)
+            gearOption.toolTip = tooltip
+        else
+            print("[HorseMod] WEIRD: no reason returned for canChangeAttachments fail")
+        end
+
         gearOption.notAvailable = true
-        local tooltip = ISWorldObjectContextMenu.addToolTip()
-        tooltip.description = getText("ContextMenu_Horse_IsRunning")
-        gearOption.toolTip = tooltip
-        return
-    elseif not HorseUtils.isAdult(horse) then
-        -- can't equip gear on a foal
-        ---@diagnostic disable-next-line until updated in Umrella as valid field
-        gearOption.notAvailable = true
-        local tooltip = ISWorldObjectContextMenu.addToolTip()
-        tooltip.description = getText("ContextMenu_Horse_NotAdult")
-        gearOption.toolTip = tooltip
         return
     end
 
