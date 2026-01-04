@@ -91,9 +91,8 @@ end
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
 ---@param context ISContextMenu
----@param accessories ArrayList
----@param horseOption umbrella.ISContextMenu.Option
-AttachmentsManager.populateHorseContextMenu = function(player, horse, context, accessories, horseOption)
+---@param accessories ArrayList<InventoryItem>
+AttachmentsManager.populateHorseContextMenu = function(player, horse, context, accessories)
     local accessoriesCount = accessories:size()
     local attachedItems = Attachments.getAttachedItems(horse)
 
@@ -101,12 +100,8 @@ AttachmentsManager.populateHorseContextMenu = function(player, horse, context, a
         return
     end
 
-    -- retrieve horse context menu
-    ---@diagnostic disable-next-line
-    local horseSubMenu = context:getSubMenu(horseOption.subOption) --[[@as ISContextMenu]]
-    
     -- create gear submenu, even if no gear is available
-    local gearOption = horseSubMenu:addOption(getText("ContextMenu_Horse_Gear"))
+    local gearOption = context:addOption(getText("ContextMenu_Horse_Gear"))
 
     local canChangeGear, reason = AttachmentsManager.canChangeAttachments(player, horse)
 
@@ -122,9 +117,8 @@ AttachmentsManager.populateHorseContextMenu = function(player, horse, context, a
         gearOption.notAvailable = true
         return
     end
-
     
-    local gearSubMenu = ISContextMenu:getNew(horseSubMenu)
+    local gearSubMenu = ISContextMenu:getNew(context)
     context:addSubMenu(gearOption, gearSubMenu)
 
     --- EQUIP OPTIONS
@@ -266,10 +260,16 @@ AttachmentsManager.onClickedAnimalForContext = function(playerNum, context, anim
             -- verify that the horse subcontext menu exists
             -- might not be necessary, but in-case another mod fucks around with it for X reasons
             local horseOption = context:getOptionFromName(animal:getFullName())
-            if not horseOption or not horseOption.subOption then break end
-            ---@cast horseOption umbrella.ISContextMenu.Option
+            if not horseOption or not horseOption.subOption then
+                break
+            end
 
-            AttachmentsManager.populateHorseContextMenu(player, animal, context, accessories, horseOption)
+            local horseSubMenu = context:getSubMenu(horseOption.subOption)
+            if not horseSubMenu then
+                break
+            end
+
+            AttachmentsManager.populateHorseContextMenu(player, animal, horseSubMenu, accessories)
         end
     until true end
 end
