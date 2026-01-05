@@ -6,11 +6,15 @@ local Mounts = require("HorseMod/Mounts")
 
 local HorseSounds = {}
 
-
+---@type table<string, number>
 local secAccum = {}
+---@type table<string, string> 
 local currentSound = {}
+---@type table<string, integer>
 local currentSoundId = {}
+---@type table<string, BaseCharacterSoundEmitter>
 local lastEmitterByKey = {}
+---@type table<string, integer>
 local tiredSoundId = {}
 
 
@@ -18,8 +22,9 @@ local STRESS_MIN_INTERVAL = 15
 local IDLE_MIN_INTERVAL = 60
 local STRESS_THRESHOLD = 70
 
-
+---@type table<string, number>
 local stressAccum = {}
+---@type table<string, number>
 local idleAccum = {}
 
 
@@ -30,6 +35,7 @@ local speeds = {
 }
 
 
+---@type table<string, true?>
 local roughMaterials = { Sand = true, Grass = true, Gravel = true, Dirt = true }
 
 
@@ -48,7 +54,7 @@ local function horseKey(horse)
 end
 
 
----@return number | nil
+---@return number
 ---@nodiscard
 local function realTime()
     local gt = GameTime.getInstance()
@@ -133,7 +139,7 @@ function HorseSounds.playMountSnort(rider, horse)
     playOneShot(emitter, "HorseMountSnort", getVolume())
 end
 
-
+---@type table<string, table<string, boolean>>
 local paramStateByKey = {}
 
 ---@param h IsoAnimal | IsoPlayer | nil
@@ -144,7 +150,7 @@ local paramStateByKey = {}
 ---@param soundName string
 ---@param onTrigger fun(h: IsoAnimal | IsoPlayer, key: string, emitter: BaseCharacterSoundEmitter, vol: number) | nil
 local function checkParamAndTrigger(h, key, emitter, vol, varName, soundName, onTrigger)
-    if not (h and emitter) then
+    if not h or not emitter then
         return
     end
 
@@ -225,7 +231,7 @@ end
 
 
 ---@param key string
----@param emitter BaseSoundEmitter | nil
+---@param emitter BaseCharacterSoundEmitter | nil
 local function ensureEmitterBound(key, emitter)
     local last = lastEmitterByKey[key]
     if last and last ~= emitter then
@@ -235,8 +241,9 @@ local function ensureEmitterBound(key, emitter)
     lastEmitterByKey[key] = emitter
 end
 
-
+---@type table<number, table<string, true?>>
 local _nearActive = {}
+---@type integer
 local _frameSeq = 0
 
 ---@param ax number
@@ -279,7 +286,7 @@ end
 ---@param h IsoAnimal
 ---@param key string
 ---@param emitter BaseCharacterSoundEmitter | nil
----@param dt number | nil
+---@param dt number
 ---@param vol number
 local function maybePlayStressed(h, key, emitter, dt, vol)
     local s = (h.getStress and h:getStress()) or 0
@@ -294,7 +301,7 @@ end
 ---@param h IsoAnimal
 ---@param key string
 ---@param emitter BaseCharacterSoundEmitter | nil
----@param dt number | nil
+---@param dt number
 ---@param vol number
 local function maybePlayIdleSnort(h, key, emitter, dt, vol)
     if shouldIdleSnort(h) then
@@ -313,7 +320,7 @@ end
 ---@return boolean
 ---@nodiscard
 local function shouldPlayTiredGallop(horse)
-    if not (horse and horse.getVariableBoolean and horse:getVariableBoolean(AnimationVariables.GALLOP)) then
+    if not horse or not horse:getVariableBoolean(AnimationVariables.GALLOP) then
         return false
     end
     if not (Stamina and Stamina.get) then
@@ -369,10 +376,13 @@ function UpdateNearbyHorsesAudio()
     local px, py, pz = player:getX(), player:getY(), player:getZ()
     local cell = getCell()
 
+    ---@type table<string, true?>
     local seen = {}
+    ---@type table<string, true?>
     local processed = {}
     local gx, gy = math.floor(px), math.floor(py)
 
+    ---@type {h: IsoAnimal, key: string, d2: number}[]
     local horses = {}
     for x = gx - radius, gx + radius do
         for y = gy - radius, gy + radius do
@@ -461,6 +471,9 @@ function UpdateNearbyHorsesAudio()
                 secAccum[key] = (secAccum[key] or 0) + dt
                 if secAccum[key] >= interval then
                     secAccum[key] = secAccum[key] - interval
+
+                    -- rely on implicit conversion to integer
+                    ---@diagnostic disable-next-line: param-type-mismatch
                     addSound(h, h:getX(), h:getY(), h:getZ(), 4, 4)
                 end
             end
@@ -567,6 +580,8 @@ function UpdateHorseAudio(player, square)
     secAccum[key] = (secAccum[key] or 0) + dt
     if secAccum[key] >= interval then
         secAccum[key] = secAccum[key] - interval
+        -- rely on implicit conversion to integer
+        ---@diagnostic disable-next-line: param-type-mismatch
         addSound(horse, horse:getX(), horse:getY(), horse:getZ(), 4, 4)
     end
 end
