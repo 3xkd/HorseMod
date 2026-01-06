@@ -1,5 +1,4 @@
----REQUIREMENTS
--- local HorseRiding = require("HorseMod/Riding")
+local Mounts = require("HorseMod/Mounts")
 
 --[[
 This patch prevents players from equipping or unequipping certain clothing items while mounted on a horse.
@@ -203,7 +202,7 @@ end
 ClothingEquip._originalWearClothingValid = ISWearClothing.isValid
 function ISWearClothing:isValid()
     if self.item then
-        if HorseRiding.isMountingHorse(self.character) then
+        if Mounts.hasMount(self.character) then
             if not ClothingEquip.canEquipItem(self.item) then
                 return false
             end
@@ -215,7 +214,7 @@ end
 ClothingEquip._originalUnequipValid = ISUnequipAction.isValid
 function ISUnequipAction:isValid()
     if self.item then
-        if HorseRiding.isMountingHorse(self.character) then
+        if Mounts.hasMount(self.character) then
             if not ClothingEquip.canEquipItem(self.item) then
                 return false
             end

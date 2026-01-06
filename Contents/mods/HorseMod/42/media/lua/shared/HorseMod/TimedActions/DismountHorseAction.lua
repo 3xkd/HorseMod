@@ -1,6 +1,7 @@
 require("TimedActions/ISBaseTimedAction")
 
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
+local Mounts = require("HorseMod/Mounts")
 
 
 ---@namespace HorseMod
@@ -41,8 +42,8 @@ function DismountHorseAction:update()
     -- keep the horse locked facing the stored direction
     self.horse:setDir(self._lockDir)
 
-    if self.character:getVariableBoolean(AnimationVariables.DISMOUNT_FINISHED) == true then
-        self.character:setVariable(AnimationVariables.DISMOUNT_FINISHED, false)
+    if self.character:getVariableBoolean(AnimationVariable.DISMOUNT_FINISHED) == true then
+        self.character:setVariable(AnimationVariable.DISMOUNT_FINISHED, false)
         self:forceComplete()
     end
 end
@@ -54,7 +55,7 @@ function DismountHorseAction:start()
     self.horse:stopAllMovementNow()
 
     self._lockDir  = self.horse:getDir()
-    self.character:setVariable(AnimationVariables.DISMOUNT_STARTED, true)
+    self.character:setVariable(AnimationVariable.DISMOUNT_STARTED, true)
 
     if self.side == "right" then
         if self.hasSaddle then
@@ -74,14 +75,14 @@ end
 
 function DismountHorseAction:stop()
     self.horse:getBehavior():setBlockMovement(false)
-    self.character:setVariable(AnimationVariables.DISMOUNT_STARTED, false)
+    self.character:setVariable(AnimationVariable.DISMOUNT_STARTED, false)
     ISBaseTimedAction.stop(self)
 end
 
 
 function DismountHorseAction:complete()
-    require("HorseMod/Riding").removeMount(self.character)
-    require("HorseMod/Mounts").removeMount(self.character)
+    -- TODO: this might take a bit to inform the client, so we should consider faking it in perform()
+    Mounts.removeMount(self.character)
     return true
 end
 
@@ -119,6 +120,8 @@ function DismountHorseAction:new(mount, side, hasSaddle, landX, landY, landZ)
     local o = ISBaseTimedAction.new(self, mount.pair.rider)
 
     -- HACK: this loses its metatable when transmitted by the server
+    mount = convertToPZNetTable(mount)
+    mount.pair = convertToPZNetTable(mount.pair)
     setmetatable(mount, require("HorseMod/mount/Mount"))
     o.mount = mount
     o.horse = mount.pair.mount

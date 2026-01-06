@@ -1,9 +1,9 @@
 ---@namespace HorseMod
 
-local HorseRiding = require("HorseMod/Riding")
 local HorseDamage = require("HorseMod/horse/HorseDamage")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 local Attachments = require("HorseMod/attachments/Attachments")
+local Mounts = require("HorseMod/Mounts")
 
 local PlayerDamage = {}
 
@@ -58,7 +58,7 @@ end
 
 ---@param player IsoPlayer
 function PlayerDamage.applyRidingPain(player)
-    local horse = HorseRiding.getMountedHorse(player)
+    local horse = Mounts.getMount(player)
     if not horse then
         return
     end
@@ -402,7 +402,7 @@ end
 ---@param zombie IsoZombie
 ---@return nil
 function PlayerDamage.onZombieAttack_checkAndRedirect(zombie)
-    if not zombie:getVariableBoolean(AnimationVariables.RIDING_HORSE) then
+    if not zombie:getVariableBoolean(AnimationVariable.RIDING_HORSE) then
         return
     end
 
@@ -423,7 +423,7 @@ function PlayerDamage.onZombieAttack_checkAndRedirect(zombie)
     for i = 0, BodyPartType.MAX:index() - 1 do
         local bpType = BodyPartType.FromIndex(i)
         local part = bodyDamage:getBodyPart(bpType)
-        local horse = HorseRiding.getMountedHorse(target)
+        local horse = Mounts.getMount(target)
         if part and (part:bitten() or part:scratched() or part:isCut() or part:bleeding()) then
             if allowedDamagePartIndices[i] then
                 return

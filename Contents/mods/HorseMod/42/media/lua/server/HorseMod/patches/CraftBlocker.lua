@@ -1,5 +1,5 @@
 ---REQUIREMENTS
-local HorseRiding = require("HorseMod/Riding")
+local Mounts = require("HorseMod/Mounts")
 
 --[[
 Patches the actions of building and crafting to block while mounted. Craft is only allowed if the recipe is marked as "InHandCraftCraft".
@@ -8,7 +8,7 @@ local CraftBlocker = {}
 
 CraftBlocker._originalBuildingIsValid = ISBuildIsoEntity.isValid
 function ISBuildIsoEntity:isValid(square)
-    if HorseRiding.isMountingHorse(self.character) then
+    if Mounts.hasMount(self.character) then
         return false
     end
 
@@ -18,7 +18,7 @@ end
 CraftBlocker._originalHandCraftValid = ISHandcraftAction.isValid
 function ISHandcraftAction:isValid()
     local craftRecipe = self.craftRecipe
-    if HorseRiding.isMountingHorse(self.character) then
+    if Mounts.hasMount(self.character) then
         if craftRecipe then
             -- if recipe can be made from hand, then allow it
             if not craftRecipe:isInHandCraftCraft() then

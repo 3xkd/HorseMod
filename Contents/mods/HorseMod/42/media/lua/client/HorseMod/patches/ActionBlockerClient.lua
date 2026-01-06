@@ -1,5 +1,5 @@
 ---REQUIREMENTS
-local HorseRiding = require("HorseMod/Riding")
+local Mounts = require("HorseMod/Mounts")
 
 local ActionBlocker = require("HorseMod/patches/ActionBlocker")
 
@@ -11,7 +11,7 @@ local ActionBlockerClient = {}
 ActionBlockerClient.addAfter = ISTimedActionQueue.addAfter
 function ISTimedActionQueue.addAfter(action, after)
     if not ActionBlocker.validActions[action.Type] then
-        if HorseRiding.isMountingHorse(action.character) then
+        if Mounts.hasMount(action.character) then
             return
         end
     end
@@ -21,7 +21,7 @@ end
 ActionBlockerClient.add = ISTimedActionQueue.add
 function ISTimedActionQueue.add(action)
     if not ActionBlocker.validActions[action.Type] then
-        if HorseRiding.isMountingHorse(action.character) then
+        if Mounts.hasMount(action.character) then
             return
         end
     end
