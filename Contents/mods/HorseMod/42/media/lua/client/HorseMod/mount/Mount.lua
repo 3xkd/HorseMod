@@ -89,7 +89,7 @@ end
 ---@nodiscard
 function Mount.new(pair)
     pair.rider:getAttachedAnimals():add(pair.mount)
-    pair.mount:getData():setAttachedPlayer(pair.rider)
+    -- pair.mount:getData():setAttachedPlayer(pair.rider)
 
     pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, true)
     pair:setAnimationVariable(AnimationVariable.TROT, false)
