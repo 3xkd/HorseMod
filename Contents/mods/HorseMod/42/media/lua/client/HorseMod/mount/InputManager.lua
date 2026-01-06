@@ -1,6 +1,6 @@
 ---@namespace HorseMod
 
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 local ModOptions = require("HorseMod/ModOptions")
 
 local JOY_DEADZONE        = 0.30   -- ignore tiny stick drift
@@ -87,7 +87,7 @@ function InputManager:getJoypadInput(pad)
             y = y
         },
         run = run,
-        trot = self.mount.pair.mount:getVariableBoolean(AnimationVariables.TROT)
+        trot = self.mount.pair.mount:getVariableBoolean(AnimationVariable.TROT)
     }
 end
 
@@ -125,7 +125,7 @@ function InputManager:getKeyboardInput()
             y = y
         },
         run = run,
-        trot = self.mount.pair.mount:getVariableBoolean(AnimationVariables.TROT)
+        trot = self.mount.pair.mount:getVariableBoolean(AnimationVariable.TROT)
     }
 end
 
@@ -147,8 +147,8 @@ function InputManager:keyPressed(key)
     if key == ModOptions.HorseTrotButton then
         self.mount.controller:toggleTrot()
     elseif key == ModOptions.HorseJumpButton then
-        if self.mount.pair.mount:getVariableBoolean(AnimationVariables.GALLOP)
-                and not self.mount.pair:getAnimationVariableBoolean(AnimationVariables.JUMP) then
+        if self.mount.pair.mount:getVariableBoolean(AnimationVariable.GALLOP)
+                and not self.mount.pair:getAnimationVariableBoolean(AnimationVariable.JUMP) then
             self.mount.controller:jump()
         end
     end

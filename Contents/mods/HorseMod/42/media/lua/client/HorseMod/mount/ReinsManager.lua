@@ -2,7 +2,7 @@
 
 local Attachments = require("HorseMod/attachments/Attachments")
 local AttachmentData = require("HorseMod/attachments/AttachmentData")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 
 -- it might be better to redesign this as a generic attachment animator, but i'll leave that decision up to sim as he did most of the attachments design
 
@@ -47,9 +47,9 @@ function ReinsManager:update()
         self:setState(mount, reinsItem, movementState)
 
         --TODO these states should be defined when the rider mounts the horse
-        mountPair.rider:setVariable(AnimationVariables.HAS_REINS, true)
+        mountPair.rider:setVariable(AnimationVariable.HAS_REINS, true)
     else
-        mountPair.rider:setVariable(AnimationVariables.HAS_REINS, false)
+        mountPair.rider:setVariable(AnimationVariable.HAS_REINS, false)
     end
 end
 

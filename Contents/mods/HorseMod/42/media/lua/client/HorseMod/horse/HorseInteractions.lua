@@ -1,7 +1,7 @@
 local HorseUtils  = require("HorseMod/Utils")
 local Mounts = require("HorseMod/Mounts")
 local Mounting = require("HorseMod/Mounting")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 -- local HorseAttachments = require("HorseMod/HorseAttachments")
 
 ---@param context ISContextMenu
@@ -82,11 +82,11 @@ local function handleJoypadMountButton(player)
     if joypadHasUIFocus(pid) then return end
     if player:hasTimedActions() then return end
     if player:getVehicle() then return end
-    if player:getVariableBoolean(AnimationVariables.MOUNTING_HORSE) then return end
+    if player:getVariableBoolean(AnimationVariable.MOUNTING_HORSE) then return end
 
     local mountedHorse = Mounts.getMount(player)
     if mountedHorse then
-        if player:getVariableBoolean(AnimationVariables.RIDING_HORSE) then
+        if player:getVariableBoolean(AnimationVariable.RIDING_HORSE) then
             Mounting.dismountHorse(player)
         end
         return

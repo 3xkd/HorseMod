@@ -5,7 +5,7 @@ end
 local Stamina = require("HorseMod/Stamina")
 local Mounts = require("HorseMod/Mounts")
 local HorseManager = require("HorseMod/HorseManager")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 
 local StaminaChange = Stamina.StaminaChange
 
@@ -23,9 +23,9 @@ function StaminaSystem:update(horses, delta)
         local staminaChange = 0.0
         if Mounts.hasRider(horse) then
             if horse:isAnimalMoving() then
-                if horse:getVariableBoolean(AnimationVariables.GALLOP) then
+                if horse:getVariableBoolean(AnimationVariable.GALLOP) then
                     staminaChange = StaminaChange.RUN
-                elseif horse:getVariableBoolean(AnimationVariables.TROT) then
+                elseif horse:getVariableBoolean(AnimationVariable.TROT) then
                     staminaChange = StaminaChange.TROT
                 else
                     staminaChange = StaminaChange.WALK

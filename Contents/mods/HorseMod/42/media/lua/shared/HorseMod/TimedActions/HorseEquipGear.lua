@@ -3,7 +3,7 @@
 ---REQUIREMENTS
 local Attachments = require("HorseMod/attachments/Attachments")
 local ContainerManager = require("HorseMod/attachments/ContainerManager")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 
 ---Timed action for equipping gear on a horse.
 ---@class HorseEquipGear : ISBaseTimedAction, umbrella.NetworkedTimedAction
@@ -26,7 +26,7 @@ function HorseEquipGear:start()
     local equipBehavior = self.equipBehavior
     
     -- set the action animation
-    self.character:setVariable(AnimationVariables.EQUIP_FINISHED, false)
+    self.character:setVariable(AnimationVariable.EQUIP_FINISHED, false)
 
     local anim = equipBehavior.anim
     local animationVar = anim and anim[self.side] or "Loot"
@@ -46,7 +46,7 @@ function HorseEquipGear:update()
 
     -- end when
     local maxTime = self.maxTime
-    if maxTime == -1 and self.character:getVariableBoolean(AnimationVariables.EQUIP_FINISHED) then
+    if maxTime == -1 and self.character:getVariableBoolean(AnimationVariable.EQUIP_FINISHED) then
         self:forceComplete()
     end
 end

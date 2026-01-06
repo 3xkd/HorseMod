@@ -1,6 +1,6 @@
 local HorseUtils = require("HorseMod/Utils")
 local Event = require("HorseMod/Event")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 
 ---@namespace HorseMod
 
@@ -59,16 +59,16 @@ end
 
 ---@param horse IsoAnimal
 local function initialiseHorse(horse)
-    horse:setVariable(AnimationVariables.IS_HORSE, true)
+    horse:setVariable(AnimationVariable.IS_HORSE, true)
 
     local speed = horse:getUsedGene("speed"):getCurrentValue()
-    horse:setVariable(AnimationVariables.GENE_SPEED, speed)
+    horse:setVariable(AnimationVariable.GENE_SPEED, speed)
     local strength = horse:getUsedGene("strength"):getCurrentValue()
-    horse:setVariable(AnimationVariables.GENE_STRENGTH, strength)
+    horse:setVariable(AnimationVariable.GENE_STRENGTH, strength)
     local stamina = horse:getUsedGene("stamina"):getCurrentValue()
-    horse:setVariable(AnimationVariables.GENE_STAMINA, stamina)
+    horse:setVariable(AnimationVariable.GENE_STAMINA, stamina)
     local carry = horse:getUsedGene("carryWeight"):getCurrentValue()
-    horse:setVariable(AnimationVariables.GENE_CARRYWEIGHT, carry)
+    horse:setVariable(AnimationVariable.GENE_CARRYWEIGHT, carry)
 end
 
 ---Utility function to find a horse by its animal ID.

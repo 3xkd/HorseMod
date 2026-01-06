@@ -1,7 +1,7 @@
 ---@namespace HorseMod
 
 local HorseDamage = require("HorseMod/horse/HorseDamage")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 local Attachments = require("HorseMod/attachments/Attachments")
 local Mounts = require("HorseMod/Mounts")
 
@@ -402,7 +402,7 @@ end
 ---@param zombie IsoZombie
 ---@return nil
 function PlayerDamage.onZombieAttack_checkAndRedirect(zombie)
-    if not zombie:getVariableBoolean(AnimationVariables.RIDING_HORSE) then
+    if not zombie:getVariableBoolean(AnimationVariable.RIDING_HORSE) then
         return
     end
 
