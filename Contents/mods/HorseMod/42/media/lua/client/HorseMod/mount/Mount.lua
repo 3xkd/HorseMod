@@ -55,7 +55,6 @@ function Mount:update()
         self.inputManager:getCurrentInput()
     )
     self.reinsManager:update()
-    UpdateHorseAudio(self.pair.rider)
 end
 
 

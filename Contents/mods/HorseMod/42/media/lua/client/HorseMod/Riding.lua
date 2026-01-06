@@ -1,10 +1,11 @@
 ---REQUIREMENTS
 local Mount = require("HorseMod/mount/Mount")
 local HorseUtils = require("HorseMod/Utils")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 local Mounts = require("HorseMod/Mounts")
 
 local MountPair = require("HorseMod/MountPair")
+local HorseSounds = require("HorseMod/HorseSounds")
 
 ---@namespace HorseMod
 
@@ -116,21 +117,30 @@ Events.OnKeyPressed.Add(HorseRiding.onKeyPressed)
 
 
 -- TODO: this function needs to be split between client and server
+---@param character IsoGameCharacter
 HorseRiding.dismountOnHorseDeath = function(character)
     if not character:isAnimal() then
         return
     end
+    ---@cast character IsoAnimal
 
     for _, mount in pairs(HorseRiding.playerMounts) do
-        if mount and mount.pair.mount == character then
+        if mount.pair.mount == character then
             local rider = mount.pair.rider
             Mounts.removeMount(rider)
-            HorseUtils.runAfter(4.1, function()
+
+            HorseSounds.playSound(character, HorseSounds.Sound.DEATH)
+
+            HorseUtils.runAfter(
+                4.1,
+                function()
                     rider:setBlockMovement(false)
                     rider:setIgnoreMovement(false)
                     rider:setIgnoreInputsForDirection(false)
-                    rider:setVariable(AnimationVariables.DYING, false)
-                end)
+                    rider:setVariable(AnimationVariable.DYING, false)
+                end
+            )
+
             return
         end
     end
@@ -141,10 +151,10 @@ Events.OnCharacterDeath.Add(HorseRiding.dismountOnHorseDeath)
 
 ---@param player IsoPlayer
 local function initHorseMod(_, player)
-    player:setVariable(AnimationVariables.RIDING_HORSE, false)
-    player:setVariable(AnimationVariables.MOUNTING_HORSE, false)
-    player:setVariable(AnimationVariables.DISMOUNT_FINISHED, false)
-    player:setVariable(AnimationVariables.MOUNT_FINISHED, false)
+    player:setVariable(AnimationVariable.RIDING_HORSE, false)
+    player:setVariable(AnimationVariable.MOUNTING_HORSE, false)
+    player:setVariable(AnimationVariable.DISMOUNT_FINISHED, false)
+    player:setVariable(AnimationVariable.MOUNT_FINISHED, false)
 end
 
 Events.OnCreatePlayer.Add(initHorseMod)

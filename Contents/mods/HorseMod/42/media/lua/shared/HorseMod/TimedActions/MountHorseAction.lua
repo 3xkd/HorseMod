@@ -1,7 +1,7 @@
 require("TimedActions/ISBaseTimedAction")
 
 local MountPair = require("HorseMod/MountPair")
-local AnimationVariables = require("HorseMod/AnimationVariables")
+local AnimationVariable = require("HorseMod/AnimationVariable")
 local Mounts = require("HorseMod/Mounts")
 
 
@@ -40,8 +40,8 @@ function MountHorseAction:update()
     self.horse:setDir(self.lockDir)
     self.character:setDir(self.lockDir)
 
-    if self.character:getVariableBoolean(AnimationVariables.MOUNT_FINISHED) == true then
-        self.character:setVariable(AnimationVariables.MOUNT_FINISHED, false)
+    if self.character:getVariableBoolean(AnimationVariable.MOUNT_FINISHED) == true then
+        self.character:setVariable(AnimationVariable.MOUNT_FINISHED, false)
         self:forceComplete()
     end
 end
@@ -53,14 +53,14 @@ function MountHorseAction:start()
     self.horse:getBehavior():setBlockMovement(true)
     self.horse:stopAllMovementNow()
 
-    self.horse:setVariable(AnimationVariables.DYING, false)
+    self.horse:setVariable(AnimationVariable.DYING, false)
 
     self.lockDir = self.horse:getDir()
     self.character:setDir(self.lockDir)
 
-    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, true)
-    self.character:setVariable(AnimationVariables.MOUNT_FINISHED, false)
-    self.character:setVariable(AnimationVariables.DYING, false)
+    self.character:setVariable(AnimationVariable.MOUNTING_HORSE, true)
+    self.character:setVariable(AnimationVariable.MOUNT_FINISHED, false)
+    self.character:setVariable(AnimationVariable.DYING, false)
 
     if self.side == "right" then
         if self.saddle then
@@ -83,13 +83,13 @@ end
 function MountHorseAction:stop()
     self.horse:getBehavior():setBlockMovement(false)
 
-    self.pair:setAnimationVariable(AnimationVariables.RIDING_HORSE, false)
-    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, false)
+    self.pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, false)
+    self.character:setVariable(AnimationVariable.MOUNTING_HORSE, false)
     self.character:setVariable("isTurningLeft", false)
     self.character:setVariable("isTurningRight", false)
     self.character:setTurnDelta(1)
 
-    self.character:setVariable(AnimationVariables.MOUNTING_HORSE, false)
+    self.character:setVariable(AnimationVariable.MOUNTING_HORSE, false)
 
     ISBaseTimedAction.stop(self)
 end
@@ -104,7 +104,8 @@ end
 
 function MountHorseAction:perform()
     -- HACK: we can't require this at file load because it is in the client dir
-    require("HorseMod/Sounds").playMountSnort(self.character, self.horse)
+    local HorseSounds = require("HorseMod/HorseSounds")
+    HorseSounds.playSound(self.horse, HorseSounds.Sound.MOUNT)
 
     ISBaseTimedAction.perform(self)
 end
