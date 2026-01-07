@@ -13,7 +13,7 @@ local function doHorseInteractionMenu(context, player, animal)
     if playerMount ~= animal then
         local canMount, reason = Mounting.canMountHorse(player, animal)
         local option = context:addOption(
-            getText("IGUI_HorseMod_MountHorse"),
+            getText("ContextMenu_Horse_Mount", animal:getFullName()),
             player, Mounting.mountHorse, animal
         )
         option.iconTexture = animal:getInventoryIconTexture()
@@ -26,7 +26,7 @@ local function doHorseInteractionMenu(context, player, animal)
         end
     else
         context:addOption(
-            getText("IGUI_HorseMod_DismountHorse"),
+            getText("ContextMenu_Horse_Dismount", animal:getFullName()),
             player, Mounting.dismountHorse
         )
     end
