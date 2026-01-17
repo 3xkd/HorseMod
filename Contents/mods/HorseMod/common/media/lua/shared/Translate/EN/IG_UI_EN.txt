@@ -1,29 +1,34 @@
 IGUI_EN = {
-    IGUI_AnimalType_stallion = "Stallion",
-    IGUI_AnimalType_mare = "Mare",
-    IGUI_AnimalType_filly = "Filly",
-    IGUI_Breed_american_quarter = "American Quarter",
-    IGUI_Breed_american_paint = "American Paint",
-    IGUI_Breed_appaloosa = "Appaloosa",
-    IGUI_Breed_thoroughbred = "Thoroughbred",
-    IGUI_Breed_blue_roan = "Blue Roan",
-    IGUI_Breed_spotted_appaloosa = "Spotted Appaloosa",
-    IGUI_Breed_american_paint_overo = "American Paint (Overo)",
-    IGUI_Breed_flea_bitten_grey = "Flea-bitten Grey",
-    IGUI_Animal_Group_horse = "Horse",
-    IGUI_Horse_Slot = "Slot",
+    /* General */
+    IGUI_AnimalType_stallion = "Stallion"
+    IGUI_AnimalType_mare = "Mare"
+    IGUI_AnimalType_filly = "Filly"
 
-    IGUI_ModOptions_HorseModName = "Horse",
-    IGUI_ModOptions_HorseSoundVolume_Desc = "Change the volume of Horse sounds",
-    IGUI_ModOptions_HorseSoundVolume_Name = "Horse Sound Volume (Default 0.40)",
-    IGUI_ModOptions_HorseSoundVolume_Tooltip = "Set sound volume of all horse sounds.",
+    IGUI_Animal_Group_horse = "Horse"
+    IGUI_Horse_Slot = "Slot" /* for attachments */
 
-    IGUI_ModOptions_HorseKeybind = "Horse keybinds",
-    IGUI_ModOptions_HorseKeybind_Jump_Name = "Horse Jump",
-    IGUI_ModOptions_HorseKeybind_Jump_Tooltip = "Change the keybind for horse jumping.",
+    /* Breeds */
+    IGUI_Breed_AmericanQuarterPalomino = "American Quarter (Palomino)"
+    IGUI_Breed_AmericanQuarterBlueRoan = "American Quarter (Blue Roan)"
+    IGUI_Breed_AmericanPaintTobiano = "American Paint (Tobiano)"
+    IGUI_Breed_AmericanPaintOvero = "American Paint (Overo)"
+    IGUI_Breed_AppaloosaGrullaBlanket = "Appaloosa (Grulla Blanket)"
+    IGUI_Breed_AppaloosaLeopard = "Appaloosa (Leopard)"
+    IGUI_Breed_ThoroughbredBay = "Thoroughbred (Bay)"
+    IGUI_Breed_ThoroughbredFleaBittenGrey = "Thoroughbred (Flea-bitten Grey)"
+
+    /* Mod Options */
+    IGUI_ModOptions_HorseModName = "Horse"
+    IGUI_ModOptions_HorseSoundVolume_Desc = "Change the volume of Horse sounds"
+    IGUI_ModOptions_HorseSoundVolume_Name = "Horse Sound Volume (Default 0.40)"
+    IGUI_ModOptions_HorseSoundVolume_Tooltip = "Set sound volume of all horse sounds."
+
+    IGUI_ModOptions_HorseKeybind = "Horse keybinds"
+    IGUI_ModOptions_HorseKeybind_Jump_Name = "Horse Jump"
+    IGUI_ModOptions_HorseKeybind_Jump_Tooltip = "Change the keybind for horse jumping."
     
-    IGUI_ModOptions_HorseKeybind_Trot_Name = "Horse Trot",
-    IGUI_ModOptions_HorseKeybind_Trot_Tooltip = "Change the keybind for horse trotting.",
+    IGUI_ModOptions_HorseKeybind_Trot_Name = "Horse Trot"
+    IGUI_ModOptions_HorseKeybind_Trot_Tooltip = "Change the keybind for horse trotting."
 
     IGUI_HorseMod_MultiplayerWarning = "The Horse mod does not support multiplayer.<br>Horses will not work properly, and you may experience other issues with your playthrough.<br>It is highly recommended that you disable the Horse mod.<br>Bug reports for multiplayer will not be accepted."
 }
