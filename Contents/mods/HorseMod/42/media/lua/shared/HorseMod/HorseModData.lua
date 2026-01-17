@@ -17,7 +17,7 @@ local ANIMAL_MODDATA_KEY = "horsemod"
 local GLOBAL_MOD_DATA
 
 Events.OnInitGlobalModData.Add(function()
-    GLOBAL_MOD_DATA = ModData.getOrCreate("horsemod")
+    GLOBAL_MOD_DATA = ModData.getOrCreate(ANIMAL_MODDATA_KEY)
     GLOBAL_MOD_DATA.orphanedHorses = GLOBAL_MOD_DATA.orphanedHorses or {}
 end)
 
