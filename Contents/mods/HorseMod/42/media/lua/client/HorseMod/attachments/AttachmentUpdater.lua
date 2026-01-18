@@ -8,8 +8,9 @@ local ManeManager = require("HorseMod/attachments/ManeManager")
 local ContainerManager = require("HorseMod/attachments/ContainerManager")
 local HorseModData = require("HorseMod/HorseModData")
 
+---@class AttachmentUpdater : System
 local AttachmentUpdater = {
-    DEBUG_AttachmentUpdater = true,
+    -- DEBUG_AttachmentUpdater = true,
 
     ---Holds currently already reapplied horses.
     ---@type table<IsoAnimal, true?>
@@ -104,12 +105,12 @@ Events.OnCharacterDeath.Add(AttachmentUpdater.onCharacterDeath)
 
 
 ---@TODO remove/comment for proper release, this is used to hot reload in-game for testing
-for i, system in ipairs(HorseManager.systems) do
-    ---@diagnostic disable-next-line
-    if system.DEBUG_AttachmentUpdater then
-        table.remove(HorseManager.systems,i)
-    end
-end
+-- for i, system in ipairs(HorseManager.systems) do
+--     ---@diagnostic disable-next-line
+--     if system.DEBUG_AttachmentUpdater then
+--         table.remove(HorseManager.systems,i)
+--     end
+-- end
 
 ---Add system for horses
 table.insert(HorseManager.systems, AttachmentUpdater)
