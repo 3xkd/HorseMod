@@ -5,6 +5,7 @@ AddChumToWaterAction,false
 CreateChumFromGroundSandAction,false
 HealthPanelAction,false
 HorseMod_DismountAction,true
+HorseMod_UrgentDismountAction,true
 HorseMod_HorseEquipGear,false
 HorseMod_HorseUnequipGear,false
 HorseMod_MountAction,false
@@ -93,7 +94,7 @@ ISEquipHeavyItem,
 ISEquipWeaponAction,true
 ISExitVehicle,
 ISExtendedPlacementAction,
-ISFeedAnimalFromHand,
+ISFeedAnimalFromHand,true
 ISFertilizeAction,
 ISFillGrave,
 ISFitnessAction,
@@ -167,7 +168,7 @@ ISPadlockByCodeAction,
 ISPaintAction,
 ISPaintSignAction,
 ISPathFindAction,
-ISPetAnimal,
+ISPetAnimal,true
 ISPickAxeGroundCoverItem,
 ISPickUpGroundCoverItem,
 ISPickupAnimal,
