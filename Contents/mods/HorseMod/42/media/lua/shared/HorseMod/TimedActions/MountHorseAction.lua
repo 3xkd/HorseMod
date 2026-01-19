@@ -11,11 +11,11 @@ local MountingUtility = require("HorseMod/mounting/MountingUtility")
 
 ---@class MountHorseAction : ISBaseTimedAction
 ---
----@field pair MountPair
+---@field character IsoPlayer
 ---
----@field mount IsoAnimal
+---@field animal IsoAnimal
 ---
----@field side string
+---@field mountPosition MountPosition
 ---
 ---@field hasSaddle boolean
 ---
@@ -25,11 +25,11 @@ local MountHorseAction = ISBaseTimedAction:derive("HorseMod_MountHorseAction")
 
 
 function MountHorseAction:isValid()
-    if self.mount:isExistInTheWorld()
+    if self.animal:isExistInTheWorld()
         and self.character:getSquare() then
         
         -- verify the player can still mount the horse
-        if MountingUtility.canMountHorse(self.character, self.mount) then
+        if MountingUtility.canMountHorse(self.character, self.animal) then
             return true
         end
         return false
@@ -40,7 +40,7 @@ end
 
 function MountHorseAction:waitToStart()
     -- self.character:faceThisObject(self.mount)
-    self.lockDir = self.mount:getDirectionAngle()
+    self.lockDir = self.animal:getDirectionAngle()
     self.character:setDirectionAngle(self.lockDir)
 	return self.character:shouldBeTurning()
 end
@@ -48,7 +48,7 @@ end
 
 function MountHorseAction:update()
     -- fix the mount and rider to look in the same direction for animation alignment
-    self.mount:setDirectionAngle(self.lockDir)
+    self.animal:setDirectionAngle(self.lockDir)
     
     local character = self.character
     character:setIsAiming(false)
@@ -62,7 +62,7 @@ end
 
 
 function MountHorseAction:start()
-    self.mount:setVariable(AnimationVariable.DYING, false)
+    self.animal:setVariable(AnimationVariable.DYING, false)
 
     self.character:setVariable(AnimationVariable.MOUNTING_HORSE, true)
     self.character:setVariable(AnimationVariable.MOUNT_FINISHED, false)
@@ -76,15 +76,14 @@ function MountHorseAction:start()
         actionAnim = "Bob_Mount_Bareback_"
     end
 
-    actionAnim = actionAnim .. self.side
+    actionAnim = actionAnim .. self.mountPosition.name
     self:setActionAnim(actionAnim)
 end
 
 
 function MountHorseAction:stop()
-    -- self.horse:getBehavior():setBlockMovement(false)
-
-    self.pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, false)
+    local pair = MountPair.new(self.character, self.animal)
+    pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, false)
     self.character:setVariable(AnimationVariable.MOUNTING_HORSE, false)
     self.character:setVariable("isTurningLeft", false)
     self.character:setVariable("isTurningRight", false)
@@ -97,8 +96,7 @@ end
 
 
 function MountHorseAction:complete()
-    -- TODO: this might take a bit to inform the client, so we should consider faking it in perform()
-    Mounts.addMount(self.character, self.mount)
+    Mounts.addMount(self.character, self.animal)
     return true
 end
 
@@ -106,7 +104,7 @@ end
 function MountHorseAction:perform()
     -- HACK: we can't require this at file load because it is in the client dir
     local HorseSounds = require("HorseMod/HorseSounds")
-    HorseSounds.playSound(self.mount, HorseSounds.Sound.MOUNT)
+    HorseSounds.playSound(self.animal, HorseSounds.Sound.MOUNT)
 
     ISBaseTimedAction.perform(self)
 end
@@ -121,21 +119,19 @@ function MountHorseAction:getDuration()
 end
 
 
----@param pair MountPair
----@param side string
+---@param character IsoPlayer
+---@param animal IsoAnimal
+---@param mountPosition MountPosition
 ---@param hasSaddle boolean
 ---@return self
 ---@nodiscard
-function MountHorseAction:new(pair, side, hasSaddle)
+function MountHorseAction:new(character, animal, mountPosition, hasSaddle)
     ---@type MountHorseAction
-    local o = ISBaseTimedAction.new(self, pair.rider)
+    local o = ISBaseTimedAction.new(self, character)
 
-    -- HACK: this loses its metatable when transmitted by the server
-    pair = convertToPZNetTable(pair)
-    setmetatable(pair, MountPair)
-    o.pair = pair
-    o.mount = pair.mount
-    o.side = side
+    o.character = character
+    o.animal = animal
+    o.mountPosition = mountPosition
     o.hasSaddle = hasSaddle
     o.stopOnWalk = true
     o.stopOnRun  = true

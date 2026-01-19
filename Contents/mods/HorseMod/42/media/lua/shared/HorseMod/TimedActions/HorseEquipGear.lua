@@ -21,7 +21,6 @@ function HorseEquipGear:isValid()
 end
 
 function HorseEquipGear:start()
-    self.character:addLineChatElement("Equipping "..self.accessory:getName().." on horse...")
     local equipBehavior = self.equipBehavior
     
     -- set the action animation

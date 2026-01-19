@@ -11,7 +11,7 @@ local Mounts = require("HorseMod/Mounts")
 ---
 ---@field character IsoPlayer
 ---
----@field horse IsoAnimal
+---@field animal IsoAnimal
 ---
 ---@field mount Mount
 ---
@@ -23,15 +23,15 @@ local DismountHorseAction = ISBaseTimedAction:derive("HorseMod_DismountHorseActi
 
 ---@return boolean
 function DismountHorseAction:isValid()
-    return self.horse:isExistInTheWorld()
+    return self.animal:isExistInTheWorld()
 end
 
 
 function DismountHorseAction:update()
     -- keep the horse locked facing the stored direction
-    local horse = self.horse
-    horse:setDirectionAngle(self.lockDir)
-    horse:getPathFindBehavior2():reset()
+    local animal = self.animal
+    animal:setDirectionAngle(self.lockDir)
+    animal:getPathFindBehavior2():reset()
 
     -- complete when dismount is finished
     if self.character:getVariableBoolean(AnimationVariable.DISMOUNT_FINISHED) == true then
@@ -42,7 +42,7 @@ end
 
 
 function DismountHorseAction:start()
-    self.lockDir = self.horse:getDirectionAngle()
+    self.lockDir = self.animal:getDirectionAngle()
     self.character:setVariable(AnimationVariable.DISMOUNT_STARTED, true)
 
     -- start animation
@@ -89,21 +89,18 @@ function DismountHorseAction:getDuration()
 end
 
 
----@param mount Mount
+---@param character IsoPlayer
+---@param animal IsoAnimal
 ---@param mountPosition MountPosition
 ---@param hasSaddle boolean
 ---@return self
 ---@nodiscard
-function DismountHorseAction:new(mount, mountPosition, hasSaddle)
+function DismountHorseAction:new(character, animal, mountPosition, hasSaddle)
     ---@type DismountHorseAction
-    local o = ISBaseTimedAction.new(self, mount.pair.rider)
+    local o = ISBaseTimedAction.new(self, character)
 
-    -- HACK: this loses its metatable when transmitted by the server
-    mount = convertToPZNetTable(mount)
-    mount.pair = convertToPZNetTable(mount.pair)
-    setmetatable(mount, require("HorseMod/mount/Mount"))
-    o.mount = mount
-    o.horse = mount.pair.mount
+    o.character = character
+    o.animal = animal
     o.mountPosition = mountPosition
     o.hasSaddle = hasSaddle
     o.stopOnWalk = true

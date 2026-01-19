@@ -15,7 +15,7 @@ function ContextualActionHandlers.AnimalsInteraction(action, playerObj, animal, 
     ---DISMOUNT HORSE
     if mountedHorse == animal then
         if not playerObj:hasTimedActions() then
-            Mounting.dismountHorse(playerObj)
+            Mounting.dismountHorse(playerObj, mountedHorse)
         end
         return
     end

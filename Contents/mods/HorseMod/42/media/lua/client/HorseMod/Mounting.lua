@@ -11,9 +11,6 @@ local MountingUtility = require("HorseMod/mounting/MountingUtility")
 
 local Mounting = {}
 
--- TODO: mountHorse and dismountHorse are too long and have a lot of redundant code
-
-
 
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
@@ -48,37 +45,34 @@ function Mounting.mountHorse(player, horse)
 
     -- create mount action
     local hasSaddle = Attachments.getSaddle(horse) ~= nil
-    local pairing = MountPair.new(player, horse)
-    local mountAction = MountHorseAction:new(pairing, mountPosition.name, hasSaddle)
+    local mountAction = MountHorseAction:new(
+        player,
+        horse,
+        mountPosition,
+        hasSaddle
+    )
 
     -- patch to update to last known mount position
     function pathfindAction:perform()
-        mountAction.side = self.mountPosition.name
+        mountAction.mountPosition = self.mountPosition
         local PathfindToMountPoint = require("HorseMod/TimedAction/PathfindToMountPoint")
         return PathfindToMountPoint.perform(self)
     end
-    
-    -- add to queue
-    ISTimedActionQueue.add(pathfindAction)
+
     ISTimedActionQueue.add(mountAction)
 end
 
-
+---@param horse IsoAnimal
 ---@param player IsoPlayer
-function Mounting.dismountHorse(player)
-    local mount = HorseRiding.getMount(player)
-    if not mount then
-        return
-    end
-    local horse = mount.pair.mount
-
+function Mounting.dismountHorse(player, horse)
     --- pathfind to the mount position
     local mountPosition, pathfindAction = MountingUtility.pathfindToHorse(player, horse)
 
     -- dismount
     local hasSaddle = Attachments.getSaddle(horse) ~= nil
     local action = DismountHorseAction:new(
-        mount,
+        player,
+        horse,
         mountPosition,
         hasSaddle
     )

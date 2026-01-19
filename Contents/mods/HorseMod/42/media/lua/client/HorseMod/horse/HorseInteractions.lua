@@ -28,7 +28,7 @@ local function doHorseInteractionMenu(context, player, animal)
     else
         context:addOption(
             getText("ContextMenu_Horse_Dismount", animal:getFullName()),
-            player, Mounting.dismountHorse
+            player, Mounting.dismountHorse, playerMount
         )
     end
 end
@@ -100,7 +100,7 @@ local function handleJoypadMountButton(player)
     local mountedHorse = Mounts.getMount(player)
     if mountedHorse then
         if player:getVariableBoolean(AnimationVariable.RIDING_HORSE) then
-            Mounting.dismountHorse(player)
+            Mounting.dismountHorse(player, mountedHorse)
         end
         return
     end
