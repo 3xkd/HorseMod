@@ -1,0 +1,24 @@
+Horse Team License
+Copyright © 2025 Horse Team (albion, RedChili, carlesturo, Chuck, JBG_84, Paddlefruit, Sewerrabbit, SimKDT)
+
+This mod (including but not limited to its code, textures, models, sounds, music, animations, and any other bundled assets) is provided solely for personal, non-commercial use within Project Zomboid.
+
+You may create and distribute/publish patches, translations, or addons, provided that:
+
+1. Your work requires the unmodified original mod to function.
+
+2. Your work does not contain or redistribute any of the original mod’s files or assets, except for the minimal data strictly necessary for the patch/translation/addon to function (e.g., a string table for translations, a lightweight compatibility config, an asset modification, modified code elements).
+
+3. Your release includes clear credit to the original author(s) and a link to the official download page of the original mod.
+
+You may not:
+1. Redistribute this mod, in whole or in part, including any of its files, assets, or code, on any platform or service without prior written permission from the author.
+
+2. Use this mod, or any of its assets, for commercial purposes, including but not limited to paid mods, monetized servers, or content packs.
+
+3. Use this mod, or any part of it, in the training, fine-tuning, or evaluation of machine learning, artificial intelligence, or neural network models, whether commercial or non-commercial.
+
+You may contact us to contribute to the mod or to request permission to reuse assets in your own projects. Permission must be explicitly granted by at least two owners of this copyright license.
+
+Reservation of Rights:
+All rights not expressly granted herein are reserved by the author.
