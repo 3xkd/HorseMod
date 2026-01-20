@@ -1,5 +1,5 @@
 Horse Team License
-Copyright © 2025 Horse Team (albion, RedChili, Carlesturo, Chuck, JBG_84, Paddlefruit, Sewerrabbit, SimKDT)
+Copyright © 2025 Horse Team (albion, RedChili, carlesturo, Chuck, JBG_84, Paddlefruit, Sewerrabbit, SimKDT)
 
 This mod (including but not limited to its code, textures, models, sounds, music, animations, and any other bundled assets) is provided solely for personal, non-commercial use within Project Zomboid.
 
