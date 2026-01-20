@@ -9,7 +9,7 @@ local MountingUtility = require("HorseMod/mounting/MountingUtility")
 ---@namespace HorseMod
 
 
----@class MountHorseAction : ISBaseTimedAction
+---@class MountAction : ISBaseTimedAction
 ---
 ---@field character IsoPlayer
 ---
@@ -20,11 +20,11 @@ local MountingUtility = require("HorseMod/mounting/MountingUtility")
 ---@field hasSaddle boolean
 ---
 ---@field lockDir number
-local MountHorseAction = ISBaseTimedAction:derive("HorseMod_MountHorseAction")
+local MountAction = ISBaseTimedAction:derive("HorseMod_MountAction")
 
 
 
-function MountHorseAction:isValid()
+function MountAction:isValid()
     if self.animal:isExistInTheWorld()
         and self.character:getSquare() then
         
@@ -38,7 +38,7 @@ function MountHorseAction:isValid()
     end
 end
 
-function MountHorseAction:waitToStart()
+function MountAction:waitToStart()
     -- self.character:faceThisObject(self.mount)
     self.lockDir = self.animal:getDirectionAngle()
     self.character:setDirectionAngle(self.lockDir)
@@ -46,7 +46,7 @@ function MountHorseAction:waitToStart()
 end
 
 
-function MountHorseAction:update()
+function MountAction:update()
     -- fix the mount and rider to look in the same direction for animation alignment
     self.animal:setDirectionAngle(self.lockDir)
     
@@ -61,7 +61,7 @@ function MountHorseAction:update()
 end
 
 
-function MountHorseAction:start()
+function MountAction:start()
     self.animal:setVariable(AnimationVariable.DYING, false)
 
     self.character:setVariable(AnimationVariable.MOUNTING_HORSE, true)
@@ -81,7 +81,7 @@ function MountHorseAction:start()
 end
 
 
-function MountHorseAction:stop()
+function MountAction:stop()
     local pair = MountPair.new(self.character, self.animal)
     pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, false)
     self.character:setVariable(AnimationVariable.MOUNTING_HORSE, false)
@@ -95,13 +95,13 @@ function MountHorseAction:stop()
 end
 
 
-function MountHorseAction:complete()
+function MountAction:complete()
     Mounts.addMount(self.character, self.animal)
     return true
 end
 
 
-function MountHorseAction:perform()
+function MountAction:perform()
     -- HACK: we can't require this at file load because it is in the client dir
     local HorseSounds = require("HorseMod/HorseSounds")
     HorseSounds.playSound(self.animal, HorseSounds.Sound.MOUNT)
@@ -110,7 +110,7 @@ function MountHorseAction:perform()
 end
 
 
-function MountHorseAction:getDuration()
+function MountAction:getDuration()
     if self.character:isTimedActionInstant() then
         return 1
     end
@@ -125,8 +125,8 @@ end
 ---@param hasSaddle boolean
 ---@return self
 ---@nodiscard
-function MountHorseAction:new(character, animal, mountPosition, hasSaddle)
-    ---@type MountHorseAction
+function MountAction:new(character, animal, mountPosition, hasSaddle)
+    ---@type MountAction
     local o = ISBaseTimedAction.new(self, character)
 
     o.character = character
@@ -137,12 +137,13 @@ function MountHorseAction:new(character, animal, mountPosition, hasSaddle)
     o.stopOnRun  = true
 
     o.maxTime = o:getDuration()
+    o.useProgressBar = false
 
     return o
 end
 
 
-_G[MountHorseAction.Type] = MountHorseAction
+_G[MountAction.Type] = MountAction
 
 
-return MountHorseAction
+return MountAction

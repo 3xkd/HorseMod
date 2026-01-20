@@ -7,7 +7,7 @@ local Mounts = require("HorseMod/Mounts")
 ---@namespace HorseMod
 
 
----@class DismountHorseAction : ISBaseTimedAction
+---@class DismountAction : ISBaseTimedAction
 ---
 ---@field character IsoPlayer
 ---
@@ -18,16 +18,16 @@ local Mounts = require("HorseMod/Mounts")
 ---@field mountPosition MountPosition
 ---
 ---@field hasSaddle boolean
-local DismountHorseAction = ISBaseTimedAction:derive("HorseMod_DismountHorseAction")
+local DismountAction = ISBaseTimedAction:derive("HorseMod_DismountAction")
 
 
 ---@return boolean
-function DismountHorseAction:isValid()
+function DismountAction:isValid()
     return self.animal:isExistInTheWorld()
 end
 
 
-function DismountHorseAction:update()
+function DismountAction:update()
     -- keep the horse locked facing the stored direction
     local animal = self.animal
     animal:setDirectionAngle(self.lockDir)
@@ -41,7 +41,7 @@ function DismountHorseAction:update()
 end
 
 
-function DismountHorseAction:start()
+function DismountAction:start()
     self.lockDir = self.animal:getDirectionAngle()
     self.character:setVariable(AnimationVariable.DISMOUNT_STARTED, true)
 
@@ -58,20 +58,20 @@ function DismountHorseAction:start()
 end
 
 
-function DismountHorseAction:stop()
+function DismountAction:stop()
     self.character:setVariable(AnimationVariable.DISMOUNT_STARTED, false)
     ISBaseTimedAction.stop(self)
 end
 
 
-function DismountHorseAction:complete()
+function DismountAction:complete()
     -- TODO: this might take a bit to inform the client, so we should consider faking it in perform()
     Mounts.removeMount(self.character)
     return true
 end
 
 
-function DismountHorseAction:perform()
+function DismountAction:perform()
     local mountPosition = self.mountPosition
     self.character:setX(mountPosition.x)
     self.character:setY(mountPosition.y)
@@ -80,7 +80,7 @@ function DismountHorseAction:perform()
 end
 
 
-function DismountHorseAction:getDuration()
+function DismountAction:getDuration()
     if self.character:isTimedActionInstant() then
         return 1
     end
@@ -95,8 +95,8 @@ end
 ---@param hasSaddle boolean
 ---@return self
 ---@nodiscard
-function DismountHorseAction:new(character, animal, mountPosition, hasSaddle)
-    ---@type DismountHorseAction
+function DismountAction:new(character, animal, mountPosition, hasSaddle)
+    ---@type DismountAction
     local o = ISBaseTimedAction.new(self, character)
 
     o.character = character
@@ -107,12 +107,13 @@ function DismountHorseAction:new(character, animal, mountPosition, hasSaddle)
     o.stopOnRun = true
 
     o.maxTime = o:getDuration()
+    o.useProgressBar = false
 
     return o
 end
 
 
-_G[DismountHorseAction.Type] = DismountHorseAction
+_G[DismountAction.Type] = DismountAction
 
 
-return DismountHorseAction
+return DismountAction

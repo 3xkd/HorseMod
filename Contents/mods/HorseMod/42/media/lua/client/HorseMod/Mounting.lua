@@ -1,9 +1,5 @@
-require("TimedActions/ISPathFindAction")
-
-local HorseRiding = require("HorseMod/Riding")
-local MountHorseAction = require("HorseMod/TimedActions/MountHorseAction")
-local DismountHorseAction = require("HorseMod/TimedActions/DismountHorseAction")
-local MountPair = require("HorseMod/MountPair")
+local MountAction = require("HorseMod/TimedActions/MountAction")
+local DismountAction = require("HorseMod/TimedActions/DismountAction")
 local Attachments = require("HorseMod/attachments/Attachments")
 local MountingUtility = require("HorseMod/mounting/MountingUtility")
 
@@ -45,13 +41,14 @@ function Mounting.mountHorse(player, horse)
 
     -- create mount action
     local hasSaddle = Attachments.getSaddle(horse) ~= nil
-    local mountAction = MountHorseAction:new(
+    local mountAction = MountAction:new(
         player,
         horse,
         mountPosition,
         hasSaddle
     )
 
+    ---@FIXME spaghetti shit right there, needs a better way of handling this
     -- patch to update to last known mount position
     function pathfindAction:perform()
         mountAction.mountPosition = self.mountPosition
@@ -70,7 +67,7 @@ function Mounting.dismountHorse(player, horse)
 
     -- dismount
     local hasSaddle = Attachments.getSaddle(horse) ~= nil
-    local action = DismountHorseAction:new(
+    local action = DismountAction:new(
         player,
         horse,
         mountPosition,
