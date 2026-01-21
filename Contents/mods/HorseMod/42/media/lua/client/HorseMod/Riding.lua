@@ -6,6 +6,8 @@ local MountPair = require("HorseMod/MountPair")
 local HorseUtils = require("HorseMod/Utils")
 local HorseSounds = require("HorseMod/HorseSounds")
 local HorseDamage = require("HorseMod/horse/HorseDamage")
+local MountAction = require("HorseMod/TimedActions/MountAction")
+local DismountAction = require("HorseMod/TimedActions/DismountAction")
 
 
 ---@namespace HorseMod
@@ -106,6 +108,22 @@ HorseRiding.onKeyPressed = function(key)
         return
     end
 
+    -- cancel dismount or mount action if possible
+    if key == getCore():getKey("Interact") then
+        local queue = ISTimedActionQueue.getTimedActionQueue(player)
+        local currentAction = queue.current
+        if currentAction then
+            if currentAction.Type == DismountAction.Type 
+                or currentAction.Type == MountAction.Type then
+                if not player:getVariableBoolean(AnimationVariable.NO_CANCEL) then
+                    currentAction:forceStop()
+                    return
+                end
+            end
+        end
+    end
+
+    -- update mount input
     local mount = HorseRiding.getMount(player)
     if mount then
         mount:keyPressed(key)

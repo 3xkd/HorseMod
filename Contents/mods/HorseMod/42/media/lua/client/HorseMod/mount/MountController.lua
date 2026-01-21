@@ -554,6 +554,7 @@ local MountController = {}
 MountController.__index = MountController
 
 
+-- nimble and trait impact on falling from riding in trees
 local BASE_CHANCE = 0.05
 local NIMBLE_LOW = 1
 local NIMBLE_HIGH = 0

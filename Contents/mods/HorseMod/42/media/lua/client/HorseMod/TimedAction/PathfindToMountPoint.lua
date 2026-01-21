@@ -48,6 +48,8 @@ function PathfindToMountPoint:new(character, mountPosition, animal, ...)
         mountPosition.pos3D,
         ...)
 
+    o.stopOnAim = true
+
     o.animal = animal
     o.mountPosition = mountPosition
 

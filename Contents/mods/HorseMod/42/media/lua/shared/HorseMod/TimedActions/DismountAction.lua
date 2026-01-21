@@ -34,6 +34,7 @@ function DismountAction:update()
     -- keep the horse and player locked facing the stored direction
     local character = self.character
     local animal = self.animal
+
     animal:setDirectionAngle(self.lockDir)
     animal:getPathFindBehavior2():reset()
 
@@ -114,6 +115,7 @@ function DismountAction:new(character, animal, mountPosition, hasSaddle)
     o.hasSaddle = hasSaddle
     o.stopOnWalk = false
     o.stopOnRun = true
+    o.stopOnAim = false
 
     o.maxTime = o:getDuration()
     o.useProgressBar = false

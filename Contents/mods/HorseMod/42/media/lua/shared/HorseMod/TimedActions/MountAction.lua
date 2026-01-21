@@ -57,7 +57,6 @@ function MountAction:update()
     animal:setDirectionAngle(self.lockDir)
     animal:getPathFindBehavior2():reset()
     
-    character:setIsAiming(false)
     character:setDirectionAngle(self.lockDir)
 
     if character:getVariableBoolean(AnimationVariable.MOUNT_FINISHED) == true then
@@ -134,8 +133,9 @@ function MountAction:new(character, animal, mountPosition, hasSaddle)
     o.animal = animal
     o.mountPosition = mountPosition
     o.hasSaddle = hasSaddle
-    o.stopOnWalk = true
+    o.stopOnWalk = false
     o.stopOnRun  = true
+    o.stopOnAim = false
 
     o.maxTime = o:getDuration()
     o.useProgressBar = false
