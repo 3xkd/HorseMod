@@ -19,7 +19,7 @@ perks = [
 ]
 
 low_nimble = 1
-high_nimble = 0.05
+high_nimble = 0
 nimble_skill = np.linspace(low_nimble, high_nimble, 11)
 
 time = np.linspace(0, 10, 100)
@@ -59,16 +59,4 @@ plt.xlabel('Time in Trees (s)')
 plt.ylabel('Chance of Falling')
 plt.title('Chance of Falling While Riding in Trees Over Time')
 plt.grid(True)
-plt.show()
-
-
-
-
-val = 10000
-values = [val]
-while val > 1:
-    val = val - val * 0.4
-    values.append(val)
-
-plt.plot(values)
 plt.show()
