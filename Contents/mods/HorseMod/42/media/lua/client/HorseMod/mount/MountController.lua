@@ -1,6 +1,6 @@
 ---REQUIREMENTS
 local Stamina = require("HorseMod/Stamina")
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local DismountAction = require("HorseMod/TimedActions/DismountAction")
 local UrgentDismountAction = require("HorseMod/TimedActions/UrgentDismountAction")
 local rdm = newrandom()
@@ -320,8 +320,8 @@ local function collideStepAt(horse, z, x0, y0, dx, dy)
 
     -- mid-square checks
     local tx, ty = math.floor(x1), math.floor(y1)
-    local midSqX = (tx ~= fx) and getSq(tx, fy, z) or nil
-    local midSqY = (ty ~= fy) and getSq(fx, ty, z) or nil
+    local midSqX = (tx ~= fx) and getSquare(tx, fy, z) or nil
+    local midSqY = (ty ~= fy) and getSquare(fx, ty, z) or nil
     local killedX, killedY = false, false
     if midSqX and squareCenterSolid(midSqX) then rx = 0; killedX = true end
     if midSqY and squareCenterSolid(midSqY) then ry = 0; killedY = true end
@@ -381,7 +381,7 @@ local function collideStepAt(horse, z, x0, y0, dx, dy)
                     if x0 + rx1 < b then rx1 = math.min(0, b - x0) end
                 end
             end
-            local okX = (rx1 ~= 0) and not squareCenterSolid(getSq(x0 + rx1, y0, z))
+            local okX = (rx1 ~= 0) and not squareCenterSolid(getSquare(x0 + rx1, y0, z))
 
             local rx2, ry2 = 0, py
             if ry2 > 0 then
@@ -395,7 +395,7 @@ local function collideStepAt(horse, z, x0, y0, dx, dy)
                     if y0 + ry2 < b then ry2 = math.min(0, b - y0) end
                 end
             end
-            local okY = (ry2 ~= 0) and not squareCenterSolid(getSq(x0, y0 + ry2, z))
+            local okY = (ry2 ~= 0) and not squareCenterSolid(getSquare(x0, y0 + ry2, z))
 
             if okX and not okY then return rx1, 0 end
             if okY and not okX then return 0, ry2 end

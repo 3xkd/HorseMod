@@ -1,7 +1,7 @@
 local HorseUtils  = require("HorseMod/Utils")
 local Mounts = require("HorseMod/Mounts")
 local Mounting = require("HorseMod/Mounting")
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local MountingUtility = require("HorseMod/mounting/MountingUtility")
 
 

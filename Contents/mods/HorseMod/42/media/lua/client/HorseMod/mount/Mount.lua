@@ -1,5 +1,5 @@
 local MountController = require("HorseMod/mount/MountController")
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local InputManager = require("HorseMod/mount/InputManager")
 local ReinsManager = require("HorseMod/mount/ReinsManager")
 local Mounting = require("HorseMod/Mounting")

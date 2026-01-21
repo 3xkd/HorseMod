@@ -1,6 +1,6 @@
 ---@namespace HorseMod
 
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local ModOptions = require("HorseMod/ModOptions")
 
 local JOY_DEADZONE        = 0.30   -- ignore tiny stick drift

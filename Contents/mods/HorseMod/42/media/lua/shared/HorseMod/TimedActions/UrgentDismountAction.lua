@@ -1,7 +1,7 @@
 ---@namespace HorseMod
 
 ---REQUIREMENTS
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local Mounts = require("HorseMod/Mounts")
 
 ---@class UrgentDismountAction : ISBaseTimedAction
