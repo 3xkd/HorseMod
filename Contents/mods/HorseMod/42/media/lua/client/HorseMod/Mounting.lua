@@ -107,7 +107,8 @@ function Mounting.dismountDeath(player, horse)
         horse,
         AnimationVariable.DYING,
         nil,
-        "PainFromFallLow"
+        "PainFromFallLow",
+        true
     ))
 end
 
@@ -120,7 +121,9 @@ function Mounting.dismountFall(player, horse)
         player,
         horse,
         nil,
-        HorseSounds.Sound.STRESSED
+        HorseSounds.Sound.STRESSED,
+        nil,
+        true
     ))
 end
 
@@ -134,7 +137,8 @@ function Mounting.dismountFallBack(player, horse)
         horse,
         AnimationVariable.FALL_BACK,
         HorseSounds.Sound.PAIN,
-        "PainFromFallHigh"
+        "PainFromFallHigh",
+        true
     ))
 end
 

@@ -761,6 +761,30 @@ function MountController:updateSpeed(input, deltaTime)
     end
 end
 
+function MountController:updateTreeFall(isGalloping, deltaTime)
+    local rider = self.mount.pair.rider
+
+    -- make the player fall if they are in trees based on some skills and traits
+    local timeInTrees = self.timeInTrees
+    if isGalloping then
+        if rider:isInTreesNoBush() then
+            self.timeInTrees = timeInTrees + deltaTime
+
+            -- roll for tree fall every 0.5s
+            if self.lastCheck > 0.5 then
+                self:rollForTreeFall()
+                self.lastCheck = 0.0
+            else
+                self.lastCheck = self.lastCheck + deltaTime
+            end
+        end
+    elseif self.timeInTrees > 0 then
+        timeInTrees = math.max(0, timeInTrees - deltaTime*4)
+        timeInTrees = math.min(timeInTrees, 10)
+        self.timeInTrees = timeInTrees
+    end
+end
+
 ---@alias MovementState "idle"|"walking"|"trot"|"gallop"
 
 ---@return MovementState
@@ -876,31 +900,7 @@ function MountController:update(input)
     rider:setY(mount:getY())
     rider:setZ(mount:getZ())
 
-    -- make the player fall if they are in trees based on some skills and traits
-    local timeInTrees = self.timeInTrees
-    if isGalloping then
-        if rider:isInTreesNoBush() then
-            self.timeInTrees = timeInTrees + deltaTime
-
-            -- roll for tree fall every 0.5s
-            if self.lastCheck > 0.5 then
-                self:rollForTreeFall()
-                self.lastCheck = 0.0
-            else
-                self.lastCheck = self.lastCheck + deltaTime
-            end
-        end
-    elseif self.timeInTrees > 0 then
-        timeInTrees = math.max(0, timeInTrees - deltaTime*4)
-        timeInTrees = math.min(timeInTrees, 10)
-        self.timeInTrees = timeInTrees
-    end
-
-    -- local num1 = self.timeInTrees
-    -- num1 = (num1 * 100 - num1 * 100%1) / 100
-    -- local num2 = self:calculateTreeFallChance()
-    -- num2 = (num2 * 100 - num2 * 100%1) / 100
-    -- rider:addLineChatElement(tostring(num1) .. " / " .. tostring(num2))
+    self:updateTreeFall(isGalloping, deltaTime)
 
     -- verify the rider/mount are not falling
     ---@TODO improve by having a custom falling animation for the player
