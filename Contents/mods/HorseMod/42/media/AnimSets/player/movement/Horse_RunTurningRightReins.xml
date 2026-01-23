@@ -7,16 +7,16 @@
     <m_deferredBoneAxis>Y</m_deferredBoneAxis>
     <m_BlendTime>0.20</m_BlendTime>
     <m_SpeedScale>HorseRunSpeed</m_SpeedScale>
-    <m_Scalar>geneSpeed</m_Scalar>
+    <m_Scalar>HorseGeneSpeed</m_Scalar>
     <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_EarlyTransitionOut>false</m_EarlyTransitionOut>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>HasReins</m_Name>
+        <m_Name>HorseHasReins</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
@@ -46,7 +46,7 @@
         <m_blendOutTime>0.40</m_blendOutTime>
         <m_BlendTime>0.20</m_BlendTime>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>false</m_Value>
         </m_Conditions>
@@ -62,7 +62,7 @@
         <m_blendOutTime>0.40</m_blendOutTime>
         <m_BlendTime>0.20</m_BlendTime>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>true</m_Value>
         </m_Conditions>
@@ -81,7 +81,7 @@
             <m_Value>true</m_Value>
         </m_Conditions>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>false</m_Value>
         </m_Conditions>
@@ -95,7 +95,7 @@
             <m_Value>true</m_Value>
         </m_Conditions>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>true</m_Value>
         </m_Conditions>
@@ -109,7 +109,7 @@
             <m_Value>true</m_Value>
         </m_Conditions>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>false</m_Value>
         </m_Conditions>
@@ -123,7 +123,7 @@
             <m_Value>true</m_Value>
         </m_Conditions>
         <m_Conditions>
-            <m_Name>HasReins</m_Name>
+            <m_Name>HorseHasReins</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>true</m_Value>
         </m_Conditions>

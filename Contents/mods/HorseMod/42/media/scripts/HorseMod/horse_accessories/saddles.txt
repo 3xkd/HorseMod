@@ -13,6 +13,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_Crude,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_Crude {
         mesh = HorseMod/HorseSaddle,
@@ -40,6 +41,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_Black,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_Black {
         mesh = HorseMod/HorseSaddle,
@@ -66,6 +68,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_CowHolstein,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_CowHolstein {
         mesh = HorseMod/HorseSaddle,
@@ -92,6 +95,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_CowSimmental,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_CowSimmental {
         mesh = HorseMod/HorseSaddle,
@@ -118,6 +122,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_White,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_White {
         mesh = HorseMod/HorseSaddle,
@@ -144,6 +149,7 @@ module HorseMod {
         WorldStaticModel = HorseSaddle_World_Landrace,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
 	model HorseSaddle_Landrace {
         mesh = HorseMod/HorseSaddle,
@@ -162,210 +168,218 @@ module HorseMod {
 
 
     /* HORSE: AMERICAN PAINT */
-	item HorseSaddle_AP {
+	item HorseSaddle_AmericanPaintTobiano {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_AP,
-        StaticModel = HorseSaddle_AP,
-        WorldStaticModel = HorseSaddle_World_AP,
+        Icon = accessories/HorseSaddle_AmericanPaintTobiano,
+        StaticModel = HorseSaddle_AmericanPaintTobiano,
+        WorldStaticModel = HorseSaddle_World_AmericanPaintTobiano,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_AP {
+	model HorseSaddle_AmericanPaintTobiano {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_AP,
+        texture = Items/Accessories/HorseSaddle_AmericanPaintTobiano,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_AP {
+    model HorseSaddle_World_AmericanPaintTobiano {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_AP,
+        texture = Items/Accessories/HorseSaddle_AmericanPaintTobiano,
         static = true,
     }
 
     /* HORSE: AMERICAN PAINT OVERO */
-	item HorseSaddle_APHO {
+	item HorseSaddle_AmericanPaintOvero {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_APHO,
-        StaticModel = HorseSaddle_APHO,
-        WorldStaticModel = HorseSaddle_World_APHO,
+        Icon = accessories/HorseSaddle_AmericanPaintOvero,
+        StaticModel = HorseSaddle_AmericanPaintOvero,
+        WorldStaticModel = HorseSaddle_World_AmericanPaintOvero,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_APHO {
+	model HorseSaddle_AmericanPaintOvero {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_APHO,
+        texture = Items/Accessories/HorseSaddle_AmericanPaintOvero,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_APHO {
+    model HorseSaddle_World_AmericanPaintOvero {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_APHO,
+        texture = Items/Accessories/HorseSaddle_AmericanPaintOvero,
         static = true,
     }
 
     /* HORSE: BLUE ROAN */
-	item HorseSaddle_AQHBR {
+	item HorseSaddle_AmericanQuarterBlueRoan {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_AQHBR,
-        StaticModel = HorseSaddle_AQHBR,
-        WorldStaticModel = HorseSaddle_World_AQHBR,
+        Icon = accessories/HorseSaddle_AmericanQuarterBlueRoan,
+        StaticModel = HorseSaddle_AmericanQuarterBlueRoan,
+        WorldStaticModel = HorseSaddle_World_AmericanQuarterBlueRoan,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_AQHBR {
+	model HorseSaddle_AmericanQuarterBlueRoan {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_AQHBR,
+        texture = Items/Accessories/HorseSaddle_AmericanQuarterBlueRoan,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_AQHBR {
+    model HorseSaddle_World_AmericanQuarterBlueRoan {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_AQHBR,
+        texture = Items/Accessories/HorseSaddle_AmericanQuarterBlueRoan,
         static = true,
     }
 
     /* HORSE: AMERICAN QUARTER */
-	item HorseSaddle_AQHP {
+	item HorseSaddle_AmericanQuarterPalomino {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_AQHP,
-        StaticModel = HorseSaddle_AQHP,
-        WorldStaticModel = HorseSaddle_World_AQHP,
+        Icon = accessories/HorseSaddle_AmericanQuarterPalomino,
+        StaticModel = HorseSaddle_AmericanQuarterPalomino,
+        WorldStaticModel = HorseSaddle_World_AmericanQuarterPalomino,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_AQHP {
+	model HorseSaddle_AmericanQuarterPalomino {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_AQHP,
+        texture = Items/Accessories/HorseSaddle_AmericanQuarterPalomino,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_AQHP {
+    model HorseSaddle_World_AmericanQuarterPalomino {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_AQHP,
+        texture = Items/Accessories/HorseSaddle_AmericanQuarterPalomino,
         static = true,
     }
 
     /* HORSE: FLEA-BITTEN GREY */
-	item HorseSaddle_FBG {
+	item HorseSaddle_ThoroughbredFleaBittenGrey {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_FBG,
-        StaticModel = HorseSaddle_FBG,
-        WorldStaticModel = HorseSaddle_World_FBG,
+        Icon = accessories/HorseSaddle_ThoroughbredFleaBittenGrey,
+        StaticModel = HorseSaddle_ThoroughbredFleaBittenGrey,
+        WorldStaticModel = HorseSaddle_World_ThoroughbredFleaBittenGrey,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_FBG {
+	model HorseSaddle_ThoroughbredFleaBittenGrey {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_FBG,
+        texture = Items/Accessories/HorseSaddle_ThoroughbredFleaBittenGrey,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_FBG {
+    model HorseSaddle_World_ThoroughbredFleaBittenGrey {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_FBG,
+        texture = Items/Accessories/HorseSaddle_ThoroughbredFleaBittenGrey,
         static = true,
     }
 
     /* HORSE: APPALOOSA */
-	item HorseSaddle_GDA {
+	item HorseSaddle_AppaloosaGrullaBlanket {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_GDA,
-        StaticModel = HorseSaddle_GDA,
-        WorldStaticModel = HorseSaddle_World_GDA,
+        Icon = accessories/HorseSaddle_AppaloosaGrullaBlanket,
+        StaticModel = HorseSaddle_AppaloosaGrullaBlanket,
+        WorldStaticModel = HorseSaddle_World_AppaloosaGrullaBlanket,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_GDA {
+	model HorseSaddle_AppaloosaGrullaBlanket {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_GDA,
+        texture = Items/Accessories/HorseSaddle_AppaloosaGrullaBlanket,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_GDA {
+    model HorseSaddle_World_AppaloosaGrullaBlanket {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_GDA,
+        texture = Items/Accessories/HorseSaddle_AppaloosaGrullaBlanket,
         static = true,
     }
 
     /* HORSE: SPOTTED APPALOOSA */
-	item HorseSaddle_LPA {
+	item HorseSaddle_AppaloosaLeopard {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_LPA,
-        StaticModel = HorseSaddle_LPA,
-        WorldStaticModel = HorseSaddle_World_LPA,
+        Icon = accessories/HorseSaddle_AppaloosaLeopard,
+        StaticModel = HorseSaddle_AppaloosaLeopard,
+        WorldStaticModel = HorseSaddle_World_AppaloosaLeopard,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_LPA {
+	model HorseSaddle_AppaloosaLeopard {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_LPA,
+        texture = Items/Accessories/HorseSaddle_AppaloosaLeopard,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_LPA {
+    model HorseSaddle_World_AppaloosaLeopard {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_LPA,
+        texture = Items/Accessories/HorseSaddle_AppaloosaLeopard,
         static = true,
     }
 
     /* HORSE: THOROUGHBRED */
-	item HorseSaddle_T {
+	item HorseSaddle_ThoroughbredBay {
         DisplayCategory = Accessory,
         Tags = horsemod:horseaccessory,
         ItemType = base:normal,
         Weight = 5,
-        Icon = accessories/HorseSaddle_T,
-        StaticModel = HorseSaddle_T,
-        WorldStaticModel = HorseSaddle_World_T,
+        Icon = accessories/HorseSaddle_ThoroughbredBay,
+        StaticModel = HorseSaddle_ThoroughbredBay,
+        WorldStaticModel = HorseSaddle_World_ThoroughbredBay,
         RequiresEquippedBothHands = true,
         ReplaceInPrimaryHand = Horse_Saddle_Hands Horse_HoldingSaddle,
+        Researchablerecipes = HorseMod.HorseSaddle,
     }
-	model HorseSaddle_T {
+	model HorseSaddle_ThoroughbredBay {
         mesh = HorseMod/HorseSaddle,
-        texture = Items/Accessories/HorseSaddle_T,
+        texture = Items/Accessories/HorseSaddle_ThoroughbredBay,
         static = true,
         attachment Bip01_Prop1 {
             scale = 1.0000,
         }
     }
-    model HorseSaddle_World_T {
+    model HorseSaddle_World_ThoroughbredBay {
         mesh = HorseMod/HorseSaddle_Ground,
-        texture = Items/Accessories/HorseSaddle_T,
+        texture = Items/Accessories/HorseSaddle_ThoroughbredBay,
         static = true,
     }
 }

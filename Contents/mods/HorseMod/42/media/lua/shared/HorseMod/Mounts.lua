@@ -38,10 +38,13 @@ end
 
 ---@param player IsoPlayer
 function Mounts.removeMount(player)
-    assert(Mounts.hasMount(player), "")
+    assert(Mounts.hasMount(player), "Tried removing mount for player without a mount")
     local mount = playerMountMap[player]
     playerMountMap[player] = nil
     mountPlayerMap[mount] = nil
+
+    -- used to reset the wander counter of the horse so it doesn't instantly wander off
+    mount:setStateEventDelayTimer(mount:getBehavior():pickRandomWanderInterval())
     
     if IS_SERVER then
         mountcommands.Dismount:send(

@@ -6,6 +6,7 @@ local Attachments = require("HorseMod/attachments/Attachments")
 local HorseEquipGear = require("HorseMod/TimedActions/HorseEquipGear")
 local HorseUnequipGear = require("HorseMod/TimedActions/HorseUnequipGear")
 local Mounts = require("HorseMod/Mounts")
+local MountingUtility = require("HorseMod/mounting/MountingUtility")
 
 local AttachmentsManager = {}
 
@@ -15,13 +16,15 @@ local AttachmentsManager = {}
 ---@param horse IsoAnimal
 ---@param accessory InventoryItem
 ---@param slot AttachmentSlot
-AttachmentsManager.equipAccessory = function(player, horse, accessory, slot)
-    local unlock, side = HorseUtils.pathfindToHorse(player, horse)
+---@param mountPosition MountPosition
+AttachmentsManager.equipAccessory = function(player, horse, accessory, slot, mountPosition)
+    MountingUtility.pathfindToHorse(player, horse, mountPosition)
+    local side = mountPosition.name
     
     -- verify an attachment isn't already equiped, else unequip it
     local oldAccessory = Attachments.getAttachedItem(horse, slot)
     if oldAccessory then
-        ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, oldAccessory, slot, side, nil, unlock))
+        ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, oldAccessory, slot, side))
     end
     
     -- equip the attachment in hands
@@ -31,7 +34,7 @@ AttachmentsManager.equipAccessory = function(player, horse, accessory, slot)
     ISTimedActionQueue.add(equipItemAction)
 
     -- equip the attachment on horse
-    ISTimedActionQueue.add(HorseEquipGear:new(player, horse, accessory, slot, side, unlock))
+    ISTimedActionQueue.add(HorseEquipGear:new(player, horse, accessory, slot, side))
 end
 
 ---Unequip a specific accessory on the horse.
@@ -39,25 +42,26 @@ end
 ---@param horse IsoAnimal
 ---@param oldAccessory InventoryItem
 ---@param slot AttachmentSlot
-AttachmentsManager.unequipAccessory = function(player, horse, oldAccessory, slot)
-    local unlock, side = HorseUtils.pathfindToHorse(player, horse)
-    ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, oldAccessory, slot, side, unlock))
+---@param mountPosition MountPosition
+AttachmentsManager.unequipAccessory = function(player, horse, oldAccessory, slot, mountPosition)
+    MountingUtility.pathfindToHorse(player, horse, mountPosition)
+    ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, oldAccessory, slot, mountPosition.name))
 end
 
 ---Unequip every accessories on the horse.
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
 ---@param oldAccessories {item: InventoryItem, slot: AttachmentSlot}[]
-AttachmentsManager.unequipAllAccessory = function(player, horse, oldAccessories)
-    local unlock, side = HorseUtils.pathfindToHorse(player, horse)
+---@param mountPosition MountPosition
+AttachmentsManager.unequipAllAccessory = function(player, horse, oldAccessories, mountPosition)
+    MountingUtility.pathfindToHorse(player, horse, mountPosition)
     
     -- unequip all
     for i = 1, #oldAccessories do
         local oldAccessory = oldAccessories[i]
         local item = oldAccessory.item
         local slot = oldAccessory.slot
-        local shouldUnlockOnPerform = i == #oldAccessories and unlock or nil
-        ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, item, slot, side, shouldUnlockOnPerform, unlock))
+        ISTimedActionQueue.add(HorseUnequipGear:new(player, horse, item, slot, mountPosition.name))
     end
 end
 
@@ -91,7 +95,8 @@ end
 ---@param player IsoPlayer
 ---@param accessories ArrayList<InventoryItem>
 ---@param horse IsoAnimal
-function AttachmentsManager.addEquipOptions(context, player, accessories, horse)
+---@param mountPosition MountPosition?
+function AttachmentsManager.addEquipOptions(context, player, accessories, horse, mountPosition)
     --- EQUIP OPTIONS
     local uniques = {}
 
@@ -148,7 +153,8 @@ function AttachmentsManager.addEquipOptions(context, player, accessories, horse)
                     AttachmentsManager.equipAccessory,
                     horse,
                     accessory,
-                    slot
+                    slot,
+                    mountPosition
                 )
                 option.iconTexture = accessory:getTexture()
 
@@ -169,6 +175,14 @@ function AttachmentsManager.addEquipOptions(context, player, accessories, horse)
                     tooltip.description = txt
                     option.toolTip = tooltip
                 end
+
+                if not mountPosition then
+                    option.notAvailable = true
+                    local tooltip = ISWorldObjectContextMenu.addToolTip()
+                    tooltip.description = getText("ContextMenu_Horse_NoMountPosition")
+                    option.toolTip = tooltip
+                end
+
             until true end
         end
     end
@@ -179,7 +193,8 @@ end
 ---@param player IsoPlayer
 ---@param attachedItems {item: InventoryItem, slot: AttachmentSlot}[]
 ---@param horse IsoAnimal
-function AttachmentsManager.addUnequipOptions(context, player, attachedItems, horse)
+---@param mountPosition MountPosition?
+function AttachmentsManager.addUnequipOptions(context, player, attachedItems, horse, mountPosition)
     --- UNEQUIP OPTIONS
     if #attachedItems > 0 then
         -- sort by display name
@@ -206,20 +221,36 @@ function AttachmentsManager.addUnequipOptions(context, player, attachedItems, ho
                 AttachmentsManager.unequipAccessory,
                 horse,
                 item, 
-                attachment.slot
+                attachment.slot,
+                mountPosition
             )
             option.iconTexture = item:getTexture()
+
+            if not mountPosition then
+                option.notAvailable = true
+                local tooltip = ISWorldObjectContextMenu.addToolTip()
+                tooltip.description = getText("ContextMenu_Horse_NoMountPosition")
+                option.toolTip = tooltip
+            end
         end
 
         -- unequip all option if more than one item is present
         if #attachedItems > 1 then
-            context:addOptionOnTop(
+            local option = context:addOptionOnTop(
                 getText("ContextMenu_Horse_Unequip_All"),
                 player,
                 AttachmentsManager.unequipAllAccessory,
                 horse,
-                attachedItems
+                attachedItems,
+                mountPosition
             )
+
+            if not mountPosition then
+                option.notAvailable = true
+                local tooltip = ISWorldObjectContextMenu.addToolTip()
+                tooltip.description = getText("ContextMenu_Horse_NoMountPosition")
+                option.toolTip = tooltip
+            end
         end
     end
 end
@@ -258,8 +289,10 @@ AttachmentsManager.populateHorseContextMenu = function(player, horse, context, a
     local gearSubMenu = ISContextMenu:getNew(context)
     context:addSubMenu(gearOption, gearSubMenu)
 
-    AttachmentsManager.addEquipOptions(gearSubMenu, player, accessories, horse)
-    AttachmentsManager.addUnequipOptions(gearSubMenu, player, attachedItems, horse)
+    local mountPosition = MountingUtility.getNearestMountPosition(player, horse)
+
+    AttachmentsManager.addEquipOptions(gearSubMenu, player, accessories, horse, mountPosition)
+    AttachmentsManager.addUnequipOptions(gearSubMenu, player, attachedItems, horse, mountPosition)
 end
 
 ---Main handler for horse context menu.

@@ -20,7 +20,7 @@ end
 
 ActionBlockerClient.add = ISTimedActionQueue.add
 function ISTimedActionQueue.add(action)
-    if not ActionBlocker.validActions[action.Type] then
+    if action and not ActionBlocker.validActions[action.Type] then
         if Mounts.hasMount(action.character) then
             return
         end

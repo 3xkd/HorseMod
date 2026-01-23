@@ -1,9 +1,8 @@
 local MountController = require("HorseMod/mount/MountController")
-local HorseDamage = require("HorseMod/horse/HorseDamage")
-local HorseUtils = require("HorseMod/Utils")
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local InputManager = require("HorseMod/mount/InputManager")
 local ReinsManager = require("HorseMod/mount/ReinsManager")
+local Mounting = require("HorseMod/Mounting")
 
 
 ---@namespace HorseMod
@@ -34,18 +33,13 @@ end
 function Mount:isDying()
     if self.pair.mount:getVariableBoolean(AnimationVariable.DYING) then
         return true
-    else
-        return false
     end
+    return false
 end
-
 
 function Mount:update()
     if self:isDying() then
-        self.pair.rider:setIgnoreMovement(true)
-        self.pair.rider:setBlockMovement(true)
-        self.pair.rider:setIgnoreInputsForDirection(true)
-        self.pair.rider:setVariable(AnimationVariable.DYING, true)
+        Mounting.dismountDeath(self.pair.rider, self.pair.mount)
         return
     end
     self.controller:update(
@@ -61,7 +55,7 @@ function Mount:cleanup()
 
     local attached = self.pair.rider:getAttachedAnimals()
     attached:remove(self.pair.mount)
-    self.pair.mount:getData():setAttachedPlayer(nil)
+    self.pair.mount:getData():setAttachedPlayer(nil) ---@diagnostic disable-line technically can still pass nil
 
     self.pair.mount:getBehavior():setBlockMovement(false)
     self.pair.mount:getPathFindBehavior2():reset()
@@ -88,7 +82,7 @@ end
 ---@return Mount
 ---@nodiscard
 function Mount.new(pair)
-    pair.rider:getAttachedAnimals():add(pair.mount)
+    -- pair.rider:getAttachedAnimals():add(pair.mount)
     -- pair.mount:getData():setAttachedPlayer(pair.rider)
 
     pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, true)

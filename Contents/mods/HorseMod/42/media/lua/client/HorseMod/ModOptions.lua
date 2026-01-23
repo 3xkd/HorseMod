@@ -12,6 +12,10 @@ local ModOptions = {
     ---Horse trot switch keybind.
     ---@type integer
     HorseTrotButton = Keyboard.KEY_X,
+
+    ---Horse gallop switch keybind.
+    ---@type integer
+    HorseGallopButton = Keyboard.KEY_LSHIFT,
 }
 
 
@@ -41,6 +45,12 @@ options:addKeyBind(
     "IGUI_ModOptions_HorseKeybind_Trot_Name",
     ModOptions.HorseTrotButton,
     "IGUI_ModOptions_HorseKeybind_Trot_Tooltip"
+)
+options:addKeyBind(
+    "HorseGallopButton",
+    "IGUI_ModOptions_HorseKeybind_Gallop_Name",
+    ModOptions.HorseGallopButton,
+    "IGUI_ModOptions_HorseKeybind_Gallop_Tooltip"
 )
 
 ---This is a helper function that will automatically populate the "config" table.

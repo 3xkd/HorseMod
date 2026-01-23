@@ -1,129 +1,24 @@
-require("TimedActions/ISPathFindAction")
+---@namespace HorseMod
 
-local HorseRiding = require("HorseMod/Riding")
-local HorseManager = require("HorseMod/HorseManager")
-local MountHorseAction = require("HorseMod/TimedActions/MountHorseAction")
-local DismountHorseAction = require("HorseMod/TimedActions/DismountHorseAction")
-local MountPair = require("HorseMod/MountPair")
+---REQUIREMENTS
+local MountAction = require("HorseMod/TimedActions/MountAction")
+local DismountAction = require("HorseMod/TimedActions/DismountAction")
+local UrgentDismountAction = require("HorseMod/TimedActions/UrgentDismountAction")
 local Attachments = require("HorseMod/attachments/Attachments")
-local Mounts = require("HorseMod/Mounts")
-local HorseUtils = require("HorseMod/Utils")
+local MountingUtility = require("HorseMod/mounting/MountingUtility")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
+local HorseSounds = require("HorseMod/HorseSounds")
+
 
 
 local Mounting = {}
-
-
----@type {name: string, attachment: string}[]
-local MOUNT_POINTS = table.newarray(
-{
-        name = "left",
-        attachment = "mountLeft"
-    },
-{
-        name = "right",
-        attachment = "mountRight"
-    }
-)
-
+-- local mountPosition = MountingUtility.getNearestMountPosition(player, horse)
 
 ---@param player IsoPlayer
 ---@param horse IsoAnimal
----@param maxDistance? number Maximum distance the mount position may be from the player to be considered.
----@return {x: number, y: number, name: string} | nil
----@nodiscard
-function Mounting.getNearestMountPosition(player, horse, maxDistance)
-    local nearestDistanceSquared    
-    if not maxDistance then
-        nearestDistanceSquared = math.huge 
-    else
-        nearestDistanceSquared = maxDistance^2
-    end
-
-    ---@type {x: number, y: number, name: string} | nil
-    local nearest = nil
-
-    for i = 1, #MOUNT_POINTS do
-        local mountPoint = MOUNT_POINTS[i]
-        local attachmentPosition = horse:getAttachmentWorldPos(mountPoint.attachment)
-        local x = attachmentPosition:x()
-        local y = attachmentPosition:y()
-        local distanceSquared = player:DistToSquared(x, y)
-        if distanceSquared <= nearestDistanceSquared then
-            nearest = {
-                x = x,
-                y = y,
-                name = mountPoint.name
-            }
-            nearestDistanceSquared = distanceSquared
-        end
-    end
-
-    if not nearest then
-        return nil
-    end
-
-    return nearest
-end
-
-
----@param player IsoPlayer
----@param radius number | nil
----@return IsoAnimal | nil
----@nodiscard
-function Mounting.getBestMountableHorse(player, radius)
-    radius = radius or 1.25
-
-    local bestHorse = nil
-    local bestDistanceSquared = radius^2
-
-    for i = 1, #HorseManager.horses do
-        local horse = HorseManager.horses[i]
-        local mountPos = Mounting.getNearestMountPosition(player, horse, radius)
-        if mountPos then
-            local distanceSquared = player:DistToSquared(mountPos.x, mountPos.y)
-            if distanceSquared <= bestDistanceSquared then
-                bestHorse = horse
-                bestDistanceSquared = distanceSquared
-            end
-        end
-    end
-
-    return bestHorse
-end
-
----Verify that the player can mount a horse.
----@param player IsoPlayer
----@param horse IsoAnimal
----@return boolean
----@return string?
----@nodiscard
-function Mounting.canMountHorse(player, horse)
-    if Mounts.hasMount(player) then
-        -- already mounted
-        return false
-    elseif Mounts.hasRider(horse) then
-        return false, "AlreadyMounted"
-    elseif horse:isDead() then
-        return false, "IsDead"
-    elseif horse:isOnHook() then
-        return false
-    -- elseif horse:getVariableBoolean("animalRunning") then
-    --     -- running
-    --     return false, "IsRunning"
-    elseif not HorseUtils.isAdult(horse) then
-        return false, "NotAdult"
-    end
-
-    return true
-end
-
--- TODO: mountHorse and dismountHorse are too long and have a lot of redundant code
-
-
----@param player IsoPlayer
----@param horse IsoAnimal
-function Mounting.mountHorse(player, horse)
-    if not Mounting.canMountHorse(player, horse) then
+---@param mountPosition MountPosition
+function Mounting.mountHorse(player, horse, mountPosition)
+    if not MountingUtility.canMountHorse(player, horse) then
         return
     end
 
@@ -135,143 +30,117 @@ function Mounting.mountHorse(player, horse)
         -- Detach from tree
         local tree = data:getAttachedTree()
         if tree then
-            data:setAttachedTree(nil)
+            data:setAttachedTree(nil) ---@diagnostic disable-line
             sendAttachAnimalToTree(horse, player, tree, true)
         end
         -- Detach from any leading player
         local leader = data:getAttachedPlayer()
         if leader then
             leader:getAttachedAnimals():remove(horse)
-            data:setAttachedPlayer(nil)
-            sendAttachAnimalToPlayer(horse, player, nil, true)
+            data:setAttachedPlayer(nil) ---@diagnostic disable-line
+            ---@FIXME that function got removed in B42.13.2
+            -- sendAttachAnimalToPlayer(horse, player, nil, true)  ---@diagnostic disable-line
         end
     end
 
-    -- Ensure the mounting player isn't leading the horse
-    player:removeAttachedAnimal(horse)
 
-    -- Freeze horse and remember direction
-    horse:getPathFindBehavior2():reset()
+    --- pathfind to the mount position
+    local pathfindAction = MountingUtility.pathfindToHorse(player, horse, mountPosition)
 
-    local behavior = horse:getBehavior()
-    behavior:setBlockMovement(true)
-    behavior:setDoingBehavior(false)
-
-    horse:stopAllMovementNow()
-    local lockDir = horse:getDir()
-
-    -- Keep horse direction locked while walking to
-    local function lockTick()
-        if horse:isExistInTheWorld() then
-            horse:setDir(lockDir)
-        end
-    end
-    Events.OnTick.Add(lockTick)
-
-    local mountPosition = Mounting.getNearestMountPosition(player, horse)
-    assert(mountPosition ~= nil)
-
-    local path = ISPathFindAction:pathToLocationF(
+    -- create mount action
+    local hasSaddle = Attachments.getSaddle(horse) ~= nil
+    local mountAction = MountAction:new(
         player,
-        mountPosition.x,
-        mountPosition.y,
-        horse:getZ()
+        horse,
+        mountPosition,
+        hasSaddle
     )
 
-    local function cleanup()
-        Events.OnTick.Remove(lockTick)
-        horse:getBehavior():setBlockMovement(false)
+    ---@FIXME spaghetti shit right there, needs a better way of handling this
+    -- patch to update to last known mount position
+    function pathfindAction:perform()
+        mountAction.mountPosition = self.mountPosition
+        local PathfindToMountPoint = require("HorseMod/TimedAction/PathfindToMountPoint")
+        return PathfindToMountPoint.perform(self)
     end
 
-    path.stop = function(self)
-        cleanup()
-        ISPathFindAction.stop(self)
-    end
-
-    path.perform = function(self)
-        cleanup()
-        ISPathFindAction.perform(self)
-    end
-
-
-    ISTimedActionQueue.add(path)
-
-    local saddle = Attachments.getSaddle(horse)
-    local pairing = MountPair.new(player, horse)
-
-    ISTimedActionQueue.add(
-        MountHorseAction:new(pairing, mountPosition.name, saddle)
-    )
+    ISTimedActionQueue.add(mountAction)
 end
 
-
+---@param horse IsoAnimal
 ---@param player IsoPlayer
-function Mounting.dismountHorse(player)
-    local mount = HorseRiding.getMount(player)
-    if not mount then
-        return
-    end
+---@param mountPosition MountPosition
+function Mounting.dismountHorse(player, horse, mountPosition)
+    --- pathfind to the mount position
+    MountingUtility.pathfindToHorse(player, horse, mountPosition)
 
-    local horse = mount.pair.mount
-
-    horse:getPathFindBehavior2():reset()
-
-    local behavior = horse:getBehavior()
-    behavior:setBlockMovement(true)
-    behavior:setDoingBehavior(false)
-
-    horse:stopAllMovementNow()
-    local lockDir = horse:getDir()
-
-    local lpos = horse:getAttachmentWorldPos("mountLeft")
-    local rpos = horse:getAttachmentWorldPos("mountRight")
-    local hx, hy = horse:getX(), horse:getY()
-
-    local dl = (hx - lpos:x())^2 + (hy - lpos:y())^2
-    local dr = (hx - rpos:x())^2 + (hy - rpos:y())^2
-    local side, tx, ty, tz = "right", rpos:x(), rpos:y(), rpos:z()
-    if dl < dr then side, tx, ty, tz = "left", lpos:x(), lpos:y(), lpos:z() end
-
-    local function centerBlocked(nx, ny, nz)
-        local sq = getSquare(nx, ny, nz)
-        if not sq then
-            return true
-        end
-        if sq:isSolid() or sq:isSolidTrans() then
-            return true
-        end
-        return false
-    end
-
-    if centerBlocked(tx, ty, tz) then
-        local ox = (side=="right") and lpos:x() or rpos:x()
-        local oy = (side=="right") and lpos:y() or rpos:y()
-        local oz = (side=="right") and lpos:z() or rpos:z()
-        if not centerBlocked(ox, oy, oz) then
-            if side == "right" then
-                side = "left"
-            else
-                side = "right"
-            end
-            tx, ty, tz = ox, oy, oz
-        end
-    end
-
-    local saddleItem = Attachments.getSaddle(horse)
-
-    player:setDir(lockDir)
-
-    local action = DismountHorseAction:new(
-        mount,
-        side,
-        saddleItem ~= nil,
-        tx,
-        ty,
-        tz
+    -- dismount
+    local hasSaddle = Attachments.getSaddle(horse) ~= nil
+    local action = DismountAction:new(
+        player,
+        horse,
+        mountPosition,
+        hasSaddle
     )
 
     ISTimedActionQueue.add(action)
 end
 
+---@param player IsoPlayer
+---@return boolean
+function Mounting.canDismountUrgent(player)
+    -- prevent multiple urgent dismount actions
+    local queue = ISTimedActionQueue.getTimedActionQueue(player)
+    local actionIndex = queue:indexOfType(UrgentDismountAction.Type)
+    if actionIndex >= 0 then
+        return false
+    end
+    return true
+end
+
+---@param player IsoPlayer
+---@param horse IsoAnimal
+function Mounting.dismountDeath(player, horse)
+    if not Mounting.canDismountUrgent(player) then return end
+
+    ISTimedActionQueue.add(UrgentDismountAction:new(
+        player,
+        horse,
+        AnimationVariable.DYING,
+        nil,
+        "PainFromFallLow",
+        true
+    ))
+end
+
+---@param player IsoPlayer
+---@param horse IsoAnimal
+function Mounting.dismountFall(player, horse)
+    if not Mounting.canDismountUrgent(player) then return end
+
+    ISTimedActionQueue.add(UrgentDismountAction:new(
+        player,
+        horse,
+        nil,
+        HorseSounds.Sound.STRESSED,
+        nil,
+        true
+    ))
+end
+
+---@param player IsoPlayer
+---@param horse IsoAnimal
+function Mounting.dismountFallBack(player, horse)
+    if not Mounting.canDismountUrgent(player) then return end
+
+    ISTimedActionQueue.add(UrgentDismountAction:new(
+        player,
+        horse,
+        AnimationVariable.FALL_BACK,
+        HorseSounds.Sound.PAIN,
+        "PainFromFallHigh",
+        true
+    ))
+end
 
 return Mounting

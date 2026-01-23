@@ -6,7 +6,7 @@
     <m_EarlyTransitionOut>false</m_EarlyTransitionOut>
     <m_BlendTime>0.60</m_BlendTime>
     <m_SpeedScale>HorseTrotSpeed</m_SpeedScale>
-    <m_Scalar>geneSpeed</m_Scalar>
+    <m_Scalar>HorseGeneSpeed</m_Scalar>
     <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_deferredBoneAxis>Y</m_deferredBoneAxis>
     <m_Conditions>

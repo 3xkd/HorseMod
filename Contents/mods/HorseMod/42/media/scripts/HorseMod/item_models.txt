@@ -1,8 +1,0 @@
-module HorseMod {
-    model HorseMeat {
-        mesh = HorseMod/HorseMeat,
-        texture = Items/Horse_Meat,
-        static = true,
-        scale = 0.004,
-    }
-}

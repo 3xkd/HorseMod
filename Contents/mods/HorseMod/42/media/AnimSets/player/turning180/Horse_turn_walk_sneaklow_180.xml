@@ -12,7 +12,7 @@
     <m_maxTorsoTwist>5.00</m_maxTorsoTwist>
     <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>

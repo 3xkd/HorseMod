@@ -1,8 +1,9 @@
 local HorseUtils  = require("HorseMod/Utils")
 local Mounts = require("HorseMod/Mounts")
 local Mounting = require("HorseMod/Mounting")
-local AnimationVariable = require("HorseMod/AnimationVariable")
--- local HorseAttachments = require("HorseMod/HorseAttachments")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
+local MountingUtility = require("HorseMod/mounting/MountingUtility")
+
 
 ---@param context ISContextMenu
 ---@param player IsoPlayer
@@ -11,23 +12,37 @@ local function doHorseInteractionMenu(context, player, animal)
     local playerMount = Mounts.getMount(player)
 
     if playerMount ~= animal then
-        local canMount, reason = Mounting.canMountHorse(player, animal)
+        local canMount, reason = MountingUtility.canMountHorse(player, animal)
+        
+        -- skip if can't mount and no reason, it means the horse can't be mounted
+        -- for reasons that don't need to be shown to the player (i.e. butcher hook)
+        if not canMount and not reason then return end
+
+        local mountPosition = MountingUtility.getNearestMountPosition(player, animal)
         local option = context:addOption(
             getText("ContextMenu_Horse_Mount", animal:getFullName()),
-            player, Mounting.mountHorse, animal
+            player, Mounting.mountHorse, animal, mountPosition
         )
         option.iconTexture = animal:getInventoryIconTexture()
-        if not canMount then
+        local tooltip
+        if not mountPosition then
+            option.notAvailable = true
+            tooltip = ISWorldObjectContextMenu.addToolTip()
+            tooltip.description = getText("ContextMenu_Horse_NoMountPoint")
+        elseif not canMount then
             option.notAvailable = true
             if reason then
-                local tooltip = ISWorldObjectContextMenu.addToolTip()
-                tooltip.description = getText("ContextMenu_Horse_" .. reason)
+                tooltip = ISWorldObjectContextMenu.addToolTip()
+                tooltip.description = getText(reason)
             end
+        end
+        if tooltip then
+            option.toolTip = tooltip
         end
     else
         context:addOption(
             getText("ContextMenu_Horse_Dismount", animal:getFullName()),
-            player, Mounting.dismountHorse
+            player, Mounting.dismountHorse, playerMount
         )
     end
 end
@@ -97,17 +112,24 @@ local function handleJoypadMountButton(player)
     if player:getVariableBoolean(AnimationVariable.MOUNTING_HORSE) then return end
 
     local mountedHorse = Mounts.getMount(player)
+
+    -- dismount current horse if riding one
     if mountedHorse then
         if player:getVariableBoolean(AnimationVariable.RIDING_HORSE) then
-            Mounting.dismountHorse(player)
+            local mountPosition = MountingUtility.getNearestMountPosition(player, mountedHorse)
+            if not mountPosition then return end
+            Mounting.dismountHorse(player, mountedHorse, mountPosition)
         end
         return
     end
 
-    local horse = Mounting.getBestMountableHorse(player, 1.25)
+    -- mount nearest horse
+    local horse = MountingUtility.getBestMountableHorse(player, 1.25)
     if horse and horse:isExistInTheWorld() then
+        local mountPosition = MountingUtility.getNearestMountPosition(player, horse)
+        if not mountPosition then return end
         player:setIsAiming(false)
-        Mounting.mountHorse(player, horse)
+        Mounting.mountHorse(player, horse, mountPosition)
     end
 end
 

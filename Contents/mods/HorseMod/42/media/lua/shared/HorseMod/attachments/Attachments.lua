@@ -50,11 +50,16 @@ Attachments.getSlots = function(fullType)
     local itemDef = AttachmentData.items[fullType]
     local slots = {}
     for slot,_ in pairs(itemDef) do
-        if slot ~= "_count" then
-            table.insert(slots, slot)
-        end
+        table.insert(slots, slot)
     end
     return slots
+end
+
+---@param fullType string
+---@return AttachmentSlot
+Attachments.getMainSlot = function(fullType)
+    local slots = Attachments.getSlots(fullType)
+    return slots[1] ---@diagnostic disable-line -- there should always be at least one slot
 end
 
 ---Retrieve the mane definition for a specific horse breed.

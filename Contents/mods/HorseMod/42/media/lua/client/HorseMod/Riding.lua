@@ -1,12 +1,14 @@
 ---REQUIREMENTS
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local Mount = require("HorseMod/mount/Mount")
-local HorseUtils = require("HorseMod/Utils")
-local AnimationVariable = require("HorseMod/AnimationVariable")
 local Mounts = require("HorseMod/Mounts")
-
 local MountPair = require("HorseMod/MountPair")
-local HorseDamage = require("HorseMod/horse/HorseDamage")
+local HorseUtils = require("HorseMod/Utils")
 local HorseSounds = require("HorseMod/HorseSounds")
+local HorseDamage = require("HorseMod/horse/HorseDamage")
+local MountAction = require("HorseMod/TimedActions/MountAction")
+local DismountAction = require("HorseMod/TimedActions/DismountAction")
+
 
 ---@namespace HorseMod
 
@@ -106,6 +108,22 @@ HorseRiding.onKeyPressed = function(key)
         return
     end
 
+    -- cancel dismount or mount action if possible
+    if key == getCore():getKey("Interact") then
+        local queue = ISTimedActionQueue.getTimedActionQueue(player)
+        local currentAction = queue.current
+        if currentAction then
+            if currentAction.Type == DismountAction.Type 
+                or currentAction.Type == MountAction.Type then
+                if not player:getVariableBoolean(AnimationVariable.NO_CANCEL) then
+                    currentAction:forceStop()
+                    return
+                end
+            end
+        end
+    end
+
+    -- update mount input
     local mount = HorseRiding.getMount(player)
     if mount then
         mount:keyPressed(key)
@@ -125,9 +143,6 @@ HorseRiding.dismountOnHorseDeath = function(character)
 
     for _, mount in pairs(HorseRiding.playerMounts) do
         if mount.pair.mount == character then
-            local rider = mount.pair.rider
-            Mounts.removeMount(rider)
-
             HorseSounds.playSound(character, HorseSounds.Sound.DEATH)
 
             HorseUtils.runAfter(
@@ -136,17 +151,6 @@ HorseRiding.dismountOnHorseDeath = function(character)
                     HorseDamage.knockDownNearbyZombies(mount.pair.mount)
                 end
             )
-
-            HorseUtils.runAfter(
-                4.1,
-                function()
-                    rider:setBlockMovement(false)
-                    rider:setIgnoreMovement(false)
-                    rider:setIgnoreInputsForDirection(false)
-                    rider:setVariable(AnimationVariable.DYING, false)
-                end
-            )
-
             return
         end
     end

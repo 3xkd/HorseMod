@@ -1,3 +1,4 @@
 lupa
 pandas
 pyperclip
+matplotlib

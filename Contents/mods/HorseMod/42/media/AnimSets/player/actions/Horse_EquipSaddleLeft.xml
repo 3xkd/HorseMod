@@ -25,7 +25,7 @@
     <m_Events>
         <m_EventName>SetVariable</m_EventName>
         <m_Time>End</m_Time>
-        <m_ParameterValue>EquipFinished=true</m_ParameterValue>
+        <m_ParameterValue>HorseEquipFinished=true</m_ParameterValue>
     </m_Events>
     <m_Events>
         <m_EventName>SetVariable</m_EventName>

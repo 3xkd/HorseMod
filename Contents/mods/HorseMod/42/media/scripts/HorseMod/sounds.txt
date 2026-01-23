@@ -9,7 +9,6 @@ module HorseMod {
             file = media/sound/HorseMod/gallop-concrete.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -21,7 +20,6 @@ module HorseMod {
             file = media/sound/HorseMod/walk-concrete.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -33,7 +31,6 @@ module HorseMod {
             file = media/sound/HorseMod/trot-concrete.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -46,7 +43,6 @@ module HorseMod {
             file = media/sound/HorseMod/gallop-dirt.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -58,7 +54,6 @@ module HorseMod {
             file = media/sound/HorseMod/walk-dirt.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -70,7 +65,6 @@ module HorseMod {
             file = media/sound/HorseMod/trot-dirt.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -82,7 +76,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseDeath.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -93,7 +86,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseEatingGrass.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -105,7 +97,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseGallopTired.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -116,7 +107,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseIdleSnort.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -127,7 +117,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseMountSnort.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -138,7 +127,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorsePain.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 
@@ -149,7 +137,6 @@ module HorseMod {
             file = media/sound/HorseMod/HorseStressed.ogg,
             distanceMin = 1,
             distanceMax = 30,
-            volume = 0.3
         }
     }
 }

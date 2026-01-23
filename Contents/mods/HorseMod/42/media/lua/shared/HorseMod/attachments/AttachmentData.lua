@@ -39,7 +39,7 @@
 ---Time to equip, if `-1` the animation defines the end time.
 ---@field time number
 ---
----Animation to play during equip, it must be an AnimNode variable condition.
+---Animations to play during equip, based on the mounting position, it must be an AnimNode variable condition.
 ---@field anim {["Left"]: string?, ["Right"]: string?}?
 ---
 ---Whenever the item should be held in hand when equipping it. Defaults to `false`.
@@ -177,14 +177,17 @@ local AttachmentData = {
     ---Breeds associated to their mane colors.
     ---@type table<string, HexColor[]>
     MANE_HEX_BY_BREED = {
-        ["american_quarter"] = {"#EADAB6"},
-        ["american_paint"] = {"#FBDEA7"},
-        ["appaloosa"] = {"#24201D"},
-        ["thoroughbred"] = {"#140C08"},
-        ["blue_roan"] = {"#19191C"},
-        ["spotted_appaloosa"] = {"#FFF7E4"},
-        ["american_paint_overo"] = {"#292524"},
-        ["flea_bitten_grey"] = {"#FCECC5"},
+        ["AmericanQuarterPalomino"] = {"#EADAB6"},
+        ["AmericanQuarterBlueRoan"] = {"#19191C"},
+        
+        ["AmericanPaintTobiano"] = {"#FBDEA7"},
+        ["AmericanPaintOvero"] = {"#292524"},
+        
+        ["AppaloosaGrullaBlanket"] = {"#24201D"},
+        ["AppaloosaLeopard"] = {"#FFF7E4"},
+        
+        ["ThoroughbredBay"] = {"#140C08"},
+        ["ThoroughbredFleaBittenGrey"] = {"#FCECC5"},
     },
 
     ---Default mane items configuration.
@@ -233,14 +236,14 @@ AttachmentData.items = {
     ["HorseMod.HorseSaddle_White"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
     ["HorseMod.HorseSaddle_Landrace"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
         -- horses
-    ["HorseMod.HorseSaddle_AP"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_APHO"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_AQHBR"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_AQHP"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_FBG"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_GDA"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_LPA"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
-    ["HorseMod.HorseSaddle_T"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AmericanPaintTobiano"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AmericanPaintOvero"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AmericanQuarterBlueRoan"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AmericanQuarterPalomino"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AppaloosaGrullaBlanket"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_AppaloosaLeopard"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_ThoroughbredBay"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
+    ["HorseMod.HorseSaddle_ThoroughbredFleaBittenGrey"] = DEFAULT_ATTACHMENT_DEFS.SADDLE,
 
     -- saddlebags
         -- vanilla animals
@@ -251,14 +254,14 @@ AttachmentData.items = {
     ["HorseMod.HorseSaddlebags_White"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
     ["HorseMod.HorseSaddlebags_Landrace"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
         -- horses
-    ["HorseMod.HorseSaddlebags_AP"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_APHO"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_AQHBR"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_AQHP"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_FBG"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_GDA"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_LPA"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
-    ["HorseMod.HorseSaddlebags_T"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AmericanPaintTobiano"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AmericanPaintOvero"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AmericanQuarterBlueRoan"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AmericanQuarterPalomino"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AppaloosaGrullaBlanket"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_AppaloosaLeopard"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_ThoroughbredBay"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
+    ["HorseMod.HorseSaddlebags_ThoroughbredFleaBittenGrey"] = DEFAULT_ATTACHMENT_DEFS.SADDLEBAGS,
 
     -- reins
     ["HorseMod.HorseReins_Crude"] = { ["Reins"] = {model = "HorseMod.HorseReins_Crude"} },

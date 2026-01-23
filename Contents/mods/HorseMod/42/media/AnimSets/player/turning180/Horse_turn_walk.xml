@@ -6,11 +6,11 @@
     <m_useDeferedRotation>false</m_useDeferedRotation>
     <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_SpeedScale>HorseWalkSpeed</m_SpeedScale>
-    <m_Scalar>geneSpeed</m_Scalar>
+    <m_Scalar>HorseGeneSpeed</m_Scalar>
     <m_ConditionPriority>10</m_ConditionPriority>
     <m_Priority>50</m_Priority>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>

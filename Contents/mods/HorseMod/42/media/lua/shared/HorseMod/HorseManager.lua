@@ -1,10 +1,12 @@
+---REQUIREMENTS
 local HorseUtils = require("HorseMod/Utils")
 local Event = require("HorseMod/Event")
-local AnimationVariable = require("HorseMod/AnimationVariable")
+local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 
 ---@namespace HorseMod
 
 
+--- A system is a module to process behavior or logic for horses.
 ---@class System
 local __System = {}
 
@@ -12,7 +14,7 @@ local __System = {}
 ---@param delta number
 function __System:update(horses, delta) end
 
-
+---Used to manage horses presence in the world, whenever they are loaded / unloaded.
 local HorseManager = {
     ---Table holding all the available horses in the player cell.
     ---@type IsoAnimal[]
@@ -131,11 +133,11 @@ HorseManager.retrieveNewHorses = function()
     until true end
 end
 
-Events.OnTick.Add(HorseManager.retrieveNewHorses)
+-- Events.OnTick.Add(HorseManager.retrieveNewHorses)
 
 ---Sends
 function HorseManager.update()
-    -- processNewAnimals()
+    HorseManager.retrieveNewHorses()
     HorseManager.releaseRemovedHorses()
 
     local delta = GameTime.getInstance():getTimeDelta()

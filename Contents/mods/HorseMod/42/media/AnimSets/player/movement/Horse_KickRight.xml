@@ -14,24 +14,24 @@
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>kickRight</m_Name>
+        <m_Name>HorseRiderKickRight</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>idleKicking</m_Name>
+        <m_Name>HorseRiderIdleKicking</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>false</m_Value>
     </m_Conditions>
     <m_Events>
         <m_EventName>SetVariable</m_EventName>
         <m_Time>Start</m_Time>
-        <m_ParameterValue>moveKicking=true</m_ParameterValue>
+        <m_ParameterValue>HorseRiderMoveKicking=true</m_ParameterValue>
     </m_Events>
     <m_SubStateBoneWeights>
         <boneName>Bip01</boneName>

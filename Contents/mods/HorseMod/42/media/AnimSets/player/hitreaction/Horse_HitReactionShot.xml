@@ -8,7 +8,7 @@
         <m_Value>Shot</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>

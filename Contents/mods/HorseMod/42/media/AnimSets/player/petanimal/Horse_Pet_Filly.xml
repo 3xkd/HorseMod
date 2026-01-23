@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>Horse_Pet_Filly</m_Name>
+	<m_AnimName>Bob_Pet_Filly</m_AnimName>
+	<m_Looped>false</m_Looped>
+	<m_BlendTime>0.20</m_BlendTime>
+	<m_Scalar>AnimalSizeX</m_Scalar>
+	<m_Scalar2>AnimalSizeY</m_Scalar2>
+	<m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
+    <m_ConditionPriority>10</m_ConditionPriority>
+    <m_Conditions>
+        <m_Name>pettingFilly</m_Name>
+        <m_Type>BOOL</m_Type>
+        <m_Value>true</m_Value>
+    </m_Conditions>
+	<m_2DBlends referenceID="1">
+		<m_AnimName>Bob_Pet_Filly</m_AnimName>
+		<m_XPos>0.00</m_XPos>
+		<m_YPos>1.00</m_YPos>
+		<m_SpeedScale>1.00</m_SpeedScale>
+	</m_2DBlends>
+	<m_2DBlends referenceID="2">
+		<m_AnimName>Bob_Pet_Filly</m_AnimName>
+		<m_XPos>0.01</m_XPos>
+		<m_YPos>0.50</m_YPos>
+		<m_SpeedScale>1.00</m_SpeedScale>
+	</m_2DBlends>
+	<m_2DBlends referenceID="3">
+		<m_AnimName>Bob_Pet_Filly</m_AnimName>
+		<m_XPos>0.00</m_XPos>
+		<m_YPos>0.00</m_YPos>
+		<m_SpeedScale>1.00</m_SpeedScale>
+	</m_2DBlends>
+	<m_Events x_name="7ae9572d-9aa1-4b4e-ad44-64c25fc3140f">
+		<m_EventName>pettingFinished</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue></m_ParameterValue>
+	</m_Events>
+    <m_Events x_name="7ae9572d-9aa1-4b4e-ad44-64c25fc3140f">
+		<m_EventName>pettingFilly</m_EventName>
+		<m_Time>End</m_Time>
+		<m_ParameterValue>false</m_ParameterValue>
+	</m_Events>
+	<m_2DBlendTri>
+		<node1>1</node1>
+		<node2>2</node2>
+		<node3>3</node3>
+	</m_2DBlendTri>
+</animNode>

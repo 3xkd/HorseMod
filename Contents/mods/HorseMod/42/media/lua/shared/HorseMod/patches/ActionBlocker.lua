@@ -1,9 +1,12 @@
+---AUTOMATICALLY GENERATED FROM script/formatTimedActionBlocker.py
+---
 ---Holds the data of the timed actions to allow while mounted on a horse.
 local ActionBlocker = {
     ---Valid timed actions while horse riding.
     ---@type table<string, true>
     validActions = {
-        ["HorseMod_DismountHorseAction"] = true,
+        ["HorseMod_DismountAction"] = true,
+        ["HorseMod_UrgentDismountAction"] = true,
         ["ISAddFluidFromItemAction"] = true,
         ["ISApplyBandage"] = true,
         ["ISApplyMakeUp"] = true,
@@ -20,6 +23,7 @@ local ActionBlocker = {
         ["ISEatFoodAction"] = true,
         ["ISEjectMagazine"] = true,
         ["ISEquipWeaponAction"] = true,
+        ["ISFeedAnimalFromHand"] = true,
         ["ISFluidEmptyAction"] = true,
         ["ISFluidPanelAction"] = true,
         ["ISFluidTransferAction"] = true,
@@ -34,6 +38,7 @@ local ActionBlocker = {
         ["ISLoadBulletsInMagazine"] = true,
         ["ISMedicalCheckAction"] = true,
         ["ISOpenAnimalInfo"] = true,
+        ["ISPetAnimal"] = true,
         ["ISRackFirearm"] = true,
         ["ISRadioAction"] = true,
         ["ISReadABook"] = true,

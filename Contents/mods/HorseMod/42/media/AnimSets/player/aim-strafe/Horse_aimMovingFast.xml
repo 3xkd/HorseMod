@@ -7,9 +7,9 @@
     <m_Scalar>verticalAimAngle</m_Scalar>
     <m_BlendTime>0.80</m_BlendTime>
     <m_SpeedScale>1.30</m_SpeedScale>
-    <m_Scalar>geneSpeed</m_Scalar>
+    <m_Scalar>HorseGeneSpeed</m_Scalar>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>

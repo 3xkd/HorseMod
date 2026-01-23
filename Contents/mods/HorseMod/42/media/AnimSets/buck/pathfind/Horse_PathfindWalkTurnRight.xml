@@ -7,7 +7,7 @@
     <m_EarlyTransitionOut>true</m_EarlyTransitionOut>
     <m_deferredBoneAxis>Y</m_deferredBoneAxis>
     <m_SpeedScale>HorseWalkSpeed</m_SpeedScale>
-    <m_Scalar>geneSpeed</m_Scalar>
+    <m_Scalar>HorseGeneSpeed</m_Scalar>
     <m_blendInTime>0.20</m_blendInTime>
     <m_blendOutTime>0.40</m_blendOutTime>
     <m_BlendTime>0.80</m_BlendTime>

@@ -11,12 +11,12 @@
     <m_SyncTrackingEnabled>false</m_SyncTrackingEnabled>
     <m_EarlyTransitionOut>false</m_EarlyTransitionOut>
     <m_Conditions>
-        <m_Name>RidingHorse</m_Name>
+        <m_Name>HorseRiding</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>HasReins</m_Name>
+        <m_Name>HorseHasReins</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
@@ -26,7 +26,7 @@
         <m_Value>false</m_Value>
     </m_Conditions>
     <m_Conditions>
-        <m_Name>DismountStarted</m_Name>
+        <m_Name>HorseDismountStarted</m_Name>
         <m_Type>BOOL</m_Type>
         <m_Value>false</m_Value>
     </m_Conditions>
@@ -56,7 +56,7 @@
         <m_blendInTime>0.10</m_blendInTime>
         <m_blendOutTime>0.20</m_blendOutTime>
         <m_Conditions>
-            <m_Name>kickLeft</m_Name>
+            <m_Name>HorseRiderKickLeft</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>true</m_Value>
         </m_Conditions>
@@ -67,7 +67,7 @@
         <m_blendInTime>0.10</m_blendInTime>
         <m_blendOutTime>0.20</m_blendOutTime>
         <m_Conditions>
-            <m_Name>kickRight</m_Name>
+            <m_Name>HorseRiderKickRight</m_Name>
             <m_Type>BOOL</m_Type>
             <m_Value>true</m_Value>
         </m_Conditions>
