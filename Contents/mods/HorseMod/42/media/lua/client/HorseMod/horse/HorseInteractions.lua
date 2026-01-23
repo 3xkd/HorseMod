@@ -13,6 +13,11 @@ local function doHorseInteractionMenu(context, player, animal)
 
     if playerMount ~= animal then
         local canMount, reason = MountingUtility.canMountHorse(player, animal)
+        
+        -- skip if can't mount and no reason, it means the horse can't be mounted
+        -- for reasons that don't need to be shown to the player (i.e. butcher hook)
+        if not canMount and not reason then return end
+
         local mountPosition = MountingUtility.getNearestMountPosition(player, animal)
         local option = context:addOption(
             getText("ContextMenu_Horse_Mount", animal:getFullName()),

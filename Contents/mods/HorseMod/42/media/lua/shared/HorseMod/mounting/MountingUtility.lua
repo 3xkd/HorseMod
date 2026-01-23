@@ -117,7 +117,7 @@ function MountingUtility.canMountHorse(player, horse)
     elseif horse:isDead() then
         return false, "ContextMenu_Horse_IsDead"
     elseif horse:isOnHook() then -- butcher hook
-        return false, "ContextMenu_Horse_IsAttached"
+        return false
     elseif horse:getVariableBoolean("animalRunning") and horse:getMovementSpeed() ~= 0 then
         return false, "ContextMenu_Horse_IsRunning"
     elseif not HorseUtils.isAdult(horse) then
