@@ -1,0 +1,10 @@
+Recipes_FR = {
+    /* Accessoire à cheval */
+    Recipe_HorseSaddle = "Fabriquer une selle de cheval"
+    Recipe_HorseSaddlebags = "Fabriquer des sacs de selle"
+    Recipe_HorseReins = "Fabriquer des rênes"
+
+    /* Colle de cheval */
+    Recipe_HorseGlue = "Fabriquer un mélange de colle de cheval dans un pot"
+    Recipe_HorseGlueToWoodGlue = "Verser la colle de cheval hors du pot"
+}

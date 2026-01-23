@@ -3,7 +3,7 @@ module HorseMod {
         Base
 	}
 
-	craftRecipe horseGlue {
+	craftRecipe HorseGlue {
         timedAction = MixingBowl,
         time = 50,
         Tags = AnySurfaceCraft;Cooking,
@@ -22,7 +22,7 @@ module HorseMod {
         }
     }
 
-    craftRecipe horseGlueToWoodGlue {
+    craftRecipe HorseGlueToWoodGlue {
         timedAction = MixingBowl,
         time = 50,
         Tags = AnySurfaceCraft;Cooking,
