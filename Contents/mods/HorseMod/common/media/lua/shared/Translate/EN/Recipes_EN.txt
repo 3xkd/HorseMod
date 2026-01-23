@@ -5,6 +5,6 @@ Recipes_EN = {
     Recipe_HorseReins = "Make Horse Reins"
 
     /* Horse glue */
-    Recipe_horseGlue = "Make Horse Glue mixture in pot"
-    Recipe_horseGlueToWoodGlue = "Pour Horse Glue out of pot"
+    Recipe_HorseGlue = "Make Horse Glue mixture in pot"
+    Recipe_HorseGlueToWoodGlue = "Pour Horse Glue out of pot"
 }
