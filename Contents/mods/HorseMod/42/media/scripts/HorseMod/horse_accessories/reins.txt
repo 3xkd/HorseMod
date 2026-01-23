@@ -11,6 +11,7 @@ module HorseMod {
         Icon = accessories/HorseReins_Crude,
         StaticModel = HorseReins_Crude,
         WorldStaticModel = HorseReins_Crude_World,
+        Researchablerecipes = HorseMod.HorseReins,
     }	
     model HorseReins_Crude {
         mesh = HorseMod/HorseReins,
@@ -66,6 +67,7 @@ module HorseMod {
         Icon = accessories/HorseReins_Brown,
         StaticModel = HorseReins_Brown,
         WorldStaticModel = HorseReins_Brown_World,
+        Researchablerecipes = HorseMod.HorseReins,
     }	
     model HorseReins_Brown {
         mesh = HorseMod/HorseReins,
@@ -121,6 +123,7 @@ module HorseMod {
         Icon = accessories/HorseReins_Black,
         StaticModel = HorseReins_Black,
         WorldStaticModel = HorseReins_Black_World,
+        Researchablerecipes = HorseMod.HorseReins,
     }	
     model HorseReins_Black {
         mesh = HorseMod/HorseReins,
@@ -176,6 +179,7 @@ module HorseMod {
         Icon = accessories/HorseReins_White,
         StaticModel = HorseReins_White,
         WorldStaticModel = HorseReins_White_World,
+        Researchablerecipes = HorseMod.HorseReins,
     }	
     model HorseReins_White {
         mesh = HorseMod/HorseReins,

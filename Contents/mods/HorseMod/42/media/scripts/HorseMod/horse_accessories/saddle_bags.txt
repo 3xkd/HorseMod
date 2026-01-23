@@ -30,6 +30,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_Crude,
         StaticModel = HorseSaddlebags_Crude,
         WorldStaticModel = HorseSaddlebags_Crude,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_Crude {
         mesh = HorseMod/HorseSaddlebags,
@@ -52,6 +53,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_Black,
         StaticModel = HorseSaddlebags_Black,
         WorldStaticModel = HorseSaddlebags_Black,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_Black {
         mesh = HorseMod/HorseSaddlebags,
@@ -73,6 +75,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_CowHolstein,
         StaticModel = HorseSaddlebags_CowHolstein,
         WorldStaticModel = HorseSaddlebags_CowHolstein,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_CowHolstein {
         mesh = HorseMod/HorseSaddlebags,
@@ -94,6 +97,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_CowSimmental,
         StaticModel = HorseSaddlebags_CowSimmental,
         WorldStaticModel = HorseSaddlebags_CowSimmental,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_CowSimmental {
         mesh = HorseMod/HorseSaddlebags,
@@ -115,6 +119,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_White,
         StaticModel = HorseSaddlebags_White,
         WorldStaticModel = HorseSaddlebags_White,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_White {
         mesh = HorseMod/HorseSaddlebags,
@@ -136,6 +141,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_Landrace,
         StaticModel = HorseSaddlebags_Landrace,
         WorldStaticModel = HorseSaddlebags_Landrace,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_Landrace {
         mesh = HorseMod/HorseSaddlebags,
@@ -158,6 +164,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AmericanPaintTobiano,
         StaticModel = HorseSaddlebags_AmericanPaintTobiano,
         WorldStaticModel = HorseSaddlebags_AmericanPaintTobiano,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AmericanPaintTobiano {
         mesh = HorseMod/HorseSaddlebags,
@@ -179,6 +186,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AmericanPaintOvero,
         StaticModel = HorseSaddlebags_AmericanPaintOvero,
         WorldStaticModel = HorseSaddlebags_AmericanPaintOvero,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AmericanPaintOvero {
         mesh = HorseMod/HorseSaddlebags,
@@ -200,6 +208,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AmericanQuarterBlueRoan,
         StaticModel = HorseSaddlebags_AmericanQuarterBlueRoan,
         WorldStaticModel = HorseSaddlebags_AmericanQuarterBlueRoan,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AmericanQuarterBlueRoan {
         mesh = HorseMod/HorseSaddlebags,
@@ -221,6 +230,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AmericanQuarterPalomino,
         StaticModel = HorseSaddlebags_AmericanQuarterPalomino,
         WorldStaticModel = HorseSaddlebags_AmericanQuarterPalomino,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AmericanQuarterPalomino {
         mesh = HorseMod/HorseSaddlebags,
@@ -242,6 +252,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AppaloosaGrullaBlanket,
         StaticModel = HorseSaddlebags_AppaloosaGrullaBlanket,
         WorldStaticModel = HorseSaddlebags_AppaloosaGrullaBlanket,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AppaloosaGrullaBlanket {
         mesh = HorseMod/HorseSaddlebags,
@@ -263,6 +274,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_AppaloosaLeopard,
         StaticModel = HorseSaddlebags_AppaloosaLeopard,
         WorldStaticModel = HorseSaddlebags_AppaloosaLeopard,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_AppaloosaLeopard {
         mesh = HorseMod/HorseSaddlebags,
@@ -284,6 +296,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_ThoroughbredBay,
         StaticModel = HorseSaddlebags_ThoroughbredBay,
         WorldStaticModel = HorseSaddlebags_ThoroughbredBay,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_ThoroughbredBay {
         mesh = HorseMod/HorseSaddlebags,
@@ -305,6 +318,7 @@ module HorseMod {
         Icon = accessories/HorseSaddlebags_ThoroughbredFleaBittenGrey,
         StaticModel = HorseSaddlebags_ThoroughbredFleaBittenGrey,
         WorldStaticModel = HorseSaddlebags_ThoroughbredFleaBittenGrey,
+        Researchablerecipes = HorseMod.HorseSaddlebags,
     }
     model HorseSaddlebags_ThoroughbredFleaBittenGrey {
         mesh = HorseMod/HorseSaddlebags,
