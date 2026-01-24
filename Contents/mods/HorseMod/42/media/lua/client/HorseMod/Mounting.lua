@@ -31,7 +31,7 @@ function Mounting.mountHorse(player, horse, mountPosition)
         local tree = data:getAttachedTree()
         if tree then
             data:setAttachedTree(nil) ---@diagnostic disable-line
-            sendAttachAnimalToTree(horse, player, tree, true)
+            -- sendAttachAnimalToTree(horse, player, tree, true)
         end
         -- Detach from any leading player
         local leader = data:getAttachedPlayer()
