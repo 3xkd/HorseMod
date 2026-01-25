@@ -82,33 +82,36 @@ end
 ---@return Mount
 ---@nodiscard
 function Mount.new(pair)
+    local rider = pair.rider
+    local mount = pair.mount
+
     -- pair.rider:getAttachedAnimals():add(pair.mount)
     -- pair.mount:getData():setAttachedPlayer(pair.rider)
 
     pair:setAnimationVariable(AnimationVariable.RIDING_HORSE, true)
     pair:setAnimationVariable(AnimationVariable.TROT, false)
-    pair.rider:setAllowRun(false)
-    pair.rider:setAllowSprint(false)
+    rider:setAllowRun(false)
+    rider:setAllowSprint(false)
 
-    pair.rider:setTurnDelta(0.65)
+    rider:setTurnDelta(0.65)
 
-    pair.rider:setVariable("isTurningLeft", false)
-    pair.rider:setVariable("isTurningRight", false)
+    rider:setVariable("isTurningLeft", false)
+    rider:setVariable("isTurningRight", false)
 
-    local geneSpeed = pair.mount:getUsedGene("speed"):getCurrentValue()
-    pair.rider:setVariable(AnimationVariable.GENE_SPEED, geneSpeed)
+    local geneSpeed = mount:getUsedGene("speed"):getCurrentValue()
+    rider:setVariable(AnimationVariable.GENE_SPEED, geneSpeed)
 
-    pair.mount:getPathFindBehavior2():reset()
-    pair.mount:getBehavior():setBlockMovement(true)
-    pair.mount:stopAllMovementNow()
+    mount:getPathFindBehavior2():reset()
+    mount:getBehavior():setBlockMovement(true)
+    mount:stopAllMovementNow()
 
-    pair.mount:setVariable("bPathfind", false)
-    pair.mount:setVariable("animalWalking", false)
-    pair.mount:setVariable("animalRunning", false)
+    mount:setVariable("bPathfind", false)
+    mount:setVariable("animalWalking", false)
+    mount:setVariable("animalRunning", false)
 
     -- TODO: are these even needed
-    pair.mount:setWild(false)
-    pair.mount:setVariable(AnimationVariable.IS_HORSE, true)
+    mount:setWild(false)
+    mount:setVariable(AnimationVariable.IS_HORSE, true)
 
     local o = setmetatable(
         {

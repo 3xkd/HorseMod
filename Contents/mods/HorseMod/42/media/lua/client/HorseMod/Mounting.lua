@@ -47,6 +47,14 @@ function Mounting.mountHorse(player, horse, mountPosition)
     --- pathfind to the mount position
     local pathfindAction = MountingUtility.pathfindToHorse(player, horse, mountPosition)
 
+    -- unequip items from hands
+    if player:getPrimaryHandItem() then
+        ISTimedActionQueue.add(ISUnequipAction:new(player, player:getPrimaryHandItem(), 50));
+    end
+    if player:getSecondaryHandItem() and player:getSecondaryHandItem() ~= player:getPrimaryHandItem() then
+        ISTimedActionQueue.add(ISUnequipAction:new(player, player:getSecondaryHandItem(), 50));
+    end
+
     -- create mount action
     local hasSaddle = Attachments.getSaddle(horse) ~= nil
     local mountAction = MountAction:new(

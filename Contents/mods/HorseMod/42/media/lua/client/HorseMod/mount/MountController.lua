@@ -823,7 +823,7 @@ function MountController:update(input)
     local rider = mountPair.rider
     local mount = mountPair.mount
 
-    rider:setSneaking(true)
+    rider:setSneaking(false)
     rider:setIgnoreAutoVault(true)
 
     -- TODO i'm doubtful this is needed?

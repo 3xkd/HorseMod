@@ -29,7 +29,7 @@
     <m_Conditions x_name="12d5649c-907d-498f-a68b-71eeb96d554b">
         <m_Name>sneaking</m_Name>
         <m_Type>BOOL</m_Type>
-        <m_Value>true</m_Value>
+        <m_Value>false</m_Value>
     </m_Conditions>
     <m_Conditions x_name="d81151c1-209b-43c9-8f5e-11b99c7e935d">
         <m_Name>nearWallCrouching</m_Name>

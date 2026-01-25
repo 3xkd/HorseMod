@@ -44,7 +44,7 @@ formatted_actions = formatted_actions.rstrip()  # Remove trailing newline
 
 format_table = TIMEDACTION_TEMPLATE.format(timedActions=formatted_actions)
 
-print(format_table)
+print(f"\033[33m{format_table}\033[0m")
 
 output_path = os.path.join(
     script_dir, 

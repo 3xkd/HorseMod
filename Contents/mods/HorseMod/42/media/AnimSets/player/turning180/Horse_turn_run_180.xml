@@ -23,7 +23,7 @@
     <m_Conditions x_name="b9b08f40-8b75-4d02-bdf3-925ce0a7d86b">
         <m_Name>sneaking</m_Name>
         <m_Type>BOOL</m_Type>
-        <m_Value>true</m_Value>
+        <m_Value>false</m_Value>
     </m_Conditions>
     <m_Conditions x_name="137f0aa5-1515-41bf-a5f9-fc3b629fa4d1">
         <m_Name>momentumScalar</m_Name>

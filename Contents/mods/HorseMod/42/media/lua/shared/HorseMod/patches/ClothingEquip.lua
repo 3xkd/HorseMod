@@ -213,9 +213,10 @@ end
 
 ClothingEquip._originalUnequipValid = ISUnequipAction.isValid
 function ISUnequipAction:isValid()
-    if self.item then
+    local item = self.item
+    if item and instanceof(item, "Clothing") then
         if Mounts.hasMount(self.character) then
-            if not ClothingEquip.canEquipItem(self.item) then
+            if not ClothingEquip.canEquipItem(item) then
                 return false
             end
         end

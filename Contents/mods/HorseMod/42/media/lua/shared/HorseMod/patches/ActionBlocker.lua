@@ -22,7 +22,6 @@ local ActionBlocker = {
         ["ISDyeHair"] = true,
         ["ISEatFoodAction"] = true,
         ["ISEjectMagazine"] = true,
-        ["ISEquipWeaponAction"] = true,
         ["ISFeedAnimalFromHand"] = true,
         ["ISFluidEmptyAction"] = true,
         ["ISFluidPanelAction"] = true,

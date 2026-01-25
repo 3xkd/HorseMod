@@ -91,7 +91,7 @@ ISEmptyRainBarrelAction,
 ISEmptyWaterInTrough,
 ISEnterVehicle,
 ISEquipHeavyItem,
-ISEquipWeaponAction,true
+ISEquipWeaponAction,false
 ISExitVehicle,
 ISExtendedPlacementAction,
 ISFeedAnimalFromHand,true
