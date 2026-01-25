@@ -7,6 +7,7 @@ CLIPS = [
     "Walk.mp4",
     "Trot.mp4",
     "Gallop.mp4",
+    "Jump.mp4",
 ]
 
 r = 2
@@ -16,7 +17,7 @@ IN_LINE_SIZE = (int(1920 / r * len(CLIPS)), int(1080 / r))
 out_clip = cv2.VideoWriter(
     os.path.join(SCRIPTS_PATH, "All_in_line.mp4"),
     cv2.VideoWriter_fourcc(*"mp4v"),
-    60,
+    24,
     IN_LINE_SIZE,
 )
 
