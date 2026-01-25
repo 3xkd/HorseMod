@@ -1,0 +1,10 @@
+Recipes_TR = {
+    /* At Aksesuarları */
+    Recipe_HorseSaddle = "At Eyeri Yap"
+    Recipe_HorseSaddlebags = "At Heybesi Yap"
+    Recipe_HorseReins = "At Dizgini Yap"
+
+    /* At Tutkalı */
+    Recipe_HorseGlue = "Tencerede at tutkalı karışımı hazırla."
+    Recipe_HorseGlueToWoodGlue = "At tutkalını kaptan dışarı dök."
+}

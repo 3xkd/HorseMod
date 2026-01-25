@@ -1,0 +1,4 @@
+Sandbox_TR = {
+    Sandbox_HorseMod_WalkSpeed = "At Tırıt Hızı"
+    Sandbox_HorseMod_GallopSpeed = "At Dörtnala Hızı"
+}
