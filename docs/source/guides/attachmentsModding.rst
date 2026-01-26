@@ -8,7 +8,7 @@ The attachments API functions for modders are defined in a module :lua:obj:`Hors
   If you want more in-depth information of how the attachment system works internally, please refer to :doc:`attachmentsDev`.
 
 .. important::
-  A full example mod showcasing how to create new attachments for the horse is available on the HorseMod GitHub repository `here <https://github.com/demiurgeQuantified/HorseMod/HorseModExampleMod>`_.
+  A full example mod showcasing how to create new attachments for the horse is available in the PZ-HorseTeam GitHub repositories `here <https://github.com/PZ-HorseTeam/Example-mod>`_.
 
 Creating a new slot
 -------------------
