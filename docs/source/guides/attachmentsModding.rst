@@ -24,7 +24,7 @@ To add a new slot, add a new :lua:class:`HorseMod.SlotDefinition` entry to the :
       modelAttachment = "head",
   })
 
-The slots are first defined in the table :lua:obj:`HorseMod.attachments.AttachmentData.slotsDefinitions`, which is then processed when the server Lua folder gets loaded to generate the various tables used by the attachment system. See :ref:`attachmentsload-label` for more details on that process.
+The slots are first defined in the table :lua:obj:`HorseMod.attachments.AttachmentData.slotsDefinitions`, which is later processed to generate the various tables used by the attachment system. See :ref:`attachmentdata-label` for more details on that process.
 
 .. hint::
   A full list of available slots in the Horse mod by default can be found in :ref:`availableslots-label`.
