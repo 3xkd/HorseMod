@@ -123,6 +123,7 @@ HorseDefinitions.ANIMALS_DATA = {
         shadoww = 1.5,
         shadowfm = 3,
         shadowbm = 3,
+        dung = "HorseMod.Dung_Horse",
 
         -- CORE
         stages = AnimalDefinitions.stages["horse"].stages,
