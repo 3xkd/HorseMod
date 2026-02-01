@@ -36,6 +36,21 @@ local HorseItemsDistribution = {
     FarmerTools = {
         items = {},
     },
+    CampingStoreGear = {
+        items = {},
+    },
+    HuntingLockers = {
+        items = {},
+    },
+    SurvivalGear = {
+        items = {},
+    },
+    CrateCamping = {
+        items = {},
+    },
+    CrateSports = {
+        items = {},
+    },
     CrateAnimalFeed = {
         items = {},
     },
@@ -62,6 +77,26 @@ addItems(HorseItemsDistribution.FarmerTools .items, saddleItems, 0.15)
 addItems(HorseItemsDistribution.FarmerTools .items, saddlebagItems, 0.15)
 addItems(HorseItemsDistribution.FarmerTools .items, reinsItems, 0.15)
 
+addItems(HorseItemsDistribution.CampingStoreGear.items, saddleItems, 0.2)
+addItems(HorseItemsDistribution.CampingStoreGear.items, saddlebagItems, 0.2)
+addItems(HorseItemsDistribution.CampingStoreGear.items, reinsItems, 0.2)
+
+addItems(HorseItemsDistribution.HuntingLockers.items, saddleItems, 0.4)
+addItems(HorseItemsDistribution.HuntingLockers.items, saddlebagItems, 0.4)
+addItems(HorseItemsDistribution.HuntingLockers.items, reinsItems, 0.4)
+
+addItems(HorseItemsDistribution.SurvivalGear.items, saddleItems, 0.2)
+addItems(HorseItemsDistribution.SurvivalGear.items, saddlebagItems, 0.2)
+addItems(HorseItemsDistribution.SurvivalGear.items, reinsItems, 0.2)
+
+addItems(HorseItemsDistribution.CrateCamping.items, saddleItems, 0.2)
+addItems(HorseItemsDistribution.CrateCamping.items, saddlebagItems, 0.2)
+addItems(HorseItemsDistribution.CrateCamping.items, reinsItems, 0.2)
+
+addItems(HorseItemsDistribution.CrateSports.items, saddleItems, 0.2)
+addItems(HorseItemsDistribution.CrateSports.items, saddlebagItems, 0.2)
+addItems(HorseItemsDistribution.CrateSports.items, reinsItems, 0.2)
+
 addItems(HorseItemsDistribution.CrateAnimalFeed .items, saddleItems, 0.25)
 addItems(HorseItemsDistribution.CrateAnimalFeed .items, saddlebagItems, 0.25)
 addItems(HorseItemsDistribution.CrateAnimalFeed .items, reinsItems, 0.25)
@@ -74,9 +109,9 @@ addItems(HorseItemsDistribution.SportStoreAccessories.items, saddleItems, 0.5)
 addItems(HorseItemsDistribution.SportStoreAccessories.items, saddlebagItems, 0.5)
 addItems(HorseItemsDistribution.SportStoreAccessories.items, reinsItems, 0.5)
 
-addItems(HorseItemsDistribution.WildWestGeneralStore.items, saddleItems, 0.15)
-addItems(HorseItemsDistribution.WildWestGeneralStore.items, saddlebagItems, 0.15)
-addItems(HorseItemsDistribution.WildWestGeneralStore.items, reinsItems, 0.15)
+addItems(HorseItemsDistribution.WildWestGeneralStore.items, saddleItems, 0.25)
+addItems(HorseItemsDistribution.WildWestGeneralStore.items, saddlebagItems, 0.25)
+addItems(HorseItemsDistribution.WildWestGeneralStore.items, reinsItems, 0.25)
 
 local ProceduralDistributions_list = ProceduralDistributions.list
 
