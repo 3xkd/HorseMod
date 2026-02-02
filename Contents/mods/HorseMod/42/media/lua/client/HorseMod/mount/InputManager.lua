@@ -44,6 +44,9 @@ end
 ---
 ---Parent mount.
 ---@field mount Mount
+---
+---Whether the left joypad bumper was pressed last time the input was polled.
+---@field lastJoypadLB boolean
 local InputManager = {}
 InputManager.__index = InputManager
 
@@ -94,21 +97,14 @@ function InputManager:getJoypadInput(pad)
         run = true
     end
 
-    local lb = getJoypadLBumper(pad)
-    if lb ~= -1 then
-        local pressed = isJoypadPressed(pad, lb)
-        local prev = self.lastJoypadLB or false
-        self.lastJoypadLB = pressed
-
-        if pressed and not prev then
-            local rider = self.mount.pair.rider
-            if not joypadHasUIFocus(rider:getPlayerNum()) then
-                self.mount.controller:toggleTrot()
-            end
+    local lbPressed = isJoypadLBPressed(pad)
+    if lbPressed and not self.lastJoypadLB then
+        local rider = self.mount.pair.rider
+        if not joypadHasUIFocus(rider:getPlayerNum()) then
+            self.mount.controller:toggleTrot()
         end
-    else
-        self.lastJoypadLB = false
     end
+    self.lastJoypadLB = lbPressed
 
     return {
         movement = {
