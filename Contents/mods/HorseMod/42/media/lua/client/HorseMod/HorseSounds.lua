@@ -159,8 +159,7 @@ end
 ---@return boolean
 ---@nodiscard
 local function shouldIdleSnort(animal)
-    local moving = animal:isAnimalMoving()
-    if moving then
+    if animal:getMovementSpeed() >= 0.01 then
         return false
     end
     if animal:getVariableBoolean(AnimationVariable.MOUNTING_HORSE) then
@@ -217,7 +216,7 @@ end
 ---@nodiscard
 local function getMovementState(animal)
     -- FIXME: this is basically a duplicate of MountController:getMovementState because we don't always have a Mount to check
-    if not animal:isAnimalMoving() then
+    if animal:getMovementSpeed() < 0.01 then
         return "idle"
     elseif animal:getVariableBoolean(AnimationVariable.GALLOP) then
         return "gallop"

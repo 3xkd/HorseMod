@@ -1,7 +1,6 @@
 ---REQUIREMENTS
 local Stamina = require("HorseMod/Stamina")
 local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
-local DismountAction = require("HorseMod/TimedActions/DismountAction")
 local Mounting = require("HorseMod/Mounting")
 local rdm = newrandom()
 
@@ -610,7 +609,7 @@ end
 function MountController:turn(input, deltaTime)
     local currentDirection = self.mount.pair.mount:getDir()
 
-    local targetDirection
+    local targetDirection = nil
     if input.movement.x ~= 0 or input.movement.y ~= 0 then
         targetDirection = IsoDirections.fromAngle(input.movement.x, input.movement.y):RotLeft()
     else
@@ -846,8 +845,8 @@ function MountController:update(input)
     rider:setSneaking(false)
     rider:setIgnoreAutoVault(true)
 
-    -- TODO i'm doubtful this is needed?
     mount:getPathFindBehavior2():reset()
+    mount:setVariable("bPathfind", false)
     mount:getBehavior():setBlockMovement(true)
 
     local deltaTime = GameTime.getInstance():getTimeDelta()
@@ -884,11 +883,9 @@ function MountController:update(input)
         local velocity = currentDirection:ToVector():setLength(self.targetSpeed)
         moveWithCollision(rider, mount, velocity, deltaTime, isGalloping, isJumping)
 
-        mount:setVariable("bPathfind", true)
         mount:setVariable("animalWalking", not input.run)
         mountPair:setAnimationVariable(AnimationVariable.GALLOP, input.run)
     else
-        mount:setVariable("bPathfind", false)
         mountPair:setAnimationVariable(AnimationVariable.GALLOP, false)
         mount:setVariable("animalWalking", false)
     end
