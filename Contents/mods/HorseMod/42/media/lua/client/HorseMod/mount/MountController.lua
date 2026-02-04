@@ -761,7 +761,8 @@ function MountController:updateTreeFall(isGalloping, deltaTime)
     -- make the player fall if they are in trees based on some skills and traits
     local timeInTrees = self.timeInTrees
     if isGalloping then
-        if rider:isInTreesNoBush() then
+        if rider:isInTreesNoBush() 
+            or self.mount.pair.mount:isInTreesNoBush() then
             self.timeInTrees = timeInTrees + deltaTime
 
             -- roll for tree fall every 0.5s
