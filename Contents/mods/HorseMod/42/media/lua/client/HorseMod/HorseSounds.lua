@@ -3,6 +3,7 @@
 local HorseManager = require("HorseMod/HorseManager")
 local AnimationVariable = require('HorseMod/definitions/AnimationVariable')
 local Stamina = require("HorseMod/Stamina")
+local ModOptions = require("HorseMod/ModOptions")
 
 
 ---@enum Sound
@@ -339,7 +340,7 @@ end
 
 function SoundsSystem:update(horses, delta)
     -- need to update this each tick incase the player changes their volume
-    self.volume = getCore():getOptionSoundVolume() * 0.1
+    self.volume = getCore():getOptionSoundVolume() * 0.1 * ModOptions.HorseSoundVolume
 
     for i = 1, #horses do
         local horse = horses[i]

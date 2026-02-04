@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <animNode>
-    <m_Name>Horse_RunOverride</m_Name>
+    <m_Name>Horse_IdleMounted</m_Name>
     <m_AnimName>Horse_Idle</m_AnimName>
     <m_ConditionPriority>10</m_ConditionPriority>
     <m_SpeedScale>1.0</m_SpeedScale>
@@ -23,4 +23,8 @@
         <m_Type>BOOL</m_Type>
         <m_Value>true</m_Value>
     </m_Conditions>
+    <m_SubStateBoneWeights>
+        <boneName>Bip01</boneName>
+        <weight>1.00</weight>
+    </m_SubStateBoneWeights>
 </animNode>

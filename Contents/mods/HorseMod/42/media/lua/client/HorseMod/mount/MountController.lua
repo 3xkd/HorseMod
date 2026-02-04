@@ -898,7 +898,7 @@ function MountController:update(input)
     end
 
     ---@type string[]
-    local mirrorVarsMount =  { "HorseGalloping","isTurningLeft","isTurningRight" }
+    local mirrorVarsMount =  { "HorseGalloping","isTurningLeft","isTurningRight","walkstateRun" }
     for i = 1, #mirrorVarsMount do
         local k = mirrorVarsMount[i]
         local v = mount:getVariableBoolean(k)
