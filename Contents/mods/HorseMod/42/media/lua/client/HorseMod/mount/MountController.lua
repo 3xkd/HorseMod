@@ -607,22 +607,22 @@ end
 ---Maximum seconds of slowdown that can be accrued.
 ---@readonly
 ---@type number
-local SLOWDOWN_MAX = 5
+local SLOWDOWN_MAX = 2.5
 
 ---Amount to increment the slowdown counter when hitting a zombie.
 ---@readonly
 ---@type number
-local SLOWDOWN_ZOMBIE_KNOCKDOWN_INCREASE = 1
+local SLOWDOWN_ZOMBIE_KNOCKDOWN_INCREASE = 0.75
 
 ---Amount to increment the slowdown counter per second when near a zombie but not fast enough to knock it down.
 ---@readonly
 ---@type number
-local SLOWDOWN_ZOMBIE_NEARBY_INCREASE = 5
+local SLOWDOWN_ZOMBIE_NEARBY_INCREASE = 4
 
 ---Amount to increment the slowdown counter per second when trampling a zombie on the ground.
 ---@readonly
 ---@type number
-local SLOWDOWN_ZOMBIE_GROUND_INCREASE = 0.75
+local SLOWDOWN_ZOMBIE_GROUND_INCREASE = 2
 
 ---Minimum seconds of slowdown before the horse is actually slowed.
 ---@readonly
@@ -632,7 +632,7 @@ local SLOWDOWN_MIN_SECONDS = 1
 ---Maximum seconds of slowdown where slowdown amount stops increasing.
 ---@readonly
 ---@type number
-local SLOWDOWN_MAX_SECONDS = 4
+local SLOWDOWN_MAX_SECONDS = 2
 
 ---Scalar to movement speed when at maximum slowdown.
 ---The final speed scalar is interpolated based on the current slowdown value (between ZOMBIE_SLOWDOWN_MIN_SECONDS and ZOMBIE_SLOWDOWN_MAX_SECONDS)
@@ -645,12 +645,12 @@ local SLOWDOWN_MAX_SCALAR = 0.2
 ---Used because very low scalars needed to make galloping slow enough make slower speeds ridiculously slow.
 ---@readonly
 ---@type number
-local SLOWDOWN_MIN_SPEED = 1.5
+local SLOWDOWN_MIN_SPEED = 2
 
 ---Minimum speed required to knock down a zombie.
 ---@readonly
 ---@type number
-local KNOCKDOWN_MIN_SPEED = 5
+local KNOCKDOWN_MIN_SPEED = 6.5
 
 ---@param deltaTime number
 function MountController:updateSlowdown(deltaTime)
@@ -836,7 +836,6 @@ function MountController:updateSpeed(input, deltaTime)
 
     local walkMultiplier = getSpeed("walk")
     local gallopRawSpeed = getSpeed("gallop")
-    local gallopMultiplier = gallopRawSpeed
 
     local pair = self.mount.pair
     local mount = pair.mount
@@ -846,15 +845,6 @@ function MountController:updateSpeed(input, deltaTime)
     local geneSpeed = getGeneticSpeed(mount) * self:getVegetationEffect(input, deltaTime)
 
     pair:setAnimationVariable(AnimationVariable.GENE_SPEED, geneSpeed)
-
-    if input.run then
-        local f = Stamina.runSpeedFactor(mount)
-        if f < 0.35 then
-            gallopMultiplier = 0.35
-        else
-            gallopMultiplier = gallopMultiplier * f
-        end
-    end
 
     mount:setVariable(AnimationVariable.WALK_SPEED, walkMultiplier)
     mount:setVariable(AnimationVariable.TROT_SPEED,  walkMultiplier * TROT_MULT)
@@ -878,13 +868,12 @@ function MountController:updateSpeed(input, deltaTime)
     self.speed = approach(self.speed, target, rate * deltaTime)
 
     if self.speed > SLOWDOWN_MIN_SPEED then
-        local slowdownAmount = math.min(math.max(SLOWDOWN_MIN_SECONDS - self.slowdownCounter), SLOWDOWN_MAX_SECONDS)
-        local slowdownPercent = math.max(math.min(slowdownAmount / (SLOWDOWN_MIN_SECONDS - SLOWDOWN_MAX_SECONDS), 1), 0)
-        local slowdownScalar = PZMath.lerp(1, SLOWDOWN_MAX_SCALAR, slowdownPercent)
-        self.speed = math.max(self.speed * slowdownScalar, SLOWDOWN_MIN_SPEED)
-    end
+        self.speed = self.speed * self:getVegetationEffect(input, deltaTime)
 
-    self.speed = self.speed * self:getVegetationEffect(input, deltaTime)
+        local slowdownAmount = math.min(math.max(self.slowdownCounter - SLOWDOWN_MIN_SECONDS, 0), SLOWDOWN_MAX_SECONDS - SLOWDOWN_MIN_SECONDS)
+        local slowdownScalar = PZMath.lerp(1, SLOWDOWN_MAX_SCALAR, slowdownAmount / (SLOWDOWN_MAX_SECONDS - SLOWDOWN_MIN_SECONDS))
+        self.speed = math.max(math.min(self.speed, target * slowdownScalar), SLOWDOWN_MIN_SPEED)
+    end
 
     if self.speed < 0.01 then
         self.speed = 0
